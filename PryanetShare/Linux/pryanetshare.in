@@ -63,7 +63,7 @@ case $1 in
     ;;
   open|--open)
     invite=`date -u +%N`
-    open=`echo $2 | sed s/pryanetshare:\/\/addProject//`
+    open=`echo $2 | sed 's/pryanetshare:\/\/addProject//'`
     curl --insecure --output ~/PryanetShare/$invite.xml $open
     ;;
   *)
