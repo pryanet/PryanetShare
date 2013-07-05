@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2C914413-B31C-4362-93C7-1AE34F09112A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SparkleLib</RootNamespace>
-    <AssemblyName>SparkleLib</AssemblyName>
+    <RootNamespace>PryanetLib</RootNamespace>
+    <AssemblyName>PryanetLib</AssemblyName>
     <ReleaseVersion />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -30,20 +30,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SparkleRepoBase.cs" />
-    <Compile Include="SparkleFetcherBase.cs" />
-    <Compile Include="SparkleWrappers.cs" />
-    <Compile Include="SparkleListenerBase.cs" />
-    <Compile Include="SparkleListenerFactory.cs" />
-    <Compile Include="SparkleListenerTcp.cs" />
-    <Compile Include="SparkleBackend.cs" />
-    <Compile Include="SparkleConfig.cs" />
-    <Compile Include="SparkleWatcher.cs" />
-    <Compile Include="SparkleExtensions.cs" />
-    <Compile Include="SparkleUser.cs" />
-    <Compile Include="SparkleLogger.cs" />
+    <Compile Include="PryanetRepoBase.cs" />
+    <Compile Include="PryanetFetcherBase.cs" />
+    <Compile Include="PryanetWrappers.cs" />
+    <Compile Include="PryanetListenerBase.cs" />
+    <Compile Include="PryanetListenerFactory.cs" />
+    <Compile Include="PryanetListenerTcp.cs" />
+    <Compile Include="PryanetBackend.cs" />
+    <Compile Include="PryanetConfig.cs" />
+    <Compile Include="PryanetWatcher.cs" />
+    <Compile Include="PryanetExtensions.cs" />
+    <Compile Include="PryanetUser.cs" />
+    <Compile Include="PryanetLogger.cs" />
     <Compile Include="Defines.cs" />
-    <Compile Include="SparkleFetcherSSH.cs" />
+    <Compile Include="PryanetFetcherSSH.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

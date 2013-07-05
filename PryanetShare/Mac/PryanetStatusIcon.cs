@@ -1,4 +1,4 @@
-//   SparkleShare, an instant update workflow to Git.
+//   PryanetShare, an instant update workflow to Git.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@ using System.IO;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleStatusIcon {
+    public class PryanetStatusIcon {
 
-        public SparkleStatusIconController Controller = new SparkleStatusIconController ();
+        public PryanetStatusIconController Controller = new PryanetStatusIconController ();
 
         private NSStatusItem status_item = NSStatusBar.SystemStatusBar.CreateStatusItem (28);
         private NSMenu menu, submenu, link_code_submenu;
@@ -50,10 +50,10 @@ namespace SparkleShare {
         
         private NSImage folder_image       = NSImage.ImageNamed ("NSFolder");
         private NSImage caution_image      = NSImage.ImageNamed ("NSCaution");
-        private NSImage sparkleshare_image = NSImage.ImageNamed ("sparkleshare-folder");
+        private NSImage pryanetshare_image = NSImage.ImageNamed ("pryanetshare-folder");
 
 
-        public SparkleStatusIcon ()
+        public PryanetStatusIcon ()
         {
             this.status_item.HighlightMode  = true;
             this.status_item.Image          = this.syncing_idle_image;
@@ -98,7 +98,7 @@ namespace SparkleShare {
             };
 
             Controller.UpdateMenuEvent += delegate {
-                while ((this.menu.Delegate as SparkleMenuDelegate).MenuIsOpen)
+                while ((this.menu.Delegate as PryanetMenuDelegate).MenuIsOpen)
                     System.Threading.Thread.Sleep (100);
 
                 Program.Controller.Invoke (() => CreateMenu ());
@@ -120,11 +120,11 @@ namespace SparkleShare {
             };
 
             this.folder_item = new NSMenuItem () {
-                Title   = "SparkleShare",
+                Title   = "PryanetShare",
                 Enabled = true
             };
 
-            this.folder_item.Image      = this.sparkleshare_image;
+            this.folder_item.Image      = this.pryanetshare_image;
             this.folder_item.Image.Size = new SizeF (16, 16);
 
             this.add_item = new NSMenuItem () {
@@ -158,7 +158,7 @@ namespace SparkleShare {
             }
 
             this.about_item = new NSMenuItem () {
-                Title   = "About SparkleShare",
+                Title   = "About PryanetShare",
                 Enabled = true
             };
 
@@ -232,15 +232,15 @@ namespace SparkleShare {
             this.menu.AddItem (NSMenuItem.SeparatorItem);
             this.menu.AddItem (this.quit_item);
 
-            this.menu.Delegate    = new SparkleMenuDelegate ();
+            this.menu.Delegate    = new PryanetMenuDelegate ();
             this.status_item.Menu = this.menu;
         }
     
 
-        private class SparkleMenuDelegate : NSMenuDelegate {
+        private class PryanetMenuDelegate : NSMenuDelegate {
             
-            public SparkleMenuDelegate (IntPtr handle) : base (handle) { }
-            public SparkleMenuDelegate () { }
+            public PryanetMenuDelegate (IntPtr handle) : base (handle) { }
+            public PryanetMenuDelegate () { }
 
             public bool MenuIsOpen { get; private set; }
 

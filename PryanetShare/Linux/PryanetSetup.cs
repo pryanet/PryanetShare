@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -21,14 +21,14 @@ using System.IO;
 using Gtk;
 using Mono.Unix;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleSetup : SparkleSetupWindow {
+    public class PryanetSetup : PryanetSetupWindow {
 
-        public SparkleSetupController Controller = new SparkleSetupController ();
+        public PryanetSetupController Controller = new PryanetSetupController ();
 
 
-        public SparkleSetup () : base ()
+        public PryanetSetup () : base ()
         {
             Controller.HideWindowEvent += delegate {
                 Application.Invoke (delegate { HideAll (); });
@@ -54,7 +54,7 @@ namespace SparkleShare {
         public void ShowPage (PageType type, string [] warnings)
         {
             if (type == PageType.Setup) {
-                Header      = "Welcome to SparkleShare!";
+                Header      = "Welcome to PryanetShare!";
                 Description = "First off, what's your name and email?\nThis information is only visible to team members.";
 
                 Table table = new Table (2, 3, true) {
@@ -127,9 +127,9 @@ namespace SparkleShare {
                 VBox layout_address  = new VBox (true, 0);
                 VBox layout_path     = new VBox (true, 0);
 
-                ListStore store = new ListStore (typeof (Gdk.Pixbuf), typeof (string), typeof (SparklePlugin));
+                ListStore store = new ListStore (typeof (Gdk.Pixbuf), typeof (string), typeof (PryanetPlugin));
 
-                SparkleTreeView tree = new SparkleTreeView (store) { HeadersVisible = false };
+                PryanetTreeView tree = new PryanetTreeView (store) { HeadersVisible = false };
                 ScrolledWindow scrolled_window = new ScrolledWindow ();
                 scrolled_window.AddWithViewport (tree);
 
@@ -143,7 +143,7 @@ namespace SparkleShare {
                 service_column.PackStart (service_cell, true);
                 service_column.SetCellDataFunc (service_cell, new TreeCellDataFunc (RenderServiceColumn));
 
-                foreach (SparklePlugin plugin in Controller.Plugins) {
+                foreach (PryanetPlugin plugin in Controller.Plugins) {
                     store.AppendValues (new Gdk.Pixbuf (plugin.ImagePath),
                         "<span size=\"small\"><b>" + plugin.Name + "</b>\n" +
                           "<span fgcolor=\"" + SecondaryTextColorSelected + "\">" +
@@ -222,7 +222,7 @@ namespace SparkleShare {
                     string address;
 
                     try {
-                        address = (model.GetValue (iter, 2) as SparklePlugin).Address;
+                        address = (model.GetValue (iter, 2) as PryanetPlugin).Address;
 
                     } catch (NullReferenceException) {
                         address = "";
@@ -232,7 +232,7 @@ namespace SparkleShare {
                         address.Equals (Controller.PreviousAddress)) {
 
                         tree.SetCursor (path, service_column, false);
-                        SparklePlugin plugin = (SparklePlugin) model.GetValue (iter, 2);
+                        PryanetPlugin plugin = (PryanetPlugin) model.GetValue (iter, 2);
 
                         if (plugin.Address != null) {
                             address_entry.Sensitive = false;}
@@ -308,7 +308,7 @@ namespace SparkleShare {
 
             if (type == PageType.Invite) {
                 Header      = "You've received an invite!";
-                Description = "Do you want to add this project to SparkleShare?";
+                Description = "Do you want to add this project to PryanetShare?";
 
                 Table table = new Table (2, 3, true) {
                     RowSpacing    = 6,
@@ -379,9 +379,9 @@ namespace SparkleShare {
                 Header = "Oops! Something went wrong" + "…";
 
                 VBox points = new VBox (false, 0);
-                Image list_point_one   = new Image (SparkleUIHelpers.GetIcon ("list-point", 16));
-                Image list_point_two   = new Image (SparkleUIHelpers.GetIcon ("list-point", 16));
-                Image list_point_three = new Image (SparkleUIHelpers.GetIcon ("list-point", 16));
+                Image list_point_one   = new Image (PryanetUIHelpers.GetIcon ("list-point", 16));
+                Image list_point_two   = new Image (PryanetUIHelpers.GetIcon ("list-point", 16));
+                Image list_point_three = new Image (PryanetUIHelpers.GetIcon ("list-point", 16));
 
                 Label label_one = new Label () {
                     Markup = "<b>" + Controller.PreviousUrl + "</b> is the address we've compiled. " +
@@ -481,7 +481,7 @@ namespace SparkleShare {
                 wrapper.PackStart (table, true, false, 0);
    
                 Image warning_image = new Image (
-                    SparkleUIHelpers.GetIcon ("dialog-information", 24));
+                    PryanetUIHelpers.GetIcon ("dialog-information", 24));
 
                 Label warning_label = new Label () {
                     Xalign = 0,
@@ -540,7 +540,7 @@ namespace SparkleShare {
                 
             if (type == PageType.Finished) {
                 Header      = "Your shared project is ready!";
-                Description = "You can find it in your SparkleShare folder";
+                Description = "You can find it in your PryanetShare folder";
                 
                 UrgencyHint = true;
 
@@ -553,7 +553,7 @@ namespace SparkleShare {
 
 
                 if (warnings.Length > 0) {
-                    Image warning_image = new Image (SparkleUIHelpers.GetIcon ("dialog-information", 24));
+                    Image warning_image = new Image (PryanetUIHelpers.GetIcon ("dialog-information", 24));
                     
                     Label warning_label = new Label (warnings [0]) {
                         Xalign = 0,
@@ -581,7 +581,7 @@ namespace SparkleShare {
                 switch (Controller.TutorialPageNumber) {
                 case 1: {
                     Header      = "What's happening next?";
-                    Description = "SparkleShare creates a special folder on your computer " +
+                    Description = "PryanetShare creates a special folder on your computer " +
                         "that will keep track of your projects.";
 
                     Button skip_tutorial_button = new Button ("Skip Tutorial");
@@ -636,7 +636,7 @@ namespace SparkleShare {
                     
                     Button copy_button = new Button (" Copy "); 
 
-                    CheckButton check_button = new CheckButton ("Add SparkleShare to startup items");
+                    CheckButton check_button = new CheckButton ("Add PryanetShare to startup items");
                     check_button.Active = true;
 
                     
@@ -662,7 +662,7 @@ namespace SparkleShare {
                 }
                 
                 if (Controller.TutorialPageNumber < 4) {
-                    Image slide = SparkleUIHelpers.GetImage ("tutorial-slide-" + Controller.TutorialPageNumber + ".png");
+                    Image slide = PryanetUIHelpers.GetImage ("tutorial-slide-" + Controller.TutorialPageNumber + ".png");
                     Add (slide);
                 }
             }
@@ -689,7 +689,7 @@ namespace SparkleShare {
         }
         
         
-        private class SparkleTreeView : TreeView {
+        private class PryanetTreeView : TreeView {
 
             public int SelectedRow
             {
@@ -703,7 +703,7 @@ namespace SparkleShare {
             }
 
 
-            public SparkleTreeView (ListStore store) : base (store)
+            public PryanetTreeView (ListStore store) : base (store)
             {
             }
         }

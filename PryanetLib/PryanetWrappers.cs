@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
-    public enum SparkleChangeType {
+    public enum PryanetChangeType {
         Added,
         Edited,
         Deleted,
@@ -29,26 +29,26 @@ namespace SparkleLib {
     }
 
 
-    public class SparkleChangeSet {
+    public class PryanetChangeSet {
 
-        public SparkleUser User = new SparkleUser ("Unknown", "Unknown");
+        public PryanetUser User = new PryanetUser ("Unknown", "Unknown");
 
-        public SparkleFolder Folder;
+        public PryanetFolder Folder;
         public string Revision;
         public DateTime Timestamp;
         public DateTime FirstTimestamp;
         public Uri RemoteUrl;
 
-        public List<SparkleChange> Changes = new List<SparkleChange> ();
+        public List<PryanetChange> Changes = new List<PryanetChange> ();
 
         public string ToMessage ()
         {
             string message = "added ‘{0}’";
             
             switch (Changes [0].Type) {
-            case SparkleChangeType.Edited:  message = "edited ‘{0}’"; break;
-            case SparkleChangeType.Deleted: message = "deleted ‘{0}’"; break;
-            case SparkleChangeType.Moved:   message = "moved ‘{0}’"; break;
+            case PryanetChangeType.Edited:  message = "edited ‘{0}’"; break;
+            case PryanetChangeType.Deleted: message = "deleted ‘{0}’"; break;
+            case PryanetChangeType.Moved:   message = "moved ‘{0}’"; break;
             }
 
             if (Changes.Count > 0)
@@ -59,9 +59,9 @@ namespace SparkleLib {
     }
 
 
-    public class SparkleChange {
+    public class PryanetChange {
 
-        public SparkleChangeType Type;
+        public PryanetChangeType Type;
         public DateTime Timestamp;
         public bool IsFolder = false;
         
@@ -70,37 +70,37 @@ namespace SparkleLib {
     }
 
 
-    public class SparkleFolder {
+    public class PryanetFolder {
 
         public string Name;
         public Uri RemoteAddress;
 
         public string FullPath {
             get {
-                string custom_path = SparkleConfig.DefaultConfig.GetFolderOptionalAttribute (Name, "path");
+                string custom_path = PryanetConfig.DefaultConfig.GetFolderOptionalAttribute (Name, "path");
 
                 if (custom_path != null)
                     return Path.Combine (custom_path, Name);
                 else
-                    return Path.Combine (SparkleConfig.DefaultConfig.FoldersPath, Name);
+                    return Path.Combine (PryanetConfig.DefaultConfig.FoldersPath, Name);
             }
         }
 
 
-        public SparkleFolder (string name)
+        public PryanetFolder (string name)
         {
             Name = name;
         }
     }
 
 
-    public class SparkleAnnouncement {
+    public class PryanetAnnouncement {
 
         public readonly string FolderIdentifier;
         public readonly string Message;
 
 
-        public SparkleAnnouncement (string folder_identifier, string message)
+        public PryanetAnnouncement (string folder_identifier, string message)
         {
             FolderIdentifier = folder_identifier;
             Message          = message;

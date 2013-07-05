@@ -8,8 +8,8 @@
     <ProjectGuid>{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}</ProjectGuid>
     <ProjectTypeGuids>{948B3504-5B70-4649-8FE4-BDE1FB46EC69};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SparkleShare</RootNamespace>
-    <AssemblyName>SparkleShare</AssemblyName>
+    <RootNamespace>PryanetShare</RootNamespace>
+    <AssemblyName>PryanetShare</AssemblyName>
     <ReleaseVersion>
     </ReleaseVersion>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="mkdir -p ${TargetDir}/${SolutionName}.app/Contents/Frameworks &amp;&amp; cp -R git ${TargetDir}/${SolutionName}.app/Contents/Resources &amp;&amp; cp -R SparkleShareInviteOpener.app ${TargetDir}/${SolutionName}.app/Contents/Resources" externalConsole="True" />
+        <Command type="AfterBuild" command="mkdir -p ${TargetDir}/${SolutionName}.app/Contents/Frameworks &amp;&amp; cp -R git ${TargetDir}/${SolutionName}.app/Contents/Resources &amp;&amp; cp -R PryanetShareInviteOpener.app ${TargetDir}/${SolutionName}.app/Contents/Resources" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
     <EnableCodeSigning>False</EnableCodeSigning>
@@ -60,44 +60,44 @@
     <Compile Include="MainMenu.xib.designer.cs">
       <DependentUpon>MainMenu.xib</DependentUpon>
     </Compile>
-    <Compile Include="..\SparkleControllerBase.cs">
-      <Link>SparkleControllerBase.cs</Link>
+    <Compile Include="..\PryanetControllerBase.cs">
+      <Link>PryanetControllerBase.cs</Link>
     </Compile>
-    <Compile Include="SparkleStatusIcon.cs" />
-    <Compile Include="SparkleUI.cs" />
+    <Compile Include="PryanetStatusIcon.cs" />
+    <Compile Include="PryanetUI.cs" />
     <Compile Include="..\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
-    <Compile Include="SparkleMacWatcher.cs" />
-    <Compile Include="SparkleEventLog.cs" />
-    <Compile Include="SparkleBubbles.cs" />
-    <Compile Include="SparkleSetup.cs" />
-    <Compile Include="SparkleSetupWindow.cs" />
-    <Compile Include="..\SparkleBubblesController.cs">
-      <Link>SparkleBubblesController.cs</Link>
+    <Compile Include="PryanetMacWatcher.cs" />
+    <Compile Include="PryanetEventLog.cs" />
+    <Compile Include="PryanetBubbles.cs" />
+    <Compile Include="PryanetSetup.cs" />
+    <Compile Include="PryanetSetupWindow.cs" />
+    <Compile Include="..\PryanetBubblesController.cs">
+      <Link>PryanetBubblesController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleEventLogController.cs">
-      <Link>SparkleEventLogController.cs</Link>
+    <Compile Include="..\PryanetEventLogController.cs">
+      <Link>PryanetEventLogController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleSetupController.cs">
-      <Link>SparkleSetupController.cs</Link>
+    <Compile Include="..\PryanetSetupController.cs">
+      <Link>PryanetSetupController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleStatusIconController.cs">
-      <Link>SparkleStatusIconController.cs</Link>
+    <Compile Include="..\PryanetStatusIconController.cs">
+      <Link>PryanetStatusIconController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleAboutController.cs">
-      <Link>SparkleAboutController.cs</Link>
+    <Compile Include="..\PryanetAboutController.cs">
+      <Link>PryanetAboutController.cs</Link>
     </Compile>
-    <Compile Include="SparkleController.cs" />
-    <Compile Include="..\SparklePlugin.cs">
-      <Link>SparklePlugin.cs</Link>
+    <Compile Include="PryanetController.cs" />
+    <Compile Include="..\PryanetPlugin.cs">
+      <Link>PryanetPlugin.cs</Link>
     </Compile>
-    <Compile Include="SparkleAbout.cs" />
-    <Compile Include="..\SparkleInvite.cs">
-      <Link>SparkleInvite.cs</Link>
+    <Compile Include="PryanetAbout.cs" />
+    <Compile Include="..\PryanetInvite.cs">
+      <Link>PryanetInvite.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleKeys.cs">
-      <Link>SparkleKeys.cs</Link>
+    <Compile Include="..\PryanetKeys.cs">
+      <Link>PryanetKeys.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -118,11 +118,11 @@
     <Content Include="..\Common\HTML\event-log.html">
       <Link>HTML\event-log.html</Link>
     </Content>
-    <Content Include="Resources\sparkleshare-folder.icns">
-      <Link>sparkleshare-folder.icns</Link>
+    <Content Include="Resources\pryanetshare-folder.icns">
+      <Link>pryanetshare-folder.icns</Link>
     </Content>
-    <Content Include="Resources\sparkleshare-app.icns">
-      <Link>sparkleshare-app.icns</Link>
+    <Content Include="Resources\pryanetshare-app.icns">
+      <Link>pryanetshare-app.icns</Link>
     </Content>
     <Content Include="..\Common\HTML\jquery.js">
       <Link>HTML\jquery.js</Link>
@@ -134,13 +134,13 @@
     <Folder Include="Plugins\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SparkleLib\SparkleLib.csproj">
+    <ProjectReference Include="..\..\PryanetLib\PryanetLib.csproj">
       <Project>{2C914413-B31C-4362-93C7-1AE34F09112A}</Project>
-      <Name>SparkleLib</Name>
+      <Name>PryanetLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SparkleLib\Git\SparkleLib.Git.csproj">
+    <ProjectReference Include="..\..\PryanetLib\Git\PryanetLib.Git.csproj">
       <Project>{009FDCD7-1D57-4202-BB6D-8477D8C6B8EE}</Project>
-      <Name>SparkleLib.Git</Name>
+      <Name>PryanetLib.Git</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
-    public class SparkleListenerTcp : SparkleListenerBase {
+    public class PryanetListenerTcp : PryanetListenerBase {
 
         private Socket socket;
         private Thread thread;
@@ -31,7 +31,7 @@ namespace SparkleLib {
         private DateTime last_ping = DateTime.Now;
 
 
-        public SparkleListenerTcp (Uri server, string folder_identifier) : base (server, folder_identifier)
+        public PryanetListenerTcp (Uri server, string folder_identifier) : base (server, folder_identifier)
         {
         }
 
@@ -102,7 +102,7 @@ namespace SparkleLib {
                                 // We've timed out, let's ping the server to
                                 // see if the connection is still up
                                 if (i == timeout) {
-                                    SparkleLogger.LogInfo ("ListenerTcp",
+                                    PryanetLogger.LogInfo ("ListenerTcp",
                                         "Pinging " + Server);
 
                                     byte [] ping_bytes = Encoding.UTF8.GetBytes ("ping\n");
@@ -114,7 +114,7 @@ namespace SparkleLib {
                                         // 10057 means "Socket is not connected"
                                         throw new SocketException (10057);
 
-                                    SparkleLogger.LogInfo ("ListenerTcp", "Received pong from " + Server);
+                                    PryanetLogger.LogInfo ("ListenerTcp", "Received pong from " + Server);
 
                                     i = 0;
                                     this.last_ping = DateTime.Now;
@@ -131,7 +131,7 @@ namespace SparkleLib {
                                     );
 
                                     if (sleepiness <= 0) {
-                                        SparkleLogger.LogInfo ("ListenerTcp", "System woke up from sleep");
+                                        PryanetLogger.LogInfo ("ListenerTcp", "System woke up from sleep");
 
                                         // 10057 means "Socket is not connected"
                                         throw new SocketException (10057);
@@ -176,7 +176,7 @@ namespace SparkleLib {
 
                         // We have a message!
                         if (!folder_identifier.Equals ("debug") && !String.IsNullOrEmpty (message))
-                            OnAnnouncement (new SparkleAnnouncement (folder_identifier, message));
+                            OnAnnouncement (new PryanetAnnouncement (folder_identifier, message));
                     }
                 }
             });
@@ -202,7 +202,7 @@ namespace SparkleLib {
         }
 
 
-        protected override void AnnounceInternal (SparkleAnnouncement announcement)
+        protected override void AnnounceInternal (PryanetAnnouncement announcement)
         {
             string to_send = "announce " + announcement.FolderIdentifier + " " + announcement.Message + "\n";
 

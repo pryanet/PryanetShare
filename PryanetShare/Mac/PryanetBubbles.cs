@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@ using System;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 
-namespace SparkleShare {
+namespace PryanetShare {
     
-    public class SparkleBubbles : NSObject {
+    public class PryanetBubbles : NSObject {
 
-        public SparkleBubblesController Controller = new SparkleBubblesController ();
+        public PryanetBubblesController Controller = new PryanetBubblesController ();
 
 
-        public SparkleBubbles ()
+        public PryanetBubbles ()
         {
             Controller.ShowBubbleEvent += delegate (string title, string subtext, string image_path) {
                 if (Environment.OSVersion.Version.Major < 12)

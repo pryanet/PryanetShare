@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,9 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
-    public class SparkleFetcherInfo {
+    public class PryanetFetcherInfo {
         public string Address;
         public string Fingerprint;
         public string RemotePath;
@@ -34,7 +34,7 @@ namespace SparkleLib {
     }
 
 
-    public abstract class SparkleFetcherBase {
+    public abstract class PryanetFetcherBase {
 
         public event Action Started = delegate { };
         public event Action Failed = delegate { };
@@ -58,7 +58,7 @@ namespace SparkleLib {
         public string TargetFolder { get; protected set; }
         public bool IsActive { get; private set; }
         public string Identifier;
-        public SparkleFetcherInfo OriginalFetcherInfo;
+        public PryanetFetcherInfo OriginalFetcherInfo;
 
         public string [] Warnings {
             get {
@@ -102,7 +102,7 @@ namespace SparkleLib {
         private Thread thread;
 
 
-        public SparkleFetcherBase (SparkleFetcherInfo info)
+        public PryanetFetcherBase (PryanetFetcherInfo info)
         {
             OriginalFetcherInfo = info;
             RequiredFingerprint = info.Fingerprint;
@@ -131,7 +131,7 @@ namespace SparkleLib {
             IsActive = true;
             Started ();
 
-            SparkleLogger.LogInfo ("Fetcher", TargetFolder + " | Fetching folder: " + RemoteUrl);
+            PryanetLogger.LogInfo ("Fetcher", TargetFolder + " | Fetching folder: " + RemoteUrl);
 
             if (Directory.Exists (TargetFolder))    
                 Directory.Delete (TargetFolder, true);
@@ -139,18 +139,18 @@ namespace SparkleLib {
             this.thread = new Thread (() => {
                 if (Fetch ()) {
                     Thread.Sleep (500);
-                    SparkleLogger.LogInfo ("Fetcher", "Finished");
+                    PryanetLogger.LogInfo ("Fetcher", "Finished");
 
                     IsActive = false;
 
                     bool repo_is_encrypted = (RemoteUrl.AbsolutePath.Contains ("-crypto") ||
-                                              RemoteUrl.Host.Equals ("sparkleshare.net"));
+                                              RemoteUrl.Host.Equals ("pryanetshare.net"));
 
                     Finished (repo_is_encrypted, IsFetchedRepoEmpty, Warnings);
 
                 } else {
                     Thread.Sleep (500);
-                    SparkleLogger.LogInfo ("Fetcher", "Failed");
+                    PryanetLogger.LogInfo ("Fetcher", "Failed");
 
                     IsActive = false;
                     Failed ();
@@ -163,7 +163,7 @@ namespace SparkleLib {
 
         public virtual void Complete ()
         {
-            string identifier_path = Path.Combine (TargetFolder, ".sparkleshare");
+            string identifier_path = Path.Combine (TargetFolder, ".pryanetshare");
 
             if (File.Exists (identifier_path)) {
                 Identifier = File.ReadAllText (identifier_path).Trim ();
@@ -183,7 +183,7 @@ namespace SparkleLib {
         // user has fetched an empty remote folder
         private void CreateInitialChangeSet ()
         {
-            string file_path = Path.Combine (TargetFolder, "SparkleShare.txt");
+            string file_path = Path.Combine (TargetFolder, "PryanetShare.txt");
             string n = Environment.NewLine;
 
             UriBuilder uri_builder = new UriBuilder (RemoteUrl);
@@ -193,18 +193,18 @@ namespace SparkleLib {
                 uri_builder.Password = "";
             }
 
-            string text = "Congratulations, you've successfully created a SparkleShare repository!" + n +
+            string text = "Congratulations, you've successfully created a PryanetShare repository!" + n +
                 n +
                 "Any files you add or change in this folder will be automatically synced to " + n +
                 uri_builder.ToString () + " and everyone connected to it." + n +
                 n +
-                "SparkleShare is an Open Source software program that helps people collaborate and " + n +
-                "share files. If you like what we do, consider buying us a beer: http://www.sparkleshare.org/" + n +
+                "PryanetShare is an Open Source software program that helps people collaborate and " + n +
+                "share files. If you like what we do, consider buying us a beer: http://www.pryanetshare.org/" + n +
                 n +
                 "Have fun! :)" + n;
 
-            if (RemoteUrl.AbsolutePath.Contains ("-crypto") || RemoteUrl.Host.Equals ("sparkleshare.net"))
-                text = text.Replace ("a SparkleShare repository", "an encrypted SparkleShare repository");
+            if (RemoteUrl.AbsolutePath.Contains ("-crypto") || RemoteUrl.Host.Equals ("pryanetshare.net"))
+                text = text.Replace ("a PryanetShare repository", "an encrypted PryanetShare repository");
 
             File.WriteAllText (file_path, text);
         }

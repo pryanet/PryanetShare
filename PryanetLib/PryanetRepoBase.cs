@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ using System.Threading;
 
 using Timers = System.Timers;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
     public enum SyncStatus {
         Idle,
@@ -43,7 +43,7 @@ namespace SparkleLib {
     }
 
 
-    public abstract class SparkleRepoBase {
+    public abstract class PryanetRepoBase {
 
 
         public abstract bool SyncUp ();
@@ -58,8 +58,8 @@ namespace SparkleLib {
         public abstract double HistorySize { get; }
 
         public abstract List<string> ExcludePaths { get; }
-        public abstract List<SparkleChangeSet> GetChangeSets ();
-        public abstract List<SparkleChangeSet> GetChangeSets (string path);
+        public abstract List<PryanetChangeSet> GetChangeSets ();
+        public abstract List<PryanetChangeSet> GetChangeSets (string path);
 
 
         public static bool UseCustomWatcher = false;
@@ -72,7 +72,7 @@ namespace SparkleLib {
         public delegate void ProgressChangedEventHandler ();
 
         public event NewChangeSetEventHandler NewChangeSet = delegate { };
-        public delegate void NewChangeSetEventHandler (SparkleChangeSet change_set);
+        public delegate void NewChangeSetEventHandler (PryanetChangeSet change_set);
 
         public event Action ConflictResolved = delegate { };
         public event Action ChangesDetected = delegate { };
@@ -81,7 +81,7 @@ namespace SparkleLib {
         public readonly string LocalPath;
         public readonly string Name;
         public readonly Uri RemoteUrl;
-        public List<SparkleChangeSet> ChangeSets { get; protected set; }
+        public List<PryanetChangeSet> ChangeSets { get; protected set; }
         public SyncStatus Status { get; private set; }
         public ErrorStatus Error { get; protected set; }
         public bool IsBuffering { get; private set; }
@@ -93,7 +93,7 @@ namespace SparkleLib {
                 if (this.identifier != null)
                     return this.identifier;
 
-                string id_path = Path.Combine (LocalPath, ".sparkleshare");
+                string id_path = Path.Combine (LocalPath, ".pryanetshare");
 
                 if (File.Exists (id_path))
                     this.identifier = File.ReadAllText (id_path).Trim ();
@@ -107,12 +107,12 @@ namespace SparkleLib {
                     if (!string.IsNullOrEmpty (config_identifier))
                         this.identifier = config_identifier;
                     else
-                        this.identifier = SparkleFetcherBase.CreateIdentifier ();
+                        this.identifier = PryanetFetcherBase.CreateIdentifier ();
 
                     File.WriteAllText (id_path, this.identifier);
                     File.SetAttributes (id_path, FileAttributes.Hidden);
 
-                    SparkleLogger.LogInfo ("Local", Name + " | Assigned identifier: " + this.identifier);
+                    PryanetLogger.LogInfo ("Local", Name + " | Assigned identifier: " + this.identifier);
 
                     return this.identifier;
                 }
@@ -120,12 +120,12 @@ namespace SparkleLib {
         }
 
 
-        protected SparkleConfig local_config;
+        protected PryanetConfig local_config;
 
 
         private string identifier;
-        private SparkleListenerBase listener;
-        private SparkleWatcher watcher;
+        private PryanetListenerBase listener;
+        private PryanetWatcher watcher;
         private TimeSpan poll_interval        = PollInterval.Short;
         private DateTime last_poll            = DateTime.Now;
         private DateTime progress_last_change = DateTime.Now;
@@ -141,9 +141,9 @@ namespace SparkleLib {
         }
 
 
-        public SparkleRepoBase (string path, SparkleConfig config)
+        public PryanetRepoBase (string path, PryanetConfig config)
         {
-            SparkleLogger.LogInfo (path, "Initializing...");
+            PryanetLogger.LogInfo (path, "Initializing...");
 
             Status            = SyncStatus.Idle;
             Error             = ErrorStatus.None;
@@ -155,11 +155,11 @@ namespace SparkleLib {
             this.identifier   = Identifier;
             ChangeSets        = GetChangeSets ();
 
-			string identifier_file_path = Path.Combine (LocalPath, ".sparkleshare");
+			string identifier_file_path = Path.Combine (LocalPath, ".pryanetshare");
 			File.SetAttributes (identifier_file_path, FileAttributes.Hidden);
 
             if (!UseCustomWatcher)
-                this.watcher = new SparkleWatcher (LocalPath);
+                this.watcher = new PryanetWatcher (LocalPath);
 
             new Thread (() => CreateListener ()).Start ();
 
@@ -239,7 +239,7 @@ namespace SparkleLib {
             if (!UseCustomWatcher)
                 this.watcher.Disable ();
 
-            SparkleLogger.LogInfo ("Local", Name + " | Activity detected, waiting for it to settle...");
+            PryanetLogger.LogInfo ("Local", Name + " | Activity detected, waiting for it to settle...");
 
             List<double> size_buffer = new List<double> ();
             DirectoryInfo info = new DirectoryInfo (LocalPath);
@@ -255,7 +255,7 @@ namespace SparkleLib {
                     size_buffer [1].Equals (size_buffer [2]) &&
                     size_buffer [2].Equals (size_buffer [3])) {
 
-                    SparkleLogger.LogInfo ("Local", Name + " | Activity has settled");
+                    PryanetLogger.LogInfo ("Local", Name + " | Activity has settled");
                     IsBuffering = false;
 
                     bool first_sync = true;
@@ -263,7 +263,7 @@ namespace SparkleLib {
                     if (HasLocalChanges && Status == SyncStatus.Idle) {
                         do {
                             if (!first_sync)
-                                SparkleLogger.LogInfo ("Local", Name + " | More changes found");
+                                PryanetLogger.LogInfo ("Local", Name + " | More changes found");
 
                             SyncUpBase ();
 
@@ -330,26 +330,26 @@ namespace SparkleLib {
             if (!UseCustomWatcher)
                 this.watcher.Disable ();
 
-            SparkleLogger.LogInfo ("SyncUp", Name + " | Initiated");
+            PryanetLogger.LogInfo ("SyncUp", Name + " | Initiated");
             HasUnsyncedChanges = true;
 
             Status = SyncStatus.SyncUp;
             SyncStatusChanged (Status);
 
             if (SyncUp ()) {
-                SparkleLogger.LogInfo ("SyncUp", Name + " | Done");
+                PryanetLogger.LogInfo ("SyncUp", Name + " | Done");
                 ChangeSets = GetChangeSets ();
 
                 HasUnsyncedChanges = false;
                 this.poll_interval = PollInterval.Long;
 
-                this.listener.Announce (new SparkleAnnouncement (Identifier, CurrentRevision));
+                this.listener.Announce (new PryanetAnnouncement (Identifier, CurrentRevision));
 
                 Status = SyncStatus.Idle;
                 SyncStatusChanged (Status);
 
             } else {
-                SparkleLogger.LogInfo ("SyncUp", Name + " | Error");
+                PryanetLogger.LogInfo ("SyncUp", Name + " | Error");
                 SyncDownBase ();
 
                 if (!UseCustomWatcher)
@@ -358,7 +358,7 @@ namespace SparkleLib {
                 if (Error == ErrorStatus.None && SyncUp ()) {
                     HasUnsyncedChanges = false;
 
-                    this.listener.Announce (new SparkleAnnouncement (Identifier, CurrentRevision));
+                    this.listener.Announce (new PryanetAnnouncement (Identifier, CurrentRevision));
 
                     Status = SyncStatus.Idle;
                     SyncStatusChanged (Status);
@@ -384,7 +384,7 @@ namespace SparkleLib {
             if (!UseCustomWatcher)
                 this.watcher.Disable ();
 
-            SparkleLogger.LogInfo ("SyncDown", Name + " | Initiated");
+            PryanetLogger.LogInfo ("SyncDown", Name + " | Initiated");
 
             Status = SyncStatus.SyncDown;
             SyncStatusChanged (Status);
@@ -392,10 +392,10 @@ namespace SparkleLib {
             string pre_sync_revision = CurrentRevision;
 
             if (SyncDown ()) {
-                SparkleLogger.LogInfo ("SyncDown", Name + " | Done");
+                PryanetLogger.LogInfo ("SyncDown", Name + " | Done");
                 Error = ErrorStatus.None;
 
-				string identifier_file_path = Path.Combine (LocalPath, ".sparkleshare");
+				string identifier_file_path = Path.Combine (LocalPath, ".pryanetshare");
 				File.SetAttributes (identifier_file_path, FileAttributes.Hidden);
 
                 ChangeSets = GetChangeSets ();
@@ -406,8 +406,8 @@ namespace SparkleLib {
 
                     bool emit_change_event = true;
 
-                    foreach (SparkleChange change in ChangeSets [0].Changes) {
-                        if (change.Path.EndsWith (".sparkleshare")) {
+                    foreach (PryanetChange change in ChangeSets [0].Changes) {
+                        if (change.Path.EndsWith (".pryanetshare")) {
                             emit_change_event = false;
                             break;
                         }
@@ -432,7 +432,7 @@ namespace SparkleLib {
                 SyncStatusChanged (Status);
 
             } else {
-                SparkleLogger.LogInfo ("SyncDown", Name + " | Error");
+                PryanetLogger.LogInfo ("SyncDown", Name + " | Error");
 
                 ChangeSets = GetChangeSets ();
 
@@ -453,7 +453,7 @@ namespace SparkleLib {
 
         private void CreateListener ()
         {
-            this.listener = SparkleListenerFactory.CreateListener (Name, Identifier);
+            this.listener = PryanetListenerFactory.CreateListener (Name, Identifier);
 
             if (this.listener.IsConnected)
                 this.poll_interval = PollInterval.Long;
@@ -469,11 +469,11 @@ namespace SparkleLib {
         private void ListenerDisconnectedDelegate ()
         {
             this.poll_interval = PollInterval.Short;
-            SparkleLogger.LogInfo (Name, "Falling back to regular polling");
+            PryanetLogger.LogInfo (Name, "Falling back to regular polling");
         }
 
 
-        private void ListenerAnnouncementReceivedDelegate (SparkleAnnouncement announcement)
+        private void ListenerAnnouncementReceivedDelegate (PryanetAnnouncement announcement)
         {
             string identifier = Identifier;
 
@@ -484,7 +484,7 @@ namespace SparkleLib {
                 while (this.is_syncing)
                     Thread.Sleep (100);
 
-                SparkleLogger.LogInfo (Name, "Syncing due to announcement");
+                PryanetLogger.LogInfo (Name, "Syncing due to announcement");
                 SyncDownBase ();
             }
         }
@@ -506,7 +506,7 @@ namespace SparkleLib {
                     size += file.Length;
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Local", "Error calculating directory size", e);
+                PryanetLogger.LogInfo ("Local", "Error calculating directory size", e);
             }
 
             return size;

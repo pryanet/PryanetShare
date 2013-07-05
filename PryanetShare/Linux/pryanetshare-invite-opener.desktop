@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=SparkleShareInviteOpener
-Exec=sparkleshare open %U
+Name=PryanetShareInviteOpener
+Exec=pryanetshare open %U
 Terminal=false
-MimeType=application/x-sparkleshare;x-scheme-handler/sparkleshare;
+MimeType=application/x-pryanetshare;x-scheme-handler/pryanetshare;
 NoDisplay=true

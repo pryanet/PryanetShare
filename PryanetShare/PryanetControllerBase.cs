@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public abstract class SparkleControllerBase {
+    public abstract class PryanetControllerBase {
 
-        public SparkleRepoBase [] Repositories {
+        public PryanetRepoBase [] Repositories {
             get {
                 lock (this.repo_lock)
                     return this.repositories.GetRange (0, this.repositories.Count).ToArray ();
@@ -68,10 +68,10 @@ namespace SparkleShare {
 
 
         public event InviteReceivedHandler InviteReceived = delegate { };
-        public delegate void InviteReceivedHandler (SparkleInvite invite);
+        public delegate void InviteReceivedHandler (PryanetInvite invite);
 
         public event NotificationRaisedEventHandler NotificationRaised = delegate { };
-        public delegate void NotificationRaisedEventHandler (SparkleChangeSet change_set);
+        public delegate void NotificationRaisedEventHandler (PryanetChangeSet change_set);
 
         public event AlertNotificationRaisedEventHandler AlertNotificationRaised = delegate { };
         public delegate void AlertNotificationRaisedEventHandler (string title, string message);
@@ -92,7 +92,7 @@ namespace SparkleShare {
             get { return this.config.LogFilePath; }
         }
 
-        public SparkleUser CurrentUser {
+        public PryanetUser CurrentUser {
             get { return this.config.User; }
             set { this.config.User = value; }
         }
@@ -115,20 +115,20 @@ namespace SparkleShare {
         // Path where the plugins are kept
         public abstract string PluginsPath { get; }
 
-        // Enables SparkleShare to start automatically at login
+        // Enables PryanetShare to start automatically at login
         public abstract void CreateStartupItem ();
 
-        // Installs the sparkleshare:// protocol handler
+        // Installs the pryanetshare:// protocol handler
         public abstract void InstallProtocolHandler ();
 
-        // Adds the SparkleShare folder to the user's
+        // Adds the PryanetShare folder to the user's
         // list of bookmarked places
         public abstract void AddToBookmarks ();
 
-        // Creates the SparkleShare folder in the user's home folder
-        public abstract bool CreateSparkleShareFolder ();
+        // Creates the PryanetShare folder in the user's home folder
+        public abstract bool CreatePryanetShareFolder ();
 
-        // Opens the SparkleShare folder or an (optional) subfolder
+        // Opens the PryanetShare folder or an (optional) subfolder
         public abstract void OpenFolder (string path);
         
         // Opens a file with the appropriate application
@@ -145,35 +145,35 @@ namespace SparkleShare {
         public abstract string EventEntryHTML { get; }
 
 
-        private SparkleConfig config;
-        private SparkleFetcherBase fetcher;
+        private PryanetConfig config;
+        private PryanetFetcherBase fetcher;
         private FileSystemWatcher watcher;
         private Object repo_lock = new Object ();
         private Object check_repos_lock = new Object ();
         private List<string> skipped_avatars = new List<string> ();
-        private List<SparkleRepoBase> repositories = new List<SparkleRepoBase> ();
+        private List<PryanetRepoBase> repositories = new List<PryanetRepoBase> ();
         private bool lost_folders_path = false;
 
 
-        public SparkleControllerBase ()
+        public PryanetControllerBase ()
         {
             string app_data_path = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
-            string config_path   = Path.Combine (app_data_path, "sparkleshare");
+            string config_path   = Path.Combine (app_data_path, "pryanetshare");
             
-            this.config                 = new SparkleConfig (config_path, "config.xml");
-            SparkleConfig.DefaultConfig = this.config;
+            this.config                 = new PryanetConfig (config_path, "config.xml");
+            PryanetConfig.DefaultConfig = this.config;
             FoldersPath                 = this.config.FoldersPath;
         }
 
 
         public virtual void Initialize ()
         {
-            SparklePlugin.PluginsPath = PluginsPath;
+            PryanetPlugin.PluginsPath = PluginsPath;
             InstallProtocolHandler ();
 
             try {
-                // Create the SparkleShare folder and add it to the bookmarks
-                if (CreateSparkleShareFolder ())
+                // Create the PryanetShare folder and add it to the bookmarks
+                if (CreatePryanetShareFolder ())
                     AddToBookmarks ();
 
             } catch (DirectoryNotFoundException) {
@@ -200,17 +200,17 @@ namespace SparkleShare {
                             key_file_path = Path.Combine (keys_path, new_file_name);
                         }
 
-                        SparkleKeys.ImportPrivateKey (key_file_path);
+                        PryanetKeys.ImportPrivateKey (key_file_path);
 
                         break;
                     }
                 }
 
                 CurrentUser.PublicKey = File.ReadAllText (key_file_path + ".pub");
-                SparkleKeys.ListPrivateKeys ();
+                PryanetKeys.ListPrivateKeys ();
             }
 
-            // Watch the SparkleShare folder
+            // Watch the PryanetShare folder
             this.watcher = new FileSystemWatcher () {
                 Filter                = "*",
                 IncludeSubdirectories = false,
@@ -228,7 +228,7 @@ namespace SparkleShare {
         public void UIHasLoaded ()
         {
             if (this.lost_folders_path) {
-                Program.UI.Bubbles.Controller.ShowBubble ("Where's your SparkleShare folder?",
+                Program.UI.Bubbles.Controller.ShowBubble ("Where's your PryanetShare folder?",
                     "Did you put it on a detached drive?", null);
             
                 Environment.Exit (-1);
@@ -238,11 +238,11 @@ namespace SparkleShare {
                 ShowSetupWindow (PageType.Setup);
 
                 new Thread (() => {
-                    string keys_path     = Path.GetDirectoryName (SparkleConfig.DefaultConfig.FullPath);
+                    string keys_path     = Path.GetDirectoryName (PryanetConfig.DefaultConfig.FullPath);
                     string key_file_name = DateTime.Now.ToString ("yyyy-MM-dd_HH\\hmm");
                     
-                    string [] key_pair = SparkleKeys.GenerateKeyPair (keys_path, key_file_name);
-                    SparkleKeys.ImportPrivateKey (key_pair [0]);
+                    string [] key_pair = PryanetKeys.GenerateKeyPair (keys_path, key_file_name);
+                    PryanetKeys.ImportPrivateKey (key_pair [0]);
 
                     CurrentUser.PublicKey = File.ReadAllText (key_pair [1]);
                     FolderListChanged (); // FIXME: Hacky way to update status icon menu to show the key
@@ -278,15 +278,15 @@ namespace SparkleShare {
         }
         
         
-        public void OpenSparkleShareFolder ()
+        public void OpenPryanetShareFolder ()
         {
             OpenFolder (this.config.FoldersPath);
         }
         
         
-        public void OpenSparkleShareFolder (string name)
+        public void OpenPryanetShareFolder (string name)
         {
-            OpenFolder (new SparkleFolder (name).FullPath);
+            OpenFolder (new PryanetFolder (name).FullPath);
         }
         
         
@@ -310,7 +310,7 @@ namespace SparkleShare {
                         continue;
                     
                     if (this.config.GetIdentifierForFolder (folder_name) == null) {
-                        string identifier_file_path = Path.Combine (folder_path, ".sparkleshare");
+                        string identifier_file_path = Path.Combine (folder_path, ".pryanetshare");
                         
                         if (!File.Exists (identifier_file_path))
                             continue;
@@ -324,7 +324,7 @@ namespace SparkleShare {
                             string new_folder_path = Path.Combine (path, folder_name);
                             AddRepository (new_folder_path);
                             
-                            SparkleLogger.LogInfo ("Controller",
+                            PryanetLogger.LogInfo ("Controller",
                                 "Renamed folder with identifier " + identifier + " to '" + folder_name + "'");
                         }
                     }
@@ -332,13 +332,13 @@ namespace SparkleShare {
                 
                 // Remove any deleted folders
                 foreach (string folder_name in this.config.Folders) {
-                    string folder_path = new SparkleFolder (folder_name).FullPath;
+                    string folder_path = new PryanetFolder (folder_name).FullPath;
                     
                     if (!Directory.Exists (folder_path)) {
                         this.config.RemoveFolder (folder_name);
                         RemoveRepository (folder_path);
                         
-                        SparkleLogger.LogInfo ("Controller", "Removed folder '" + folder_name + "' from config");
+                        PryanetLogger.LogInfo ("Controller", "Removed folder '" + folder_name + "' from config");
                         
                     } else {
                         AddRepository (folder_path);
@@ -361,17 +361,17 @@ namespace SparkleShare {
 
         private void AddRepository (string folder_path)
         {
-            SparkleRepoBase repo = null;
+            PryanetRepoBase repo = null;
             string folder_name   = Path.GetFileName (folder_path);
             string backend       = this.config.GetBackendForFolder (folder_name);
 
             try {
-                repo = (SparkleRepoBase) Activator.CreateInstance (
-                    Type.GetType ("SparkleLib." + backend + ".SparkleRepo, SparkleLib." + backend),
+                repo = (PryanetRepoBase) Activator.CreateInstance (
+                    Type.GetType ("PryanetLib." + backend + ".PryanetRepo, PryanetLib." + backend),
                     new object [] { folder_path, this.config });
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Controller", "Failed to load backend '" + backend + "' for '" + folder_name + "': ", e);
+                PryanetLogger.LogInfo ("Controller", "Failed to load backend '" + backend + "' for '" + folder_name + "': ", e);
                 return;
             }
 
@@ -397,7 +397,7 @@ namespace SparkleShare {
                 double percentage = 0.0;
                 int repo_count    = 0;
 
-                foreach (SparkleRepoBase rep in Repositories) {
+                foreach (PryanetRepoBase rep in Repositories) {
                     if (rep.ProgressPercentage > 0) {
                         percentage += rep.ProgressPercentage;
                         repo_count++;
@@ -416,7 +416,7 @@ namespace SparkleShare {
                 UpdateState ();
             };
 
-            repo.NewChangeSet += delegate (SparkleChangeSet change_set) {
+            repo.NewChangeSet += delegate (PryanetChangeSet change_set) {
                 NotificationRaised (change_set);
             };
 
@@ -431,7 +431,7 @@ namespace SparkleShare {
 
         private void RemoveRepository (string folder_path)
         {
-            foreach (SparkleRepoBase repo in this.repositories) {
+            foreach (PryanetRepoBase repo in this.repositories) {
                 if (repo.LocalPath.Equals (folder_path)) {
                     this.repositories.Remove (repo);
                     repo.Dispose ();
@@ -465,17 +465,17 @@ namespace SparkleShare {
             if (this.fetcher != null &&
                 this.fetcher.IsActive) {
 
-                AlertNotificationRaised ("SparkleShare Setup seems busy", "Please wait for it to finish");
+                AlertNotificationRaised ("PryanetShare Setup seems busy", "Please wait for it to finish");
 
             } else {
-                SparkleInvite invite = new SparkleInvite (args.FullPath);
+                PryanetInvite invite = new PryanetInvite (args.FullPath);
 
                 // It may be that the invite we received a path to isn't
                 // fully downloaded yet, so we try to read it several times
                 int tries = 0;
                 while (!invite.IsValid) {
                     Thread.Sleep (100);
-                    invite = new SparkleInvite (args.FullPath);
+                    invite = new PryanetInvite (args.FullPath);
                     tries++;
 
                     if (tries > 10) {
@@ -498,7 +498,7 @@ namespace SparkleShare {
             bool has_unsynced_repos = false;
             bool has_syncing_repos  = false;
 
-            foreach (SparkleRepoBase repo in Repositories) {
+            foreach (PryanetRepoBase repo in Repositories) {
                 if (repo.Status == SyncStatus.SyncDown || repo.Status == SyncStatus.SyncUp || repo.IsBuffering) {
                     has_syncing_repos = true;
                     break;
@@ -517,7 +517,7 @@ namespace SparkleShare {
         }
 
 
-        public void StartFetcher (SparkleFetcherInfo info)
+        public void StartFetcher (PryanetFetcherInfo info)
         {
             string tmp_path = this.config.TmpPath;
 
@@ -527,15 +527,15 @@ namespace SparkleShare {
             }
 
             string canonical_name = Path.GetFileName (info.RemotePath);
-            string backend        = SparkleFetcherBase.GetBackend (info.Address);
+            string backend        = PryanetFetcherBase.GetBackend (info.Address);
             info.TargetDirectory  = Path.Combine (tmp_path, canonical_name);
 
             try {
-                this.fetcher = (SparkleFetcherBase) Activator.CreateInstance (
-                    Type.GetType ("SparkleLib." + backend + ".SparkleFetcher, SparkleLib." + backend), info);
+                this.fetcher = (PryanetFetcherBase) Activator.CreateInstance (
+                    Type.GetType ("PryanetLib." + backend + ".PryanetFetcher, PryanetLib." + backend), info);
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Controller",
+                PryanetLogger.LogInfo ("Controller",
                     "Failed to load '" + backend + "' backend for '" + canonical_name + "' " + e.Message);
 
                 FolderFetchError (Path.Combine (info.Address, info.RemotePath).Replace (@"\", "/"),
@@ -576,10 +576,10 @@ namespace SparkleShare {
             if (Directory.Exists (this.fetcher.TargetFolder)) {
                 try {
                     Directory.Delete (this.fetcher.TargetFolder, true /* Recursive */ );
-                    SparkleLogger.LogInfo ("Controller", "Deleted '" + this.fetcher.TargetFolder + "'");
+                    PryanetLogger.LogInfo ("Controller", "Deleted '" + this.fetcher.TargetFolder + "'");
 
                 } catch (Exception e) {
-                    SparkleLogger.LogInfo ("Controller", "Failed to delete '" + this.fetcher.TargetFolder + "'", e);
+                    PryanetLogger.LogInfo ("Controller", "Failed to delete '" + this.fetcher.TargetFolder + "'", e);
                 }
             }
 
@@ -640,14 +640,14 @@ namespace SparkleShare {
                 Directory.Move (this.fetcher.TargetFolder, target_folder_path);
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Controller", "Error moving directory, trying again...", e);
+                PryanetLogger.LogInfo ("Controller", "Error moving directory, trying again...", e);
 
                 try {
                     ClearDirectoryAttributes (this.fetcher.TargetFolder);
                     Directory.Move (this.fetcher.TargetFolder, target_folder_path);
 
                 } catch (Exception x) {
-                    SparkleLogger.LogInfo ("Controller", "Error moving directory", x);
+                    PryanetLogger.LogInfo ("Controller", "Error moving directory", x);
                     
                     this.fetcher.Dispose ();
                     this.fetcher = null;
@@ -656,7 +656,7 @@ namespace SparkleShare {
                 }
             }
 
-            string backend = SparkleFetcherBase.GetBackend (this.fetcher.RemoteUrl.ToString ());
+            string backend = PryanetFetcherBase.GetBackend (this.fetcher.RemoteUrl.ToString ());
 
             this.config.AddFolder (target_folder_name, this.fetcher.Identifier,
                 this.fetcher.RemoteUrl.ToString (), backend);
@@ -701,7 +701,7 @@ namespace SparkleShare {
                 avatar_file_path = Path.Combine (avatars_path, email.MD5 () + ".png");
             
             } catch (InvalidOperationException e) {
-                SparkleLogger.LogInfo ("Controller", "Error fetching avatar for " + email, e);
+                PryanetLogger.LogInfo ("Controller", "Error fetching avatar for " + email, e);
                 return null;
             }
 
@@ -721,11 +721,11 @@ namespace SparkleShare {
                 if (buffer.Length > 255) {
                     if (!Directory.Exists (avatars_path)) {
                         Directory.CreateDirectory (avatars_path);
-                        SparkleLogger.LogInfo ("Controller", "Created '" + avatars_path + "'");
+                        PryanetLogger.LogInfo ("Controller", "Created '" + avatars_path + "'");
                     }
 
                     File.WriteAllBytes (avatar_file_path, buffer);
-                    SparkleLogger.LogInfo ("Controller", "Fetched " + size + "x" + size + " avatar for " + email);
+                    PryanetLogger.LogInfo ("Controller", "Fetched " + size + "x" + size + " avatar for " + email);
 
                     return avatar_file_path;
 
@@ -734,7 +734,7 @@ namespace SparkleShare {
                 }
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Controller", "Error fetching avatar for " + email, e);
+                PryanetLogger.LogInfo ("Controller", "Error fetching avatar for " + email, e);
                 skipped_avatars.Add (email);
 
                 return null;
@@ -744,7 +744,7 @@ namespace SparkleShare {
 
         public virtual void Quit ()
         {
-            foreach (SparkleRepoBase repo in Repositories)
+            foreach (PryanetRepoBase repo in Repositories)
                 repo.Dispose ();
             
             Environment.Exit (0);
@@ -763,7 +763,7 @@ namespace SparkleShare {
             string gravatar_cert_fingerprint = "217ACB08C0A1ACC23A21B6ECDE82CD45E14DEC19";
 
             if (!certificate2.Thumbprint.Equals (gravatar_cert_fingerprint)) {
-                SparkleLogger.LogInfo ("Controller", "Invalid certificate for https://www.gravatar.com/");
+                PryanetLogger.LogInfo ("Controller", "Invalid certificate for https://www.gravatar.com/");
                 return false;
             }
 

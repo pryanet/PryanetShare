@@ -8,8 +8,8 @@
     <ProjectGuid>{009FDCD7-1D57-4202-BB6D-8477D8C6B8EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SparkleLib.Git</RootNamespace>
-    <AssemblyName>SparkleLib.Git</AssemblyName>
+    <RootNamespace>PryanetLib.Git</RootNamespace>
+    <AssemblyName>PryanetLib.Git</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ReleaseVersion />
   </PropertyGroup>
@@ -46,14 +46,14 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\SparkleLib.csproj">
+    <ProjectReference Include="..\PryanetLib.csproj">
       <Project>{2C914413-B31C-4362-93C7-1AE34F09112A}</Project>
-      <Name>SparkleLib</Name>
+      <Name>PryanetLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SparkleFetcherGit.cs" />
-    <Compile Include="SparkleGit.cs" />
-    <Compile Include="SparkleRepoGit.cs" />
+    <Compile Include="PryanetFetcherGit.cs" />
+    <Compile Include="PryanetGit.cs" />
+    <Compile Include="PryanetRepoGit.cs" />
   </ItemGroup>
 </Project>

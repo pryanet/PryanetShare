@@ -1,13 +1,13 @@
 dnl Process this file with autoconf to produce a configure script.
-m4_define([sparkleshare_version], [1.1.0])
+m4_define([pryanetshare_version], [1.1.0])
 
 AC_PREREQ([2.54])
-AC_INIT([SparkleShare], sparkleshare_version)
+AC_INIT([PryanetShare], pryanetshare_version)
 AM_INIT_AUTOMAKE([1.11 dist-bzip2 dist-zip foreign tar-pax])
 AM_MAINTAINER_MODE
 
 dnl Export Version Info
-AC_SUBST([ASM_VERSION], [sparkleshare_version])
+AC_SUBST([ASM_VERSION], [pryanetshare_version])
 
 dnl pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -15,7 +15,7 @@ if test "x$PKG_CONFIG" = "xno"; then
         AC_MSG_ERROR([You need to install pkg-config])
 fi
 
-AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/sparkleshare -I build/m4/shamrock -I build/m4/shave \${ACLOCAL_FLAGS}"])
+AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/pryanetshare -I build/m4/shamrock -I build/m4/shave \${ACLOCAL_FLAGS}"])
 
 SHAMROCK_EXPAND_LIBDIR
 SHAMROCK_EXPAND_BINDIR
@@ -36,7 +36,7 @@ SHAMROCK_CHECK_MONO_4_0_GAC_ASSEMBLIES([
 ])]
 )
 
-SPARKLESHARE_CHECK_NOTIFY_SHARP
+PRYANETSHARE_CHECK_NOTIFY_SHARP
 
 AC_ARG_ENABLE(debug,
 	AC_HELP_STRING([--enable-debug],
@@ -67,7 +67,7 @@ dnl package checks, common for all configs
 #AC_SUBST(NDESK_DBUS_GLIB_LIBS)
 
 
-SPARKLESHARE_CHECK_GTK_SHARP
+PRYANETSHARE_CHECK_GTK_SHARP
 
 AC_ARG_ENABLE(appindicator,
 	AS_HELP_STRING([--enable-appindicator[=@<:@no/auto/yes@:>@]],[Build support for application indicators ]),
@@ -108,7 +108,7 @@ if test "$OSNAME" = "Linux" ; then
 			AC_DEFINE(HAVE_APP_INDICATOR, 1, [Have AppIndicator])
 	fi
 
-	GUISUBDIRS=SparkleShare
+	GUISUBDIRS=PryanetShare
 else
 	GUISUBDIRS=
 fi
@@ -125,26 +125,26 @@ build/Makefile
 build/m4/Makefile
 build/m4/shave/shave
 build/m4/shave/shave-libtool
-SparkleLib/Defines.cs
-SparkleLib/Makefile
-SparkleLib/Git/Makefile
-SparkleShare/Common/Makefile
-SparkleShare/Common/HTML/Makefile
-SparkleShare/Common/Plugins/Makefile
-SparkleShare/Common/Pixmaps/Makefile
-SparkleShare/Linux/Makefile
-SparkleShare/Linux/Pixmaps/Makefile
-SparkleShare/Linux/Pixmaps/icons/Makefile
-SparkleShare/Linux/Pixmaps/icons/gnome/Makefile
-SparkleShare/Linux/Pixmaps/icons/ubuntu-mono-dark/Makefile
-SparkleShare/Linux/Pixmaps/icons/ubuntu-mono-light/Makefile
-SparkleShare/Linux/sparkleshare
-SparkleShare/Makefile
+PryanetLib/Defines.cs
+PryanetLib/Makefile
+PryanetLib/Git/Makefile
+PryanetShare/Common/Makefile
+PryanetShare/Common/HTML/Makefile
+PryanetShare/Common/Plugins/Makefile
+PryanetShare/Common/Pixmaps/Makefile
+PryanetShare/Linux/Makefile
+PryanetShare/Linux/Pixmaps/Makefile
+PryanetShare/Linux/Pixmaps/icons/Makefile
+PryanetShare/Linux/Pixmaps/icons/gnome/Makefile
+PryanetShare/Linux/Pixmaps/icons/ubuntu-mono-dark/Makefile
+PryanetShare/Linux/Pixmaps/icons/ubuntu-mono-light/Makefile
+PryanetShare/Linux/pryanetshare
+PryanetShare/Makefile
 Makefile
 ])
 
 echo "
-SparkleShare ${VERSION}
+PryanetShare ${VERSION}
 
 Configuration:
        Prefix : ${prefix}

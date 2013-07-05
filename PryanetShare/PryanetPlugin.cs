@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@ using System.Xml;
 
 using IO = System.IO;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparklePlugin : XmlDocument {
+    public class PryanetPlugin : XmlDocument {
 
         public static string PluginsPath = "";
 
         public static string LocalPluginsPath = IO.Path.Combine (
-            Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData), "sparkleshare", "plugins");
+            Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData), "pryanetshare", "plugins");
 
         new public string Name { get { return GetValue ("info", "name"); } }
         public string Description { get { return GetValue ("info", "description"); } }
@@ -65,14 +65,14 @@ namespace SparkleShare {
         private string plugin_directory;
 
 
-        public SparklePlugin (string plugin_path)
+        public PryanetPlugin (string plugin_path)
         {
             this.plugin_directory = System.IO.Path.GetDirectoryName (plugin_path);
             Load (plugin_path);
         }
 
 
-        public static SparklePlugin Create (string name, string description, string address_value,
+        public static PryanetPlugin Create (string name, string description, string address_value,
             string address_example, string path_value, string path_example)
         {
             string plugin_path = System.IO.Path.Combine (LocalPluginsPath, name + ".xml");
@@ -81,7 +81,7 @@ namespace SparkleShare {
                 return null;
 
             string plugin_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<sparkleshare>" +
+                "<pryanetshare>" +
                 "  <plugin>" +
                 "    <info>" +
                 "        <name>" + name + "</name>" +
@@ -97,7 +97,7 @@ namespace SparkleShare {
                 "      <example>" + path_example + "</example>" +
                 "    </path>" +
                 "  </plugin>" +
-                "</sparkleshare>";
+                "</pryanetshare>";
 
             plugin_xml = plugin_xml.Replace ("<value></value>", "<value/>");
             plugin_xml = plugin_xml.Replace ("<example></example>", "<example/>");
@@ -106,13 +106,13 @@ namespace SparkleShare {
                 IO.Directory.CreateDirectory (LocalPluginsPath);
 
             IO.File.WriteAllText (plugin_path, plugin_xml);
-            return new SparklePlugin (plugin_path);
+            return new PryanetPlugin (plugin_path);
         }
 
 
         private string GetValue (string a, string b)
         {
-            XmlNode node = SelectSingleNode ("/sparkleshare/plugin/" + a + "/" + b + "/text()");
+            XmlNode node = SelectSingleNode ("/pryanetshare/plugin/" + a + "/" + b + "/text()");
 
             if (node != null && !string.IsNullOrEmpty (node.Value))
                 return node.Value;

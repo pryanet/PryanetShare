@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -28,21 +28,21 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Shapes = System.Windows.Shapes;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleEventLog : Window {
+    public class PryanetEventLog : Window {
 
-        public SparkleEventLogController Controller = new SparkleEventLogController ();
+        public PryanetEventLogController Controller = new PryanetEventLogController ();
 
         private Canvas canvas;
         private Label size_label_value;
         private Label history_label_value;
         private ComboBox combo_box;
         private WebBrowser web_browser;
-        private SparkleSpinner spinner;
+        private PryanetSpinner spinner;
         
         
-        public SparkleEventLog ()
+        public PryanetEventLog ()
         {
             Title              = "Recent Changes";
             Height             = 640;
@@ -50,7 +50,7 @@ namespace SparkleShare {
             ResizeMode         = ResizeMode.NoResize; // TODO
             Background         = new SolidColorBrush (Color.FromRgb (240, 240, 240));    
             AllowsTransparency = false;
-            Icon               = SparkleUIHelpers.GetImageSource ("sparkleshare-app", "ico");
+            Icon               = PryanetUIHelpers.GetImageSource ("pryanetshare-app", "ico");
 
             int x = (int) (SystemParameters.PrimaryScreenWidth * 0.61);
             int y = (int) (SystemParameters.PrimaryScreenHeight * 0.5 - (Height * 0.5));
@@ -102,10 +102,10 @@ namespace SparkleShare {
                 Height = Height - 64
             };
 
-            this.web_browser.ObjectForScripting = new SparkleScriptingObject ();
+            this.web_browser.ObjectForScripting = new PryanetScriptingObject ();
                     
 
-            spinner = new SparkleSpinner (22);
+            spinner = new PryanetSpinner (22);
             
             // Disable annoying IE clicking sound
             CoInternetSetFeatureEnabled (21, 0x00000002, true);
@@ -273,7 +273,7 @@ namespace SparkleShare {
         
         public void UpdateContent (string html)
         {
-            string pixmaps_path = Path.Combine (SparkleLib.SparkleConfig.DefaultConfig.TmpPath, "Pixmaps");
+            string pixmaps_path = Path.Combine (PryanetLib.PryanetConfig.DefaultConfig.TmpPath, "Pixmaps");
             pixmaps_path        = pixmaps_path.Replace ("\\", "/");
             
             html = html.Replace ("<a href=", "<a class='windows' href=");
@@ -294,7 +294,7 @@ namespace SparkleShare {
 
             this.spinner.Stop ();
     
-			this.web_browser.ObjectForScripting = new SparkleScriptingObject ();  	
+			this.web_browser.ObjectForScripting = new PryanetScriptingObject ();  	
 			this.web_browser.NavigateToString (html);
 		
             if (!this.canvas.Children.Contains (this.web_browser)) {
@@ -307,7 +307,7 @@ namespace SparkleShare {
         
         private void WriteOutImages ()
         {
-            string tmp_path     = SparkleLib.SparkleConfig.DefaultConfig.TmpPath;
+            string tmp_path     = PryanetLib.PryanetConfig.DefaultConfig.TmpPath;
             string pixmaps_path = Path.Combine (tmp_path, "Pixmaps");
             
             if (!Directory.Exists (pixmaps_path)) {
@@ -317,7 +317,7 @@ namespace SparkleShare {
                     File.GetAttributes (tmp_path) | FileAttributes.Hidden);
             }
               
-            BitmapSource image = SparkleUIHelpers.GetImageSource ("user-icon-default");
+            BitmapSource image = PryanetUIHelpers.GetImageSource ("user-icon-default");
             string file_path   = Path.Combine (pixmaps_path, "user-icon-default.png");
                 
             using (FileStream stream = new FileStream (file_path, FileMode.Create))
@@ -330,7 +330,7 @@ namespace SparkleShare {
             string [] actions = new string [] {"added", "deleted", "edited", "moved"};
             
             foreach (string action in actions) {    
-                image = SparkleUIHelpers.GetImageSource ("document-" + action + "-12");
+                image = PryanetUIHelpers.GetImageSource ("document-" + action + "-12");
                 file_path   = Path.Combine (pixmaps_path, "document-" + action + "-12.png");
                     
                 using (FileStream stream = new FileStream (file_path, FileMode.Create))
@@ -360,7 +360,7 @@ namespace SparkleShare {
     
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [ComVisible(true)]
-    public class SparkleScriptingObject {
+    public class PryanetScriptingObject {
         
         public void LinkClicked (string url)
         {

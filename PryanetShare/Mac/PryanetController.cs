@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@ using MonoMac.Foundation;
 using MonoMac.AppKit;
 
 using Mono.Unix.Native;
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleController : SparkleControllerBase {
+    public class PryanetController : PryanetControllerBase {
 
         public override string PluginsPath {
             get {
@@ -38,16 +38,16 @@ namespace SparkleShare {
 
         // We have to use our own custom made folder watcher, as
         // System.IO.FileSystemWatcher fails watching subfolders on Mac
-        private SparkleMacWatcher watcher;
+        private PryanetMacWatcher watcher;
 
         
-        public SparkleController () : base ()
+        public PryanetController () : base ()
         {
             NSApplication.Init ();
 
             // Let's use the bundled git first
-            SparkleLib.Git.SparkleGit.GitPath  = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core", "git");
-            SparkleLib.Git.SparkleGit.ExecPath = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core");
+            PryanetLib.Git.PryanetGit.GitPath  = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core", "git");
+            PryanetLib.Git.PryanetGit.ExecPath = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core");
         }
 
         
@@ -55,8 +55,8 @@ namespace SparkleShare {
         {
             base.Initialize ();
 
-            SparkleRepoBase.UseCustomWatcher = true;
-            this.watcher = new SparkleMacWatcher (Program.Controller.FoldersPath);
+            PryanetRepoBase.UseCustomWatcher = true;
+            this.watcher = new PryanetMacWatcher (Program.Controller.FoldersPath);
 
             this.watcher.Changed += delegate (string path) {
                 FileSystemEventArgs fse_args = new FileSystemEventArgs (WatcherChangeTypes.Changed, path, "Unknown_File");
@@ -65,7 +65,7 @@ namespace SparkleShare {
                 // FIXME: There are cases where the wrong repo is triggered, so
                 // we trigger all of them for now. Causes only slightly more overhead
                 int i = 0;
-                foreach (SparkleRepoBase repo in Repositories) {
+                foreach (PryanetRepoBase repo in Repositories) {
                     tasks [i] = MacActivityTask (repo, fse_args);
                     tasks [i] ();
                     i++;
@@ -77,7 +77,7 @@ namespace SparkleShare {
 
         private delegate void FileActivityTask ();
 
-        private FileActivityTask MacActivityTask (SparkleRepoBase repo, FileSystemEventArgs fse_args) {
+        private FileActivityTask MacActivityTask (PryanetRepoBase repo, FileSystemEventArgs fse_args) {
             return delegate { new Thread (() => { repo.OnFileActivity (fse_args); }).Start (); };
         }
 
@@ -95,13 +95,13 @@ namespace SparkleShare {
             process.Start ();
             process.WaitForExit ();
 
-            SparkleLogger.LogInfo ("Controller", "Added " + NSBundle.MainBundle.BundlePath + " to login items");
+            PryanetLogger.LogInfo ("Controller", "Added " + NSBundle.MainBundle.BundlePath + " to login items");
         }
 
 
         public override void InstallProtocolHandler ()
         {
-             // We ship SparkleShareInviteHandler.app in the bundle
+             // We ship PryanetShareInviteHandler.app in the bundle
         }
 
 
@@ -111,12 +111,12 @@ namespace SparkleShare {
         }
 
 
-        public override bool CreateSparkleShareFolder ()
+        public override bool CreatePryanetShareFolder ()
         {
             if (!Directory.Exists (Program.Controller.FoldersPath)) {
                 Directory.CreateDirectory (Program.Controller.FoldersPath);
 
-                NSWorkspace.SharedWorkspace.SetIconforFile (NSImage.ImageNamed ("sparkleshare-folder.icns"),
+                NSWorkspace.SharedWorkspace.SetIconforFile (NSImage.ImageNamed ("pryanetshare-folder.icns"),
                     Program.Controller.FoldersPath, 0);
 
                 Syscall.chmod (Program.Controller.FoldersPath, (FilePermissions) 448); // 448 -> 700

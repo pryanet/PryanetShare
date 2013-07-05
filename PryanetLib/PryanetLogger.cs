@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,9 @@
 using System;
 using System.IO;
 
-namespace SparkleLib {
+namespace PryanetLib {
     
-    public static class SparkleLogger {
+    public static class PryanetLogger {
 
         private static Object debug_lock = new Object ();
         private static int log_size = 0;
@@ -39,17 +39,17 @@ namespace SparkleLib {
             if (exception != null)
                 line += ": " + exception.Message + " " + exception.StackTrace;
 
-            if (SparkleConfig.DebugMode)
+            if (PryanetConfig.DebugMode)
                 Console.WriteLine (line);
 
             lock (debug_lock) {
                 // Don't let the log get bigger than 1000 lines
                 if (log_size >= 1000) {
-                    File.WriteAllText (SparkleConfig.DefaultConfig.LogFilePath, line + Environment.NewLine);
+                    File.WriteAllText (PryanetConfig.DefaultConfig.LogFilePath, line + Environment.NewLine);
                     log_size = 0;
 
                 } else {
-                    File.AppendAllText (SparkleConfig.DefaultConfig.LogFilePath, line + Environment.NewLine);
+                    File.AppendAllText (PryanetConfig.DefaultConfig.LogFilePath, line + Environment.NewLine);
                     log_size++;
                 }
             }
@@ -60,27 +60,27 @@ namespace SparkleLib {
         {
             string home_path = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
-            if (SparkleBackend.Platform == PlatformID.Win32NT)
+            if (PryanetBackend.Platform == PlatformID.Win32NT)
                 home_path = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
 
-            string crash_report_file_path = new string [] { home_path, "SparkleShare", "crash_report.txt" }.Combine ();
+            string crash_report_file_path = new string [] { home_path, "PryanetShare", "crash_report.txt" }.Combine ();
 
             string n = Environment.NewLine;
-            string crash_report = "Oops! SparkleShare has crashed... :(" + n + n +
+            string crash_report = "Oops! PryanetShare has crashed... :(" + n + n +
                 "If you want to help fix this crash, please report it at " + n +
-                "https://github.com/hbons/SparkleShare/issues and include the lines below." + n + n +
+                "https://github.com/hbons/PryanetShare/issues and include the lines below." + n + n +
                 "Remove any sensitive information like file names, IP addresses, domain names, etc. if needed." + n + n +
                 "------" +  n + n +
-                "SparkleShare version: " + SparkleLib.SparkleBackend.Version + n +
-                "Operating system:     " + SparkleLib.SparkleBackend.Platform + " " + Environment.OSVersion + n;
+                "PryanetShare version: " + PryanetLib.PryanetBackend.Version + n +
+                "Operating system:     " + PryanetLib.PryanetBackend.Platform + " " + Environment.OSVersion + n;
 
             crash_report += e.GetType () + ": " + e.Message + n + e.StackTrace + n;
 
             if (e.InnerException != null)
                 crash_report += n + e.InnerException.Message + n + e.InnerException.StackTrace + n;
 
-            if (SparkleConfig.DefaultConfig != null && File.Exists (SparkleConfig.DefaultConfig.LogFilePath)) {
-                string debug_log      = File.ReadAllText (SparkleConfig.DefaultConfig.LogFilePath);
+            if (PryanetConfig.DefaultConfig != null && File.Exists (PryanetConfig.DefaultConfig.LogFilePath)) {
+                string debug_log      = File.ReadAllText (PryanetConfig.DefaultConfig.LogFilePath);
                 string [] debug_lines = debug_log.Split (Environment.NewLine.ToCharArray ()); 
                 int line_count        = 50;
                     

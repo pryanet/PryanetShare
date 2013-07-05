@@ -1,33 +1,33 @@
 #!/usr/bin/env bash
 
 if [[ $UID -eq 0 ]]; then
-  echo "SparkleShare can't be run as root. Things would go utterly wrong."
+  echo "PryanetShare can't be run as root. Things would go utterly wrong."
   exit 1
 fi
 
 if [ "$XDG_RUNTIME_DIR" ]; then
-  pidfile=${XDG_RUNTIME_DIR}/sparkleshare.pid
+  pidfile=${XDG_RUNTIME_DIR}/pryanetshare.pid
 else
-  pidfile=~/.sparkleshare-$(hostname)-${USER}.pid
+  pidfile=~/.pryanetshare-$(hostname)-${USER}.pid
 fi
 
 start() {
   if [ -e "${pidfile}" ]; then
-    sparklepid=`cat ${pidfile}`
-    if [ -n "`ps -p ${sparklepid} | grep ${sparklepid}`" ]; then
-      echo "SparkleShare is already running."
+    pryanetpid=`cat ${pidfile}`
+    if [ -n "`ps -p ${pryanetpid} | grep ${pryanetpid}`" ]; then
+      echo "PryanetShare is already running."
       exit 0
     else
-      echo "Stale SparkleShare PID file found, starting a new instance..."
+      echo "Stale PryanetShare PID file found, starting a new instance..."
       rm -f $pidfile
     fi
   fi
 
-  echo -n "Starting SparkleShare... "
+  echo -n "Starting PryanetShare... "
   if [ -n "${SSH_AGENT_PID}" -o -n "${SSH_AUTH_SOCK}" ] ; then
-    mono "@expanded_libdir@/@PACKAGE@/SparkleShare.exe" $2 &
+    mono "@expanded_libdir@/@PACKAGE@/PryanetShare.exe" $2 &
   else
-    ssh-agent mono "@expanded_libdir@/@PACKAGE@/SparkleShare.exe" $2 &
+    ssh-agent mono "@expanded_libdir@/@PACKAGE@/PryanetShare.exe" $2 &
   fi
   ( umask 066; echo $! > ${pidfile} )
   echo "Done."
@@ -35,18 +35,18 @@ start() {
 
 stop() {
   if [ -e "${pidfile}" ]; then
-    sparklepid=`cat ${pidfile}`
-    if [ -n "`ps -p ${sparklepid} | grep ${sparklepid}`" ]; then
-      echo -n "Stopping SparkleShare... "
-      kill ${sparklepid}
+    pryanetpid=`cat ${pidfile}`
+    if [ -n "`ps -p ${pryanetpid} | grep ${pryanetpid}`" ]; then
+      echo -n "Stopping PryanetShare... "
+      kill ${pryanetpid}
       rm -f ${pidfile}
       echo "Done."
     else
-      echo "SparkleShare is not running, removing stale PID file..."
+      echo "PryanetShare is not running, removing stale PID file..."
       rm -f ${pidfile}
     fi
   else
-    echo "SparkleShare is not running."
+    echo "PryanetShare is not running."
   fi
 }
 
@@ -63,10 +63,10 @@ case $1 in
     ;;
   open|--open)
     invite=`date -u +%N`
-    open=`echo $2 | sed s/sparkleshare:\/\/addProject//`
-    curl --insecure --output ~/SparkleShare/$invite.xml $open
+    open=`echo $2 | sed s/pryanetshare:\/\/addProject//`
+    curl --insecure --output ~/PryanetShare/$invite.xml $open
     ;;
   *)
-    mono "@expanded_libdir@/@PACKAGE@/SparkleShare.exe" --help
+    mono "@expanded_libdir@/@PACKAGE@/PryanetShare.exe" --help
     ;;
 esac

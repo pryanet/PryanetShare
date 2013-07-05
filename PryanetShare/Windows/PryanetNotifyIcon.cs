@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -29,11 +29,11 @@ using System.Windows.Markup;
 using Drawing = System.Drawing;
 using Forms = System.Windows.Forms;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
     [ContentProperty("Text")]
     [DefaultEvent("MouseDoubleClick")]
-    public class SparkleNotifyIcon : FrameworkElement, IAddChild {
+    public class PryanetNotifyIcon : FrameworkElement, IAddChild {
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr GetModuleHandle(string module_name);
@@ -115,13 +115,13 @@ namespace SparkleShare {
 
 
         public readonly RoutedEvent MouseClickEvent = EventManager.RegisterRoutedEvent (
-            "MouseClick", RoutingStrategy.Bubble, typeof (MouseButtonEventHandler), typeof (SparkleNotifyIcon));
+            "MouseClick", RoutingStrategy.Bubble, typeof (MouseButtonEventHandler), typeof (PryanetNotifyIcon));
 
         public readonly RoutedEvent MouseDoubleClickEvent = EventManager.RegisterRoutedEvent(
-            "MouseDoubleClick",    RoutingStrategy.Bubble,    typeof (MouseButtonEventHandler), typeof (SparkleNotifyIcon));
+            "MouseDoubleClick",    RoutingStrategy.Bubble,    typeof (MouseButtonEventHandler), typeof (PryanetNotifyIcon));
 
         public readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text",    typeof(string), typeof (SparkleNotifyIcon), new PropertyMetadata (OnTextChanged));
+            "Text",    typeof(string), typeof (PryanetNotifyIcon), new PropertyMetadata (OnTextChanged));
 
         
         private string header_text;
@@ -131,9 +131,9 @@ namespace SparkleShare {
         private delegate int HookProc (int code, int param, IntPtr struct_pointer);
         
         
-        public SparkleNotifyIcon ()
+        public PryanetNotifyIcon ()
         {
-            VisibilityProperty.OverrideMetadata (typeof (SparkleNotifyIcon),
+            VisibilityProperty.OverrideMetadata (typeof (PryanetNotifyIcon),
                 new PropertyMetadata (OnVisibilityChanged));
             
             this.notify_icon = new Forms.NotifyIcon () {
@@ -302,7 +302,7 @@ namespace SparkleShare {
         private void OnVisibilityChanged (DependencyObject target,
             DependencyPropertyChangedEventArgs args)
         {
-            SparkleNotifyIcon control   = (SparkleNotifyIcon) target;
+            PryanetNotifyIcon control   = (PryanetNotifyIcon) target;
             control.notify_icon.Visible = (control.Visibility == Visibility.Visible);
         }
         
@@ -346,7 +346,7 @@ namespace SparkleShare {
         private static void OnTextChanged (DependencyObject target,
             DependencyPropertyChangedEventArgs args)
         {
-            SparkleNotifyIcon control = (SparkleNotifyIcon) target;
+            PryanetNotifyIcon control = (PryanetNotifyIcon) target;
             control.notify_icon.Text  = control.Text;
         }
         

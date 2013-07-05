@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT=sparkleshare
+PROJECT=pryanetshare
 
 function error () {
 	echo "Error: $1" 1>&2
@@ -66,7 +66,7 @@ check_autotool_version pkg-config 0.14.0
 
 #run intltoolize --force --copy
 run $LIBTOOLIZE --force --copy --automake
-run aclocal -I build/m4/sparkleshare -I build/m4/shamrock -I build/m4/shave $ACLOCAL_FLAGS
+run aclocal -I build/m4/pryanetshare -I build/m4/shamrock -I build/m4/shave $ACLOCAL_FLAGS
 run autoconf
 
 run automake --gnu --add-missing --force --copy \

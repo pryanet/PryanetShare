@@ -1,4 +1,4 @@
-//   SparkleShare, an instant update workflow to Git.
+//   PryanetShare, an instant update workflow to Git.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -23,9 +23,9 @@ using System.IO;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleSetupWindow : NSWindow {
+    public class PryanetSetupWindow : NSWindow {
 
         public List <NSButton> Buttons = new List <NSButton> ();
         public string Header;
@@ -36,9 +36,9 @@ namespace SparkleShare {
         private NSTextField header_text_field, description_text_field;
 
 
-        public SparkleSetupWindow (IntPtr handle) : base (handle) { }
+        public PryanetSetupWindow (IntPtr handle) : base (handle) { }
 
-        public SparkleSetupWindow () : base ()
+        public PryanetSetupWindow () : base ()
         {
             SetFrame (new RectangleF (0, 0, 640, 420), true);
 
@@ -58,13 +58,13 @@ namespace SparkleShare {
                 Frame = new RectangleF (0, 0, 150, 482)
             };
 
-            this.header_text_field = new SparkleLabel ("", NSTextAlignment.Left) {
+            this.header_text_field = new PryanetLabel ("", NSTextAlignment.Left) {
                 Frame = new RectangleF (190, Frame.Height - 80, Frame.Width, 24),
                 Font  = NSFontManager.SharedFontManager.FontWithFamily (
                     "Lucida Grande", NSFontTraitMask.Bold, 0, 15),
             };
 
-            this.description_text_field = new SparkleLabel ("", NSTextAlignment.Left) {
+            this.description_text_field = new PryanetLabel ("", NSTextAlignment.Left) {
                 Frame = new RectangleF (190, Frame.Height - 130, 640 - 240, 44),
                 Font  = NSFontManager.SharedFontManager.FontWithFamily (
                     "Lucida Grande", NSFontTraitMask.Condensed, 0, 13)
@@ -105,7 +105,7 @@ namespace SparkleShare {
                 foreach (NSButton button in Buttons) {
                     button.BezelStyle = NSBezelStyle.Rounded;
                     button.Frame      = new RectangleF (Frame.Width - 15 - x - (105 * i), 12, 105, 32);
-                    button.Font       = SparkleUI.Font;
+                    button.Font       = PryanetUI.Font;
 
                     // Make the button a bit wider if the text is likely to be longer
                     if (button.Title.Contains (" ")) {
@@ -127,7 +127,7 @@ namespace SparkleShare {
 
         public override void OrderFrontRegardless ()
         {
-            NSApplication.SharedApplication.AddWindowsItem (this, "SparkleShare Setup", false);
+            NSApplication.SharedApplication.AddWindowsItem (this, "PryanetShare Setup", false);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
             MakeKeyAndOrderFront (this);
 

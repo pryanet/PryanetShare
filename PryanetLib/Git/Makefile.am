@@ -1,14 +1,14 @@
-ASSEMBLY = SparkleLib.Git
+ASSEMBLY = PryanetLib.Git
 TARGET = library
 
 ASSEMBLY_INFO_SOURCE = ../Defines.cs
 
-LINK = -r:$(DIR_BIN)/SparkleLib.dll
+LINK = -r:$(DIR_BIN)/PryanetLib.dll
 
 SOURCES =  \
-	SparkleGit.cs \
-	SparkleFetcherGit.cs \
-	SparkleRepoGit.cs
+	PryanetGit.cs \
+	PryanetFetcherGit.cs \
+	PryanetRepoGit.cs
 
 
 install-data-hook:

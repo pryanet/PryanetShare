@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -21,26 +21,26 @@ using System.Diagnostics;
 using Gtk;
 using Mono.Unix;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleAbout : Window {
+    public class PryanetAbout : Window {
 
-        public SparkleAboutController Controller = new SparkleAboutController ();
+        public PryanetAboutController Controller = new PryanetAboutController ();
 
         private Label updates;
 
 
-        public SparkleAbout () : base ("")
+        public PryanetAbout () : base ("")
         {
             DefaultSize    = new Gdk.Size (600, 260);
             Resizable      = false;
             BorderWidth    = 0;
-            IconName       = "folder-sparkleshare";
+            IconName       = "folder-pryanetshare";
             WindowPosition = WindowPosition.Center;
-            Title          = "About SparkleShare";
+            Title          = "About PryanetShare";
             AppPaintable   = true;
 
-            string image_path = new string [] { SparkleUI.AssetsPath, "pixmaps", "about.png" }.Combine ();
+            string image_path = new string [] { PryanetUI.AssetsPath, "pixmaps", "about.png" }.Combine ();
 
             Realize ();
             Gdk.Pixbuf buf = new Gdk.Pixbuf (image_path);
@@ -114,7 +114,7 @@ namespace SparkleShare {
                 LineWrap     = true,
                 LineWrapMode = Pango.WrapMode.Word,
                 Markup       = "<span font_size='small' fgcolor='white'>" +
-                               "SparkleShare is Open Source software. You are free to use, modify, " +
+                               "PryanetShare is Open Source software. You are free to use, modify, " +
                                "and redistribute it under the GNU General Public License version 3 or later." +
                                "</span>",
                 WidthRequest = 330,
@@ -131,10 +131,10 @@ namespace SparkleShare {
 			
 			HBox links_layout = new HBox (false, 6);
 			
-			SparkleLink website_link        = new SparkleLink ("Website", Controller.WebsiteLinkAddress);
-			SparkleLink credits_link        = new SparkleLink ("Credits", Controller.CreditsLinkAddress);
-            SparkleLink report_problem_link = new SparkleLink ("Report a problem", Controller.ReportProblemLinkAddress);
-            SparkleLink debug_log_link = new SparkleLink ("Debug log", Controller.DebugLogLinkAddress);
+			PryanetLink website_link        = new PryanetLink ("Website", Controller.WebsiteLinkAddress);
+			PryanetLink credits_link        = new PryanetLink ("Credits", Controller.CreditsLinkAddress);
+            PryanetLink report_problem_link = new PryanetLink ("Report a problem", Controller.ReportProblemLinkAddress);
+            PryanetLink debug_log_link = new PryanetLink ("Debug log", Controller.DebugLogLinkAddress);
 			
 			links_layout.PackStart (new Label (""), false, false, 143);
 			links_layout.PackStart (website_link, false, false, 9);
@@ -154,9 +154,9 @@ namespace SparkleShare {
     }
 	
 	
-	public class SparkleLink : EventBox {
+	public class PryanetLink : EventBox {
 		
-		public SparkleLink (string text, string url)
+		public PryanetLink (string text, string url)
 		{
 			VisibleWindow = false;
 			

@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -22,29 +22,29 @@ using System.IO;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleAbout : NSWindow {
+    public class PryanetAbout : NSWindow {
 
-        public SparkleAboutController Controller = new SparkleAboutController ();
+        public PryanetAboutController Controller = new PryanetAboutController ();
 
         private NSTextField version_text_field, updates_text_field, credits_text_field;
-        private SparkleLink website_link, credits_link, report_problem_link, debug_log_link;
+        private PryanetLink website_link, credits_link, report_problem_link, debug_log_link;
         private NSImage about_image;
         private NSImageView about_image_view;
         private NSButton hidden_close_button;
 
 
-        public SparkleAbout (IntPtr handle) : base (handle) { }
+        public PryanetAbout (IntPtr handle) : base (handle) { }
 
-        public SparkleAbout () : base ()
+        public PryanetAbout () : base ()
         {
             SetFrame (new RectangleF (0, 0, 640, 281), true);
             Center ();
 
-            Delegate    = new SparkleAboutDelegate ();
+            Delegate    = new PryanetAboutDelegate ();
             StyleMask   = (NSWindowStyle.Closable | NSWindowStyle.Titled);
-            Title       = "About SparkleShare";
+            Title       = "About PryanetShare";
             MaxSize     = new SizeF (640, 281);
             MinSize     = new SizeF (640, 281);
             HasShadow   = true;
@@ -88,7 +88,7 @@ namespace SparkleShare {
                 Frame = new RectangleF (0, 0, 640, 260)
             };
 
-            this.version_text_field = new SparkleLabel ("version " + Controller.RunningVersion, NSTextAlignment.Left) {
+            this.version_text_field = new PryanetLabel ("version " + Controller.RunningVersion, NSTextAlignment.Left) {
                 DrawsBackground = false,
                 Frame           = new RectangleF (295, 140, 318, 22),
                 TextColor       = NSColor.White,
@@ -96,7 +96,7 @@ namespace SparkleShare {
                     "Lucida Grande", NSFontTraitMask.Unbold, 0, 11)
             };
 
-            this.updates_text_field = new SparkleLabel ("Checking for updates...", NSTextAlignment.Left) {
+            this.updates_text_field = new PryanetLabel ("Checking for updates...", NSTextAlignment.Left) {
                 DrawsBackground = false,
                 Frame           = new RectangleF (295, Frame.Height - 232, 318, 98),
                 TextColor       = NSColor.FromCalibratedRgba (1.0f, 1.0f, 1.0f, 0.5f),
@@ -104,11 +104,11 @@ namespace SparkleShare {
                     "Lucida Grande", NSFontTraitMask.Unbold, 0, 11)
             };
 
-            this.credits_text_field = new SparkleLabel (
+            this.credits_text_field = new PryanetLabel (
                 @"Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others." +
                 "\n" +
                 "\n" +
-                "SparkleShare is Open Source software. You are free to use, modify, and redistribute it " +
+                "PryanetShare is Open Source software. You are free to use, modify, and redistribute it " +
                 "under the GNU General Public License version 3 or later.", NSTextAlignment.Left) {
                 
                 DrawsBackground = false,
@@ -118,20 +118,20 @@ namespace SparkleShare {
                     "Lucida Grande", NSFontTraitMask.Unbold, 0, 11),
             };
 
-            this.website_link       = new SparkleLink ("Website", Controller.WebsiteLinkAddress);
+            this.website_link       = new PryanetLink ("Website", Controller.WebsiteLinkAddress);
             this.website_link.Frame = new RectangleF (new PointF (295, 25), this.website_link.Frame.Size);
             
-            this.credits_link       = new SparkleLink ("Credits", Controller.CreditsLinkAddress);
+            this.credits_link       = new PryanetLink ("Credits", Controller.CreditsLinkAddress);
             this.credits_link.Frame = new RectangleF (
                 new PointF (this.website_link.Frame.X + this.website_link.Frame.Width + 10, 25),
                 this.credits_link.Frame.Size);
             
-            this.report_problem_link       = new SparkleLink ("Report a problem", Controller.ReportProblemLinkAddress);
+            this.report_problem_link       = new PryanetLink ("Report a problem", Controller.ReportProblemLinkAddress);
             this.report_problem_link.Frame = new RectangleF (
                 new PointF (this.credits_link.Frame.X + this.credits_link.Frame.Width + 10, 25),
                 this.report_problem_link.Frame.Size);
             
-            this.debug_log_link       = new SparkleLink ("Debug log", Controller.DebugLogLinkAddress);
+            this.debug_log_link       = new PryanetLink ("Debug log", Controller.DebugLogLinkAddress);
             this.debug_log_link.Frame = new RectangleF (
                 new PointF (this.report_problem_link.Frame.X + this.report_problem_link.Frame.Width + 10, 25),
                 this.debug_log_link.Frame.Size);
@@ -170,22 +170,22 @@ namespace SparkleShare {
         }
 
 
-        private class SparkleAboutDelegate : NSWindowDelegate {
+        private class PryanetAboutDelegate : NSWindowDelegate {
             
             public override bool WindowShouldClose (NSObject sender)
             {
-                (sender as SparkleAbout).Controller.WindowClosed ();
+                (sender as PryanetAbout).Controller.WindowClosed ();
                 return false;
             }
         }
         
         
-        private class SparkleLink : NSTextField {
+        private class PryanetLink : NSTextField {
             
             private NSUrl url;
             
             
-            public SparkleLink (string text, string address) : base ()
+            public PryanetLink (string text, string address) : base ()
             {
                 this.url = new NSUrl (address);
                 

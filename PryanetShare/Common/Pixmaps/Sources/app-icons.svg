@@ -54,7 +54,7 @@
             <dc:title>Hylke Bons, Lapo Calamandrei</dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:title>sparkleshare</dc:title>
+        <dc:title>pryanetshare</dc:title>
         <dc:subject>
           <rdf:Bag>
             <rdf:li>folder</rdf:li>
@@ -1207,7 +1207,7 @@
          fill="#000000"><tspan
            id="tspan4716"
            x="166.9707"
-           y="-228.48639">sparkleshare</tspan></text>
+           y="-228.48639">pryanetshare</tspan></text>
       <rect
          id="rect22378"
          style="enable-background:accumulate"

@@ -6,9 +6,9 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <ProjectGuid>{728483AA-E34B-4441-BF2C-C8BC2901E4E0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AssemblyName>SparkleShare</AssemblyName>
+    <AssemblyName>PryanetShare</AssemblyName>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>SparkleShare</RootNamespace>
+    <RootNamespace>PryanetShare</RootNamespace>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -29,7 +29,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>Pixmaps\sparkleshare-app.ico</ApplicationIcon>
+    <ApplicationIcon>Pixmaps\pryanetshare-app.ico</ApplicationIcon>
     <ReleaseVersion />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -57,47 +57,47 @@
     <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SparkleBubblesController.cs">
-      <Link>SparkleBubblesController.cs</Link>
+    <Compile Include="..\PryanetBubblesController.cs">
+      <Link>PryanetBubblesController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleControllerBase.cs">
-      <Link>SparkleControllerBase.cs</Link>
+    <Compile Include="..\PryanetControllerBase.cs">
+      <Link>PryanetControllerBase.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleExtensions.cs">
-      <Link>SparkleExtensions.cs</Link>
+    <Compile Include="..\PryanetExtensions.cs">
+      <Link>PryanetExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleInvite.cs">
-      <Link>SparkleInvite.cs</Link>
+    <Compile Include="..\PryanetInvite.cs">
+      <Link>PryanetInvite.cs</Link>
     </Compile>
-    <Compile Include="..\SparklePlugin.cs">
-      <Link>SparklePlugin.cs</Link>
+    <Compile Include="..\PryanetPlugin.cs">
+      <Link>PryanetPlugin.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleStatusIconController.cs">
-      <Link>SparkleStatusIconController.cs</Link>
+    <Compile Include="..\PryanetStatusIconController.cs">
+      <Link>PryanetStatusIconController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleSetupController.cs" />
-    <Compile Include="SparkleShortcut.cs" />
-    <Compile Include="SparkleUI.cs" />
-    <Compile Include="..\SparkleAboutController.cs" />
-    <Compile Include="SparkleBubbles.cs" />
-    <Compile Include="SparkleAbout.cs" />
-    <Compile Include="SparkleController.cs" />
-    <Compile Include="SparkleEventLog.cs" />
-    <Compile Include="SparkleSetup.cs" />
-    <Compile Include="SparkleStatusIcon.cs" />
-    <Compile Include="SparkleUIHelpers.cs" />
-    <Compile Include="..\SparkleEventLogController.cs">
-      <Link>SparkleEventLogController.cs</Link>
+    <Compile Include="..\PryanetSetupController.cs" />
+    <Compile Include="PryanetShortcut.cs" />
+    <Compile Include="PryanetUI.cs" />
+    <Compile Include="..\PryanetAboutController.cs" />
+    <Compile Include="PryanetBubbles.cs" />
+    <Compile Include="PryanetAbout.cs" />
+    <Compile Include="PryanetController.cs" />
+    <Compile Include="PryanetEventLog.cs" />
+    <Compile Include="PryanetSetup.cs" />
+    <Compile Include="PryanetStatusIcon.cs" />
+    <Compile Include="PryanetUIHelpers.cs" />
+    <Compile Include="..\PryanetEventLogController.cs">
+      <Link>PryanetEventLogController.cs</Link>
     </Compile>
-    <Compile Include="..\SparkleKeys.cs">
-      <Link>SparkleKeys.cs</Link>
+    <Compile Include="..\PryanetKeys.cs">
+      <Link>PryanetKeys.cs</Link>
     </Compile>
-    <Compile Include="SparkleSetupWindow.cs" />
+    <Compile Include="PryanetSetupWindow.cs" />
     <Compile Include="..\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
-    <Compile Include="SparkleNotifyIcon.cs" />
-    <Compile Include="SparkleSpinner.cs" />
+    <Compile Include="PryanetNotifyIcon.cs" />
+    <Compile Include="PryanetSpinner.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -239,19 +239,19 @@
   <ItemGroup>
     <EmbeddedResource Include="Pixmaps\folder.png" />
     <EmbeddedResource Include="Pixmaps\process-syncing-error.png" />
-    <EmbeddedResource Include="Pixmaps\sparkleshare-app.ico" />
-    <EmbeddedResource Include="Pixmaps\sparkleshare-folder.png" />
+    <EmbeddedResource Include="Pixmaps\pryanetshare-app.ico" />
+    <EmbeddedResource Include="Pixmaps\pryanetshare-folder.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pixmaps\tutorial-slide-3.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SparkleLib\SparkleLib.csproj">
+    <ProjectReference Include="..\..\PryanetLib\PryanetLib.csproj">
       <Project>{2C914413-B31C-4362-93C7-1AE34F09112A}</Project>
-      <Name>SparkleLib</Name>
+      <Name>PryanetLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pixmaps\sparkleshare-folder.ico" />
+    <Content Include="Pixmaps\pryanetshare-folder.ico" />
   </ItemGroup>
 </Project>

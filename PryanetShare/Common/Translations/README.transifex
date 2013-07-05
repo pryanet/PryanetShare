@@ -4,7 +4,7 @@ Transifex.net Token Verification
 The list of tokens bellow guarantee the respective users to be able to enable 
 submission on components using the following repository url:
 
-git@gitorious.org:sparkleshare/sparkleshare.git
+git@gitorious.org:pryanetshare/pryanetshare.git
 
 Tokens:
 

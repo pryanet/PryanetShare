@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
 using System;
 using System.Threading;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    // This is SparkleShare!
+    // This is PryanetShare!
     public class Program {
 
-        public static SparkleController Controller;
-        public static SparkleUI UI;
+        public static PryanetController Controller;
+        public static PryanetUI UI;
 
-        private static Mutex program_mutex = new Mutex (false, "SparkleShare");
+        private static Mutex program_mutex = new Mutex (false, "PryanetShare");
         
      
         #if !__MonoCS__
@@ -37,42 +37,42 @@ namespace SparkleShare {
         public static void Main (string [] args)
         {
             if (args.Length != 0 && !args [0].Equals ("start") &&
-                SparkleBackend.Platform != PlatformID.MacOSX &&
-                SparkleBackend.Platform != PlatformID.Win32NT) {
+                PryanetBackend.Platform != PlatformID.MacOSX &&
+                PryanetBackend.Platform != PlatformID.Win32NT) {
 
                 string n = Environment.NewLine;
 
                 Console.WriteLine (n +
-                    "SparkleShare is a collaboration and sharing tool that is" + n +
+                    "PryanetShare is a collaboration and sharing tool that is" + n +
                     "designed to keep things simple and to stay out of your way." + n +
                     n +
-                    "Version: " + SparkleLib.SparkleBackend.Version + n +
+                    "Version: " + PryanetLib.PryanetBackend.Version + n +
                     "Copyright (C) 2010 Hylke Bons" + n +
                     "This program comes with ABSOLUTELY NO WARRANTY." + n +
                     n +
                     "This is free software, and you are welcome to redistribute it" + n +
                     "under certain conditions. Please read the GNU GPLv3 for details." + n +
                     n +
-                    "Usage: sparkleshare [start|stop|restart]");
+                    "Usage: pryanetshare [start|stop|restart]");
 
                 Environment.Exit (-1);
             }
 
-            // Only allow one instance of SparkleShare (on Windows)
+            // Only allow one instance of PryanetShare (on Windows)
             if (!program_mutex.WaitOne (0, false)) {
-                Console.WriteLine ("SparkleShare is already running.");
+                Console.WriteLine ("PryanetShare is already running.");
                 Environment.Exit (-1);
             }
 
             try {
-                Controller = new SparkleController ();
+                Controller = new PryanetController ();
                 Controller.Initialize ();
 
-                UI = new SparkleUI ();
+                UI = new PryanetUI ();
                 UI.Run ();
             
             } catch (Exception e) {
-                SparkleLogger.WriteCrashReport (e);
+                PryanetLogger.WriteCrashReport (e);
                 Environment.Exit (-1);
             }
          

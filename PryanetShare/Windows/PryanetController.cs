@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -27,17 +27,17 @@ using System.Threading;
 using Forms = System.Windows.Forms;
 
 using Microsoft.Win32;
-using SparkleLib;
+using PryanetLib;
 using System.Windows;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleController : SparkleControllerBase {
+    public class PryanetController : PryanetControllerBase {
 
         private int ssh_agent_pid;
 
 
-        public SparkleController () : base ()
+        public PryanetController () : base ()
         {
         }
 
@@ -72,22 +72,22 @@ namespace SparkleShare {
 
         public override string EventLogHTML {
             get {
-                string html = SparkleUIHelpers.GetHTML ("event-log.html");
-                return html.Replace ("<!-- $jquery -->", SparkleUIHelpers.GetHTML ("jquery.js"));
+                string html = PryanetUIHelpers.GetHTML ("event-log.html");
+                return html.Replace ("<!-- $jquery -->", PryanetUIHelpers.GetHTML ("jquery.js"));
             }
         }
 
 
         public override string DayEntryHTML {
             get {
-                return SparkleUIHelpers.GetHTML ("day-entry.html");
+                return PryanetUIHelpers.GetHTML ("day-entry.html");
             }
         }
 
 
         public override string EventEntryHTML {
             get {
-                return SparkleUIHelpers.GetHTML ("event-entry.html");
+                return PryanetUIHelpers.GetHTML ("event-entry.html");
             }
         }
 
@@ -95,7 +95,7 @@ namespace SparkleShare {
         public override void CreateStartupItem ()
         {
             string startup_folder_path = Environment.GetFolderPath (Environment.SpecialFolder.Startup);
-            string shortcut_path       = Path.Combine (startup_folder_path, "SparkleShare.lnk");
+            string shortcut_path       = Path.Combine (startup_folder_path, "PryanetShare.lnk");
 
             if (File.Exists (shortcut_path))
                 File.Delete (shortcut_path);
@@ -116,7 +116,7 @@ namespace SparkleShare {
         public override void AddToBookmarks ()
         {
             string user_profile_path = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
-            string shortcut_path     = Path.Combine (user_profile_path, "Links", "SparkleShare.lnk");
+            string shortcut_path     = Path.Combine (user_profile_path, "Links", "PryanetShare.lnk");
 
             if (File.Exists (shortcut_path))
                 File.Delete (shortcut_path);
@@ -126,7 +126,7 @@ namespace SparkleShare {
         }
 
 
-        public override bool CreateSparkleShareFolder ()
+        public override bool CreatePryanetShareFolder ()
         {
             if (Directory.Exists (FoldersPath))
                 return false;
@@ -134,10 +134,10 @@ namespace SparkleShare {
         	Directory.CreateDirectory (FoldersPath);
 
 			File.SetAttributes (FoldersPath, File.GetAttributes (FoldersPath) | FileAttributes.System);
-            SparkleLogger.LogInfo ("Config", "Created '" + FoldersPath + "'");
+            PryanetLogger.LogInfo ("Config", "Created '" + FoldersPath + "'");
 
             string app_path       = Path.GetDirectoryName (Forms.Application.ExecutablePath);
-            string icon_file_path = Path.Combine (app_path, "Pixmaps", "sparkleshare-folder.ico");
+            string icon_file_path = Path.Combine (app_path, "Pixmaps", "pryanetshare-folder.ico");
 
             if (!File.Exists (icon_file_path)) {
                 string ini_file_path  = Path.Combine (FoldersPath, "desktop.ini");
@@ -146,7 +146,7 @@ namespace SparkleShare {
                 string ini_file = "[.ShellClassInfo]" + n +
                     "IconFile=" + icon_file_path + n +
                     "IconIndex=0" + n +
-                    "InfoTip=SparkleShare";
+                    "InfoTip=PryanetShare";
 
                 try {
                     File.Create (ini_file_path).Close ();
@@ -156,7 +156,7 @@ namespace SparkleShare {
                         File.GetAttributes (ini_file_path) | FileAttributes.Hidden | FileAttributes.System);
 
                 } catch (IOException e) {
-                    SparkleLogger.LogInfo ("Config", "Failed setting icon for '" + FoldersPath + "': " + e.Message);
+                    PryanetLogger.LogInfo ("Config", "Failed setting icon for '" + FoldersPath + "': " + e.Message);
                 }
 
                 return true;
@@ -206,17 +206,17 @@ namespace SparkleShare {
             string auth_agent_pid = Environment.GetEnvironmentVariable ("SSH_AGENT_PID");
 
             if (!string.IsNullOrEmpty (auth_agent_pid)) {
-                SparkleLogger.LogInfo ("Controller", "Trying to use existing ssh-agent with PID=" + auth_agent_pid + "...");
+                PryanetLogger.LogInfo ("Controller", "Trying to use existing ssh-agent with PID=" + auth_agent_pid + "...");
                 this.ssh_agent_pid = Convert.ToInt32 (auth_agent_pid);
                 
                 try {
                     Process ssh_agent = Process.GetProcessById (this.ssh_agent_pid);
-                    SparkleLogger.LogInfo ("Controller", "Using existing ssh-agent with PID=" + this.ssh_agent_pid);
+                    PryanetLogger.LogInfo ("Controller", "Using existing ssh-agent with PID=" + this.ssh_agent_pid);
 
                     return;
 
                 } catch (ArgumentException) {
-                    SparkleLogger.LogInfo ("Controller", "ssh-agent with PID=" + auth_agent_pid + " does not exist. Starting a new one...");
+                    PryanetLogger.LogInfo ("Controller", "ssh-agent with PID=" + auth_agent_pid + " does not exist. Starting a new one...");
                 }
             }
 
@@ -241,10 +241,10 @@ namespace SparkleShare {
                 Int32.TryParse (ssh_pid_match.Groups [1].Value, out this.ssh_agent_pid);
                 Environment.SetEnvironmentVariable ("SSH_AGENT_PID", "" + this.ssh_agent_pid);
 
-                SparkleLogger.LogInfo ("Controller", "ssh-agent started, PID=" + this.ssh_agent_pid);
+                PryanetLogger.LogInfo ("Controller", "ssh-agent started, PID=" + this.ssh_agent_pid);
 
             } else {
-                SparkleLogger.LogInfo ("Controller", "Could not start ssh-agent:" + output);
+                PryanetLogger.LogInfo ("Controller", "Could not start ssh-agent:" + output);
             }
         }
 
@@ -258,7 +258,7 @@ namespace SparkleShare {
                 Process.GetProcessById (this.ssh_agent_pid).Kill ();
 
             } catch (ArgumentException e) {
-                SparkleLogger.LogInfo ("SSH", "Could not stop ssh-agent: " + e.Message);
+                PryanetLogger.LogInfo ("SSH", "Could not stop ssh-agent: " + e.Message);
             }
         }
     }

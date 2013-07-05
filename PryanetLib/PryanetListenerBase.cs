@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,17 +19,17 @@ using System;
 using System.Collections.Generic;
 using System.Timers;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
     // A persistent connection to the server that
     // listens for change notifications
-    public abstract class SparkleListenerBase {
+    public abstract class PryanetListenerBase {
 
         public event Action Connected = delegate { };
         public event Action Disconnected = delegate { };
 
         public event AnnouncementReceivedEventHandler AnnouncementReceived = delegate { };
-        public delegate void AnnouncementReceivedEventHandler (SparkleAnnouncement announcement);
+        public delegate void AnnouncementReceivedEventHandler (PryanetAnnouncement announcement);
 
         public readonly Uri Server;
 
@@ -38,7 +38,7 @@ namespace SparkleLib {
         public abstract bool IsConnecting { get; }
 
 
-        protected abstract void AnnounceInternal (SparkleAnnouncement announcent);
+        protected abstract void AnnounceInternal (PryanetAnnouncement announcent);
         protected abstract void AlsoListenToInternal (string folder_identifier);
 
         protected List<string> channels = new List<string> ();
@@ -46,10 +46,10 @@ namespace SparkleLib {
 
         private int max_recent_announcements = 10;
 
-        private Dictionary<string, List<SparkleAnnouncement>> recent_announcements =
-            new Dictionary<string, List<SparkleAnnouncement>> ();
+        private Dictionary<string, List<PryanetAnnouncement>> recent_announcements =
+            new Dictionary<string, List<PryanetAnnouncement>> ();
 
-        private Dictionary<string, SparkleAnnouncement> queue_up   = new Dictionary<string, SparkleAnnouncement> ();
+        private Dictionary<string, PryanetAnnouncement> queue_up   = new Dictionary<string, PryanetAnnouncement> ();
 
         private Timer reconnect_timer = new Timer {
             Interval = 60 * 1000,
@@ -57,7 +57,7 @@ namespace SparkleLib {
         };
 
 
-        public SparkleListenerBase (Uri server, string folder_identifier)
+        public PryanetListenerBase (Uri server, string folder_identifier)
         {
             Server = server;
             this.channels.Add (folder_identifier);
@@ -71,23 +71,23 @@ namespace SparkleLib {
         }
 
 
-        public void Announce (SparkleAnnouncement announcement)
+        public void Announce (PryanetAnnouncement announcement)
         {
             if (!IsRecentAnnouncement (announcement)) {
                 if (IsConnected) {
-                    SparkleLogger.LogInfo ("Listener", "Announcing message " + announcement.Message +
+                    PryanetLogger.LogInfo ("Listener", "Announcing message " + announcement.Message +
                         " to " + announcement.FolderIdentifier + " on " + Server);
 
                     AnnounceInternal (announcement);
                     AddRecentAnnouncement (announcement);
 
                 } else {
-                    SparkleLogger.LogInfo ("Listener", "Can't send message to " + Server + ". Queuing message");
+                    PryanetLogger.LogInfo ("Listener", "Can't send message to " + Server + ". Queuing message");
                     this.queue_up [announcement.FolderIdentifier] = announcement;
                 }
 
             } else {
-                SparkleLogger.LogInfo ("Listener", "Already processed message " + announcement.Message +
+                PryanetLogger.LogInfo ("Listener", "Already processed message " + announcement.Message +
                     " to " + announcement.FolderIdentifier + " from " + Server);
             }
         }
@@ -99,7 +99,7 @@ namespace SparkleLib {
                 this.channels.Add (channel);
 
             if (IsConnected) {
-                SparkleLogger.LogInfo ("Listener", "Subscribing to channel " + channel + " on " + Server);
+                PryanetLogger.LogInfo ("Listener", "Subscribing to channel " + channel + " on " + Server);
                 AlsoListenToInternal (channel);
             }
         }
@@ -107,7 +107,7 @@ namespace SparkleLib {
 
         public void Reconnect ()
         {
-            SparkleLogger.LogInfo ("Listener", "Trying to reconnect to " + Server);
+            PryanetLogger.LogInfo ("Listener", "Trying to reconnect to " + Server);
             Connect ();
         }
 
@@ -115,18 +115,18 @@ namespace SparkleLib {
         public void OnConnected ()
         {
             foreach (string channel in this.channels.GetRange (0, this.channels.Count)) {
-                SparkleLogger.LogInfo ("Listener", "Subscribing to channel " + channel + " on " + Server);
+                PryanetLogger.LogInfo ("Listener", "Subscribing to channel " + channel + " on " + Server);
                 AlsoListenToInternal (channel);
             }
 
-            SparkleLogger.LogInfo ("Listener", "Listening for announcements on " + Server);
+            PryanetLogger.LogInfo ("Listener", "Listening for announcements on " + Server);
             Connected ();
 
             if (this.queue_up.Count > 0) {
-                SparkleLogger.LogInfo ("Listener", "Delivering " + this.queue_up.Count + " queued messages...");
+                PryanetLogger.LogInfo ("Listener", "Delivering " + this.queue_up.Count + " queued messages...");
 
-                foreach (KeyValuePair<string, SparkleAnnouncement> item in this.queue_up) {
-                    SparkleAnnouncement announcement = item.Value;
+                foreach (KeyValuePair<string, PryanetAnnouncement> item in this.queue_up) {
+                    PryanetAnnouncement announcement = item.Value;
                     Announce (announcement);
                 }
             }
@@ -135,14 +135,14 @@ namespace SparkleLib {
 
         public void OnDisconnected (string message)
         {
-            SparkleLogger.LogInfo ("Listener", "Disconnected from " + Server + ": " + message);
+            PryanetLogger.LogInfo ("Listener", "Disconnected from " + Server + ": " + message);
             Disconnected ();
         }
 
 
-        public void OnAnnouncement (SparkleAnnouncement announcement)
+        public void OnAnnouncement (PryanetAnnouncement announcement)
         {
-            SparkleLogger.LogInfo ("Listener", "Got message " + announcement.Message + " from " +
+            PryanetLogger.LogInfo ("Listener", "Got message " + announcement.Message + " from " +
                 announcement.FolderIdentifier + " on " + Server);
 
             if (IsRecentAnnouncement (announcement))
@@ -159,13 +159,13 @@ namespace SparkleLib {
         }
 
 
-        private bool IsRecentAnnouncement (SparkleAnnouncement announcement)
+        private bool IsRecentAnnouncement (PryanetAnnouncement announcement)
         {
             if (!this.recent_announcements.ContainsKey (announcement.FolderIdentifier)) {
                 return false;
 
             } else {
-                foreach (SparkleAnnouncement recent_announcement in GetRecentAnnouncements (announcement.FolderIdentifier)) {
+                foreach (PryanetAnnouncement recent_announcement in GetRecentAnnouncements (announcement.FolderIdentifier)) {
                     if (recent_announcement.Message.Equals (announcement.Message))
                         return true;
                 }
@@ -175,18 +175,18 @@ namespace SparkleLib {
         }
 
 
-        private List<SparkleAnnouncement> GetRecentAnnouncements (string folder_identifier)
+        private List<PryanetAnnouncement> GetRecentAnnouncements (string folder_identifier)
         {
             if (!this.recent_announcements.ContainsKey (folder_identifier))
-                this.recent_announcements [folder_identifier] = new List<SparkleAnnouncement> ();
+                this.recent_announcements [folder_identifier] = new List<PryanetAnnouncement> ();
 
             return this.recent_announcements [folder_identifier];
         }
 
 
-        private void AddRecentAnnouncement (SparkleAnnouncement announcement)
+        private void AddRecentAnnouncement (PryanetAnnouncement announcement)
         {
-            List<SparkleAnnouncement> recent_announcements =
+            List<PryanetAnnouncement> recent_announcements =
                 GetRecentAnnouncements (announcement.FolderIdentifier);
 
             if (!IsRecentAnnouncement (announcement))

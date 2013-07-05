@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,13 @@
 using System;
 using System.IO;
 using System.Diagnostics;
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleLib.Git {
+namespace PryanetLib.Git {
 
-    public abstract class SparkleProcess : Process {
+    public abstract class PryanetProcess : Process {
 
-        public SparkleProcess (string path, string args) : base ()
+        public PryanetProcess (string path, string args) : base ()
         {
             StartInfo.FileName  = path;
             StartInfo.Arguments = args;
@@ -33,14 +33,14 @@ namespace SparkleLib.Git {
 
         new public void Start ()
         {
-            SparkleLogger.LogInfo ("Cmd | " + System.IO.Path.GetFileName (StartInfo.WorkingDirectory),
+            PryanetLogger.LogInfo ("Cmd | " + System.IO.Path.GetFileName (StartInfo.WorkingDirectory),
                 System.IO.Path.GetFileName (StartInfo.FileName) + " " + StartInfo.Arguments);
 
             try {
                 base.Start ();
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Cmd", "Couldn't execute command: " + e.Message);
+                PryanetLogger.LogInfo ("Cmd", "Couldn't execute command: " + e.Message);
                 Environment.Exit (-1);
             }
         }
@@ -99,13 +99,13 @@ namespace SparkleLib.Git {
     }
 
 
-    public class SparkleGit : SparkleProcess {
+    public class PryanetGit : PryanetProcess {
 
         public static string ExecPath;
         public static string GitPath;
 
 
-        public SparkleGit (string path, string args) : base (path, args)
+        public PryanetGit (string path, string args) : base (path, args)
         {
             if (string.IsNullOrEmpty (GitPath))
                 GitPath = LocateCommand ("git");
@@ -130,12 +130,12 @@ namespace SparkleLib.Git {
     }
 
 
-    public class SparkleGitBin : SparkleProcess {
+    public class PryanetGitBin : PryanetProcess {
 
         public static string GitBinPath;
 
 
-        public SparkleGitBin (string path, string args) : base (path, args)
+        public PryanetGitBin (string path, string args) : base (path, args)
         {
             if (string.IsNullOrEmpty (GitBinPath))
                 GitBinPath = LocateCommand ("git-bin");

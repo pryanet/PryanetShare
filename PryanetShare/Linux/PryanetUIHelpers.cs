@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@ using System.IO;
 
 using Gtk;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public static class SparkleUIHelpers {
+    public static class PryanetUIHelpers {
 
         public static Gdk.Pixbuf GetIcon (string name, int size)
         {
@@ -35,7 +35,7 @@ namespace SparkleShare {
             icon_theme.AppendSearchPath ("/usr/share/icons");
             icon_theme.AppendSearchPath ("/usr/local/share/icons");
             icon_theme.AppendSearchPath ("/opt/local/share/icons");
-            icon_theme.AppendSearchPath (Path.Combine (SparkleUI.AssetsPath, "icons"));
+            icon_theme.AppendSearchPath (Path.Combine (PryanetUI.AssetsPath, "icons"));
 
             try {
                 return icon_theme.LoadIcon (name, size, IconLookupFlags.GenericFallback);
@@ -53,7 +53,7 @@ namespace SparkleShare {
 
         public static Image GetImage (string name)
         {
-            string image_path = new string [] { SparkleUI.AssetsPath, "pixmaps", name }.Combine ();
+            string image_path = new string [] { PryanetUI.AssetsPath, "pixmaps", name }.Combine ();
             return new Image (image_path);
         }
 

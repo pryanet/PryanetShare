@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
     public static class Extensions {
 

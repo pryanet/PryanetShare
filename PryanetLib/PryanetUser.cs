@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
 
 using System;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
-    public class SparkleUser {
+    public class PryanetUser {
 
         public readonly string Name;
         public readonly string Email;
@@ -31,7 +31,7 @@ namespace SparkleLib {
         public string PublicKeyFilePath;
 
 
-        public SparkleUser (string name, string email)
+        public PryanetUser (string name, string email)
         {
             Name  = name;
             Email = email;

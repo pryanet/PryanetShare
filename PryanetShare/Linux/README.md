@@ -1,8 +1,8 @@
 ## Building on Linux distributions
 
-You can choose to build SparkleShare from source or to get the package through your distribution's repositories.
+You can choose to build PryanetShare from source or to get the package through your distribution's repositories.
 
-To run SparkleShare, you'll need the following packages:
+To run PryanetShare, you'll need the following packages:
 
 ```
 curl
@@ -60,7 +60,7 @@ $ sudo zypper install gtk-sharp2 mono-core mono-devel monodevelop ndesk-dbus-gli
 
 ### Starting the build
 
-You can build and install SparkleShare like this:
+You can build and install PryanetShare like this:
 
 ```bash
 $ ./configure (or ./autogen.sh if you build from the repository)
@@ -69,11 +69,11 @@ $ sudo make install
 ```
 
 
-### Resetting SparkleShare settings
+### Resetting PryanetShare settings
 
 ```
-rm -Rf ~/SparkleShare
-rm -Rf ~/.config/sparkleshare
+rm -Rf ~/PryanetShare
+rm -Rf ~/.config/pryanetshare
 ```
 
 

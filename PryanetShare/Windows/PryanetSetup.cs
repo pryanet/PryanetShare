@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -34,14 +34,14 @@ using Drawing = System.Drawing;
 using Imaging = System.Windows.Interop.Imaging;
 using WPF = System.Windows.Controls;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleSetup : SparkleSetupWindow {
+    public class PryanetSetup : PryanetSetupWindow {
     
-        public SparkleSetupController Controller = new SparkleSetupController ();
+        public PryanetSetupController Controller = new PryanetSetupController ();
         
         
-        public SparkleSetup ()
+        public PryanetSetup ()
         {
             Controller.ShowWindowEvent += delegate {
                Dispatcher.BeginInvoke ((Action) delegate {
@@ -63,7 +63,7 @@ namespace SparkleShare {
                     
                     switch (type) {
                     case PageType.Setup: {
-                        Header      = "Welcome to SparkleShare!";
+                        Header      = "Welcome to PryanetShare!";
                         Description  = "First off, what's your name and email?\nThis information is only visible to team members.";
                         
                         TextBlock name_label = new TextBlock () {
@@ -157,7 +157,7 @@ namespace SparkleShare {
 
                     case PageType.Invite: {
                         Header      = "You've received an invite!";
-                           Description = "Do you want to add this project to SparkleShare?";
+                           Description = "Do you want to add this project to PryanetShare?";
         
                         
                         TextBlock address_label = new TextBlock () {
@@ -265,7 +265,7 @@ namespace SparkleShare {
                         header_style.Setters.Add (new Setter (GridViewColumnHeader.VisibilityProperty, Visibility.Collapsed));
                         grid_view.ColumnHeaderContainerStyle = header_style;
                         
-                        foreach (SparklePlugin plugin in Controller.Plugins) {
+                        foreach (PryanetPlugin plugin in Controller.Plugins) {
                             // FIXME: images are blurry
                             BitmapFrame image = BitmapFrame.Create (
                                 new Uri (plugin.ImagePath)
@@ -746,7 +746,7 @@ namespace SparkleShare {
 
                     case PageType.Finished: {
                         Header      = "Your shared project is ready!";
-                        Description = "You can find the files in your SparkleShare folder.";
+                        Description = "You can find the files in your PryanetShare folder.";
                         
                         
                         Button finish_button = new Button () {
@@ -800,7 +800,7 @@ namespace SparkleShare {
                         switch (Controller.TutorialPageNumber) {
                             case 1: {
                                 Header      = "What's happening next?";
-                                Description = "SparkleShare creates a special folder on your computer " +
+                                Description = "PryanetShare creates a special folder on your computer " +
                                     "that will keep track of your projects.";
     
                             
@@ -809,7 +809,7 @@ namespace SparkleShare {
                                     Height = 200
                                 };
                             
-                                slide_image.Source = SparkleUIHelpers.GetImageSource ("tutorial-slide-1");
+                                slide_image.Source = PryanetUIHelpers.GetImageSource ("tutorial-slide-1");
                             
                                 Button skip_tutorial_button = new Button () {
                                     Content = "Skip tutorial"
@@ -854,7 +854,7 @@ namespace SparkleShare {
                                     Height = 200
                                 };
                             
-                                slide_image.Source = SparkleUIHelpers.GetImageSource ("tutorial-slide-2");
+                                slide_image.Source = PryanetUIHelpers.GetImageSource ("tutorial-slide-2");
                             
                             
                                 ContentCanvas.Children.Add (slide_image);
@@ -885,7 +885,7 @@ namespace SparkleShare {
                                     Height = 200
                                 };
                             
-                                slide_image.Source = SparkleUIHelpers.GetImageSource ("tutorial-slide-3");
+                                slide_image.Source = PryanetUIHelpers.GetImageSource ("tutorial-slide-3");
                             
                             
                                 ContentCanvas.Children.Add (slide_image);
@@ -926,7 +926,7 @@ namespace SparkleShare {
                                 };
                                 
                                 CheckBox check_box = new CheckBox () {
-                                    Content   = "Add SparkleShare to startup items",
+                                    Content   = "Add PryanetShare to startup items",
                                     IsChecked = true
                                 };
                             

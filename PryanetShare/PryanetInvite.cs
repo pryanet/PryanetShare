@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,11 @@ using System.Net;
 using System.Text;
 using System.Xml;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleInvite : XmlDocument {
+    public class PryanetInvite : XmlDocument {
 
         public string Address { get; private set; }
         public string RemotePath { get; private set; }
@@ -40,13 +40,13 @@ namespace SparkleShare {
         }
 
 
-        public SparkleInvite (string xml_file_path) : base ()
+        public PryanetInvite (string xml_file_path) : base ()
         {
             try {
                 Load (xml_file_path);
 
             } catch (XmlException e) {
-                SparkleLogger.LogInfo ("Invite", "Error parsing XML", e);
+                PryanetLogger.LogInfo ("Invite", "Error parsing XML", e);
                 return;
             }
 
@@ -84,12 +84,12 @@ namespace SparkleShare {
                 response.Close ();
 
             } catch (WebException e) {
-                SparkleLogger.LogInfo ("Invite", "Failed uploading public key to " + AcceptUrl + "", e);
+                PryanetLogger.LogInfo ("Invite", "Failed uploading public key to " + AcceptUrl + "", e);
                 return false;
             }
 
             if (response != null && response.StatusCode == HttpStatusCode.OK) {
-                SparkleLogger.LogInfo ("Invite", "Uploaded public key to " + AcceptUrl);
+                PryanetLogger.LogInfo ("Invite", "Uploaded public key to " + AcceptUrl);
                 return true;
             }
 
@@ -100,7 +100,7 @@ namespace SparkleShare {
         private string ReadField (string name)
         {
             try {
-                XmlNode node = SelectSingleNode ("/sparkleshare/invite/" + name + "/text()");
+                XmlNode node = SelectSingleNode ("/pryanetshare/invite/" + name + "/text()");
                 
                 if (node != null)
                     return node.Value;    
@@ -108,7 +108,7 @@ namespace SparkleShare {
                     return "";
                 
             } catch (XmlException e) {
-                SparkleLogger.LogInfo ("Invite", "Error reading field '" + name + "'", e);
+                PryanetLogger.LogInfo ("Invite", "Error reading field '" + name + "'", e);
                 return "";
             }
         }

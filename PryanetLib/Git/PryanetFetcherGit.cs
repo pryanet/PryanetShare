@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,13 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleLib.Git {
+namespace PryanetLib.Git {
 
-    public class SparkleFetcher : SparkleFetcherSSH {
+    public class PryanetFetcher : PryanetFetcherSSH {
 
-        private SparkleGit git;
+        private PryanetGit git;
         private bool use_git_bin;
 
         private string cached_salt;
@@ -38,7 +38,7 @@ namespace SparkleLib.Git {
                     return this.cached_salt;
 
                 // Check if the repo's salt is stored in a branch...
-                SparkleGit git   = new SparkleGit (TargetFolder, "ls-remote --heads");
+                PryanetGit git   = new PryanetGit (TargetFolder, "ls-remote --heads");
                 string branches  = git.StartAndReadStandardOutput ();
                 Regex salt_regex = new Regex ("refs/heads/salt-([0-9a-f]+)");
 				Match salt_match = salt_regex.Match (branches);
@@ -61,7 +61,7 @@ namespace SparkleLib.Git {
         }
 
 
-        public SparkleFetcher (SparkleFetcherInfo info) : base (info)
+        public PryanetFetcher (PryanetFetcherInfo info) : base (info)
         {
             if (RemoteUrl.ToString ().StartsWith ("ssh+"))
                 RemoteUrl = new Uri ("ssh" + RemoteUrl.ToString ().Substring (RemoteUrl.ToString ().IndexOf ("://")));
@@ -111,11 +111,11 @@ namespace SparkleLib.Git {
                 return false;
 
             if (FetchPriorHistory) {
-                this.git = new SparkleGit (SparkleConfig.DefaultConfig.TmpPath,
+                this.git = new PryanetGit (PryanetConfig.DefaultConfig.TmpPath,
                     "clone --progress --no-checkout \"" + RemoteUrl + "\" \"" + TargetFolder + "\"");
 
             } else {
-                this.git = new SparkleGit (SparkleConfig.DefaultConfig.TmpPath,
+                this.git = new PryanetGit (PryanetConfig.DefaultConfig.TmpPath,
                     "clone --progress --no-checkout --depth=1 \"" + RemoteUrl + "\" \"" + TargetFolder + "\"");
             }
 
@@ -145,7 +145,7 @@ namespace SparkleLib.Git {
                         number = (number / 100 * 20); // "Compressing objects" stage
 
                 } else {
-                    SparkleLogger.LogInfo ("Fetcher", line);
+                    PryanetLogger.LogInfo ("Fetcher", line);
                     line = line.Trim (new char [] {' ', '@'});
 
                     if (line.StartsWith ("fatal:", StringComparison.InvariantCultureIgnoreCase) ||
@@ -200,7 +200,7 @@ namespace SparkleLib.Git {
 
         public override bool IsFetchedRepoEmpty {
             get {
-                SparkleGit git = new SparkleGit (TargetFolder, "rev-parse HEAD");
+                PryanetGit git = new PryanetGit (TargetFolder, "rev-parse HEAD");
                 git.StartAndWaitForExit ();
 
                 return (git.ExitCode != 0);
@@ -236,10 +236,10 @@ namespace SparkleLib.Git {
 
         public override bool IsFetchedRepoPasswordCorrect (string password)
         {
-            string password_check_file_path = Path.Combine (TargetFolder, ".sparkleshare");
+            string password_check_file_path = Path.Combine (TargetFolder, ".pryanetshare");
 
             if (!File.Exists (password_check_file_path)) {
-                SparkleGit git = new SparkleGit (TargetFolder, "show HEAD:.sparkleshare");
+                PryanetGit git = new PryanetGit (TargetFolder, "show HEAD:.pryanetshare");
                 string output = git.StartAndReadStandardOutput ();
 
                 if (git.ExitCode == 0)
@@ -284,7 +284,7 @@ namespace SparkleLib.Git {
                 }
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Fetcher", "Failed to dispose properly", e);
+                PryanetLogger.LogInfo ("Fetcher", "Failed to dispose properly", e);
             }
         }
 
@@ -292,7 +292,7 @@ namespace SparkleLib.Git {
         public override void Complete ()
         {
             if (!IsFetchedRepoEmpty) {
-                SparkleGit git = new SparkleGit (TargetFolder, "checkout --quiet HEAD");
+                PryanetGit git = new PryanetGit (TargetFolder, "checkout --quiet HEAD");
                 git.StartAndWaitForExit ();
             }
 
@@ -319,7 +319,7 @@ namespace SparkleLib.Git {
             };
 
             foreach (string setting in settings) {
-                SparkleGit git_config = new SparkleGit (TargetFolder, "config " + setting);
+                PryanetGit git_config = new PryanetGit (TargetFolder, "config " + setting);
                 git_config.StartAndWaitForExit ();
             }
 
@@ -337,7 +337,7 @@ namespace SparkleLib.Git {
             };
 
             foreach (string setting in settings) {
-                SparkleGit git_config = new SparkleGit (TargetFolder, "config " + setting);
+                PryanetGit git_config = new PryanetGit (TargetFolder, "config " + setting);
                 git_config.StartAndWaitForExit ();
             }
         }

@@ -1,23 +1,23 @@
-ASSEMBLY = SparkleLib
+ASSEMBLY = PryanetLib
 TARGET = library
 
 ASSEMBLY_INFO_SOURCE = Defines.cs
 
 SOURCES =  \
 	Defines.cs \
-	SparkleBackend.cs \
-	SparkleConfig.cs \
-	SparkleExtensions.cs \
-	SparkleFetcherBase.cs \
-	SparkleFetcherSSH.cs \
-	SparkleListenerBase.cs \
-	SparkleListenerFactory.cs \
-	SparkleListenerTcp.cs \
-	SparkleLogger.cs \
-	SparkleRepoBase.cs \
-	SparkleUser.cs \
-	SparkleWatcher.cs \
-	SparkleWrappers.cs
+	PryanetBackend.cs \
+	PryanetConfig.cs \
+	PryanetExtensions.cs \
+	PryanetFetcherBase.cs \
+	PryanetFetcherSSH.cs \
+	PryanetListenerBase.cs \
+	PryanetListenerFactory.cs \
+	PryanetListenerTcp.cs \
+	PryanetLogger.cs \
+	PryanetRepoBase.cs \
+	PryanetUser.cs \
+	PryanetWatcher.cs \
+	PryanetWrappers.cs
 
 
 install-data-hook:

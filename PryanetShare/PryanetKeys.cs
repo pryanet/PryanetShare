@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public static class SparkleKeys {
+    public static class PryanetKeys {
 
         public static string [] GenerateKeyPair (string output_path, string key_name)
         {
@@ -31,7 +31,7 @@ namespace SparkleShare {
             string key_file_path = Path.Combine (output_path, key_name);
 
             if (File.Exists (key_file_path)) {
-                SparkleLogger.LogInfo ("Auth", "A key pair exists ('" + key_name + "'), leaving it untouched");
+                PryanetLogger.LogInfo ("Auth", "A key pair exists ('" + key_name + "'), leaving it untouched");
                 return new string [] { key_file_path, key_file_path + ".pub" };
             }
 
@@ -45,15 +45,15 @@ namespace SparkleShare {
                 "-C \"" + computer_name + "\" " + // key comment
                 "-f \"" + key_name + "\""; // file name
 
-            SparkleKeyProcess process = new SparkleKeyProcess ("ssh-keygen", arguments);
+            PryanetKeyProcess process = new PryanetKeyProcess ("ssh-keygen", arguments);
             process.StartInfo.WorkingDirectory = output_path;
             process.Start ();
             process.WaitForExit ();
 
             if (process.ExitCode == 0)
-                SparkleLogger.LogInfo ("Auth", "Created keypair '" + key_file_path + "'");
+                PryanetLogger.LogInfo ("Auth", "Created keypair '" + key_file_path + "'");
             else
-                SparkleLogger.LogInfo ("Auth", "Could not create key pair '" + key_file_path + "'");
+                PryanetLogger.LogInfo ("Auth", "Could not create key pair '" + key_file_path + "'");
 
             return new string [] { key_file_path, key_file_path + ".pub" };
         }
@@ -61,32 +61,32 @@ namespace SparkleShare {
 
         public static void ImportPrivateKey (string key_file_path)
         {
-            SparkleKeyProcess process = new SparkleKeyProcess ("ssh-add", "\"" + key_file_path + "\"");
+            PryanetKeyProcess process = new PryanetKeyProcess ("ssh-add", "\"" + key_file_path + "\"");
             process.Start ();
             process.WaitForExit ();
 
             if (process.ExitCode == 0)
-                SparkleLogger.LogInfo ("Auth", "Imported key '" + key_file_path + "'");
+                PryanetLogger.LogInfo ("Auth", "Imported key '" + key_file_path + "'");
             else
-                SparkleLogger.LogInfo ("Auth", "Could not import key '" + key_file_path + "', " +
+                PryanetLogger.LogInfo ("Auth", "Could not import key '" + key_file_path + "', " +
                     process.StandardError.ReadToEnd ());
         }
 
 
         public static void ListPrivateKeys ()
         {
-            SparkleKeyProcess process = new SparkleKeyProcess ("ssh-add", "-l");
+            PryanetKeyProcess process = new PryanetKeyProcess ("ssh-add", "-l");
             process.Start ();
             string keys_in_use = process.StandardOutput.ReadToEnd ();
             process.WaitForExit ();
 
-            SparkleLogger.LogInfo ("Auth", "The following keys may be used:\n" + keys_in_use.Trim ());
+            PryanetLogger.LogInfo ("Auth", "The following keys may be used:\n" + keys_in_use.Trim ());
         }
 
 
-        private class SparkleKeyProcess : Process {
+        private class PryanetKeyProcess : Process {
 
-            public SparkleKeyProcess (string command, string arguments) : base ()
+            public PryanetKeyProcess (string command, string arguments) : base ()
             {
                 StartInfo.FileName               = command;
                 StartInfo.Arguments              = arguments;

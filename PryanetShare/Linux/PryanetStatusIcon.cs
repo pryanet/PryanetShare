@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@ using Gtk;
 using AppIndicator;
 #endif
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleStatusIcon {
+    public class PryanetStatusIcon {
 
-        public SparkleStatusIconController Controller = new SparkleStatusIconController ();
+        public PryanetStatusIconController Controller = new PryanetStatusIconController ();
 
         private Menu menu;
         private MenuItem recent_events_item;
@@ -40,15 +40,15 @@ namespace SparkleShare {
         #endif
 
 
-        public SparkleStatusIcon ()
+        public PryanetStatusIcon ()
         {
             #if HAVE_APP_INDICATOR
-            this.indicator = new ApplicationIndicator ("sparkleshare", "sparkleshare", Category.ApplicationStatus);
+            this.indicator = new ApplicationIndicator ("pryanetshare", "pryanetshare", Category.ApplicationStatus);
             this.indicator.IconName = "process-syncing-idle";
             this.indicator.Status   = Status.Active;
             #else
 			this.status_icon          = new StatusIcon ();
-            this.status_icon.IconName = "sparkleshare";
+            this.status_icon.IconName = "pryanetshare";
 
             this.status_icon.Activate  += ShowMenu; // Primary mouse button click
             this.status_icon.PopupMenu += ShowMenu; // Secondary mouse button click
@@ -63,7 +63,7 @@ namespace SparkleShare {
                         #if HAVE_APP_INDICATOR
                         this.indicator.IconName = "process-syncing-idle";
                         #else
-                        this.status_icon.IconName = "sparkleshare";
+                        this.status_icon.IconName = "pryanetshare";
                         #endif
                         break;
                     }
@@ -134,8 +134,8 @@ namespace SparkleShare {
             this.menu       = new Menu ();
             this.state_item = new MenuItem (Controller.StateText) { Sensitive = false };
 
-            ImageMenuItem folder_item = new SparkleMenuItem ("SparkleShare");
-            folder_item.Image = new Image (SparkleUIHelpers.GetIcon ("sparkleshare", 16));
+            ImageMenuItem folder_item = new PryanetMenuItem ("PryanetShare");
+            folder_item.Image = new Image (PryanetUIHelpers.GetIcon ("pryanetshare", 16));
 
             this.menu.Add (this.state_item);
             this.menu.Add (new SeparatorMenuItem ());                
@@ -144,7 +144,7 @@ namespace SparkleShare {
             if (Program.Controller.Folders.Count > 0) {
                 int i = 0;
                 foreach (string folder_name in Controller.Folders) {
-                    ImageMenuItem item = new SparkleMenuItem (folder_name);
+                    ImageMenuItem item = new PryanetMenuItem (folder_name);
                     Gdk.Pixbuf folder_icon;
 
                     if (!string.IsNullOrEmpty (Controller.FolderErrors [i])) {
@@ -210,7 +210,7 @@ namespace SparkleShare {
                 (link_code_item.Submenu as Menu).Add (copy_item);
             }
 
-            MenuItem about_item = new MenuItem ("About SparkleShare");
+            MenuItem about_item = new MenuItem ("About PryanetShare");
             
             about_item.Activated              += delegate { Controller.AboutClicked (); };
             add_item.Activated                += delegate { Controller.AddHostedProjectClicked (); };
@@ -254,9 +254,9 @@ namespace SparkleShare {
     }
 
     
-    public class SparkleMenuItem : ImageMenuItem {
+    public class PryanetMenuItem : ImageMenuItem {
 
-        public SparkleMenuItem (string text) : base (text)
+        public PryanetMenuItem (string text) : base (text)
         {
             SetProperty ("always-show-image", new GLib.Value (true));
         }

@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@ using System;
 using System.Net;
 using System.Threading;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleAboutController {
+    public class PryanetAboutController {
 
         public event Action ShowWindowEvent = delegate { };
         public event Action HideWindowEvent = delegate { };
@@ -29,17 +29,17 @@ namespace SparkleShare {
         public event UpdateLabelEventDelegate UpdateLabelEvent = delegate { };
         public delegate void UpdateLabelEventDelegate (string text);
 
-        public readonly string WebsiteLinkAddress       = "http://www.sparkleshare.org/";
-        public readonly string CreditsLinkAddress       = "http://www.github.com/hbons/SparkleShare/tree/master/legal/AUTHORS";
-        public readonly string ReportProblemLinkAddress = "http://www.github.com/hbons/SparkleShare/issues";
+        public readonly string WebsiteLinkAddress       = "http://www.pryanetshare.org/";
+        public readonly string CreditsLinkAddress       = "http://www.github.com/hbons/PryanetShare/tree/master/legal/AUTHORS";
+        public readonly string ReportProblemLinkAddress = "http://www.github.com/hbons/PryanetShare/issues";
         public readonly string DebugLogLinkAddress      = "file://" + Program.Controller.ConfigPath;
 
         public string RunningVersion;
 
 
-        public SparkleAboutController ()
+        public PryanetAboutController ()
         {
-            RunningVersion = SparkleLib.SparkleBackend.Version;
+            RunningVersion = PryanetLib.PryanetBackend.Version;
 
             Program.Controller.ShowAboutWindowEvent += delegate {
                 ShowWindowEvent ();
@@ -60,7 +60,7 @@ namespace SparkleShare {
             Thread.Sleep (500);
 
             WebClient web_client = new WebClient ();
-            Uri uri = new Uri ("http://www.sparkleshare.org/version");
+            Uri uri = new Uri ("http://www.pryanetshare.org/version");
 
             try {
                 string latest_version = web_client.DownloadString (uri).Trim ();

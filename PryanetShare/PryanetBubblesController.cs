@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,23 +18,23 @@
 using System;
 using System.Text;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleBubblesController {
+    public class PryanetBubblesController {
 
         public event ShowBubbleEventHandler ShowBubbleEvent = delegate { };
         public delegate void ShowBubbleEventHandler (string title, string subtext, string image_path);
 
 
-        public SparkleBubblesController ()
+        public PryanetBubblesController ()
         {
             Program.Controller.AlertNotificationRaised += delegate (string title, string message) {
                 ShowBubble (title, message, null);
             };
 
-            Program.Controller.NotificationRaised += delegate (SparkleChangeSet change_set) {
+            Program.Controller.NotificationRaised += delegate (PryanetChangeSet change_set) {
                 ShowBubble (change_set.User.Name, change_set.ToMessage (),
                     Program.Controller.GetAvatar (change_set.User.Email, 48));
             };

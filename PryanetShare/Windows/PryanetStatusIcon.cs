@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -27,30 +27,30 @@ using System.Windows.Controls.Primitives;
 using Drawing = System.Drawing;
 using Forms = System.Windows.Forms;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleStatusIcon : Control {
+    public class PryanetStatusIcon : Control {
         
-        public SparkleStatusIconController Controller = new SparkleStatusIconController();
+        public PryanetStatusIconController Controller = new PryanetStatusIconController();
         
-        private Drawing.Bitmap syncing_idle_image  = SparkleUIHelpers.GetBitmap ("process-syncing-idle");
-        private Drawing.Bitmap syncing_up_image    = SparkleUIHelpers.GetBitmap ("process-syncing-up");
-        private Drawing.Bitmap syncing_down_image  = SparkleUIHelpers.GetBitmap ("process-syncing-down");
-        private Drawing.Bitmap syncing_image       = SparkleUIHelpers.GetBitmap ("process-syncing");
-        private Drawing.Bitmap syncing_error_image = SparkleUIHelpers.GetBitmap ("process-syncing-error");
+        private Drawing.Bitmap syncing_idle_image  = PryanetUIHelpers.GetBitmap ("process-syncing-idle");
+        private Drawing.Bitmap syncing_up_image    = PryanetUIHelpers.GetBitmap ("process-syncing-up");
+        private Drawing.Bitmap syncing_down_image  = PryanetUIHelpers.GetBitmap ("process-syncing-down");
+        private Drawing.Bitmap syncing_image       = PryanetUIHelpers.GetBitmap ("process-syncing");
+        private Drawing.Bitmap syncing_error_image = PryanetUIHelpers.GetBitmap ("process-syncing-error");
 
         private ContextMenu context_menu;
 
-        private SparkleMenuItem log_item;
-        private SparkleMenuItem state_item;
-        private SparkleMenuItem exit_item;
+        private PryanetMenuItem log_item;
+        private PryanetMenuItem state_item;
+        private PryanetMenuItem exit_item;
         
-        private SparkleNotifyIcon notify_icon = new SparkleNotifyIcon ();
+        private PryanetNotifyIcon notify_icon = new PryanetNotifyIcon ();
 
 
-        public SparkleStatusIcon ()
+        public PryanetStatusIcon ()
         {
-            this.notify_icon.HeaderText = "SparkleShare";
+            this.notify_icon.HeaderText = "PryanetShare";
             this.notify_icon.Icon       = this.syncing_idle_image;
 
             CreateMenu ();
@@ -86,7 +86,7 @@ namespace SparkleShare {
                 Dispatcher.BeginInvoke ((Action) delegate {
                     this.state_item.Header = state_text;
                     this.state_item.UpdateLayout ();
-                    this.notify_icon.HeaderText = "SparkleShare\n" + state_text;
+                    this.notify_icon.HeaderText = "PryanetShare\n" + state_text;
                 });
             };
             
@@ -109,36 +109,36 @@ namespace SparkleShare {
         {
             this.context_menu = new ContextMenu ();
 
-            this.state_item = new SparkleMenuItem () {
+            this.state_item = new PryanetMenuItem () {
                 Header    = Controller.StateText,
                 IsEnabled = false
             };
             
             Image folder_image = new Image () {
-                Source = SparkleUIHelpers.GetImageSource ("sparkleshare-folder"),
+                Source = PryanetUIHelpers.GetImageSource ("pryanetshare-folder"),
                 Width  = 16,
                 Height = 16
             };
             
-            SparkleMenuItem folder_item = new SparkleMenuItem () {
-                Header = "SparkleShare",
+            PryanetMenuItem folder_item = new PryanetMenuItem () {
+                Header = "PryanetShare",
                 Icon   = folder_image
             };
             
-            SparkleMenuItem add_item = new SparkleMenuItem () { Header = "Add hosted project…" };
+            PryanetMenuItem add_item = new PryanetMenuItem () { Header = "Add hosted project…" };
             
-            this.log_item = new SparkleMenuItem () {
+            this.log_item = new PryanetMenuItem () {
                 Header    = "Recent changes…",
                 IsEnabled = Controller.RecentEventsItemEnabled
             };
 
-            SparkleMenuItem link_code_item = new SparkleMenuItem () { Header = "Client ID" };
+            PryanetMenuItem link_code_item = new PryanetMenuItem () { Header = "Client ID" };
             
             if (Controller.LinkCodeItemEnabled) {
-                SparkleMenuItem code_item = new SparkleMenuItem ();
+                PryanetMenuItem code_item = new PryanetMenuItem ();
                 code_item.Header = Program.Controller.CurrentUser.PublicKey.Substring (0, 20) + "...";
                 
-                SparkleMenuItem copy_item = new SparkleMenuItem () { Header = "Copy to Clipboard" };
+                PryanetMenuItem copy_item = new PryanetMenuItem () { Header = "Copy to Clipboard" };
                 copy_item.Click += delegate { Controller.CopyToClipboardClicked (); };
                 
                 link_code_item.Items.Add (code_item);
@@ -151,11 +151,11 @@ namespace SparkleShare {
                 IsChecked = Program.Controller.NotificationsEnabled
             };
             
-            SparkleMenuItem notify_item = new SparkleMenuItem () { Header = "Notifications" };
+            PryanetMenuItem notify_item = new PryanetMenuItem () { Header = "Notifications" };
             notify_item.Icon = notify_check_box;
 
-            SparkleMenuItem about_item = new SparkleMenuItem () { Header = "About SparkleShare" };
-            this.exit_item = new SparkleMenuItem () { Header = "Exit" };
+            PryanetMenuItem about_item = new PryanetMenuItem () { Header = "About PryanetShare" };
+            this.exit_item = new PryanetMenuItem () { Header = "Exit" };
             
             
 			add_item.Click      += delegate { Controller.AddHostedProjectClicked (); };
@@ -186,12 +186,12 @@ namespace SparkleShare {
             if (Controller.Folders.Length > 0) {
                 int i = 0;
                 foreach (string folder_name in Controller.Folders) {     
-                    SparkleMenuItem subfolder_item = new SparkleMenuItem () {
+                    PryanetMenuItem subfolder_item = new PryanetMenuItem () {
                         Header = folder_name.Replace ("_", "__")
                     };
                     
                     Image subfolder_image = new Image () {
-                        Source = SparkleUIHelpers.GetImageSource ("folder"),
+                        Source = PryanetUIHelpers.GetImageSource ("folder"),
                         Width  = 16,
                         Height = 16
                     };
@@ -203,12 +203,12 @@ namespace SparkleShare {
                                 BitmapSizeOptions.FromWidthAndHeight (16,16))
                         };
 
-                        SparkleMenuItem error_item = new SparkleMenuItem () {
+                        PryanetMenuItem error_item = new PryanetMenuItem () {
                             Header    = Controller.FolderErrors [i],
                             IsEnabled = false
                         };
                         
-                        SparkleMenuItem try_again_item = new SparkleMenuItem () {
+                        PryanetMenuItem try_again_item = new PryanetMenuItem () {
                             Header = "Try again"
                         };
 
@@ -257,9 +257,9 @@ namespace SparkleShare {
     }
     
     
-    public class SparkleMenuItem : MenuItem {
+    public class PryanetMenuItem : MenuItem {
         
-        public SparkleMenuItem () : base ()
+        public PryanetMenuItem () : base ()
         {
             Padding = new Thickness (6, 3, 4, 0);
         }

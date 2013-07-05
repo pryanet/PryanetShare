@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,27 +18,27 @@
 using System;
 using System.Windows.Forms;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleUI {
+    public class PryanetUI {
 
-        public SparkleSetup Setup;
-        public SparkleEventLog EventLog;
-        public SparkleBubbles Bubbles;
-        public SparkleStatusIcon StatusIcon;
-        public SparkleAbout About;
+        public PryanetSetup Setup;
+        public PryanetEventLog EventLog;
+        public PryanetBubbles Bubbles;
+        public PryanetStatusIcon StatusIcon;
+        public PryanetAbout About;
 
 
-        public SparkleUI ()
+        public PryanetUI ()
         {   
             // FIXME: The second time windows are shown, the windows
             // don't have the smooth ease in animation, but appear abruptly. 
             // The ease out animation always seems to work
-            Setup      = new SparkleSetup ();
-            EventLog   = new SparkleEventLog ();
-            About      = new SparkleAbout ();
-            Bubbles    = new SparkleBubbles ();
-            StatusIcon = new SparkleStatusIcon ();
+            Setup      = new PryanetSetup ();
+            EventLog   = new PryanetEventLog ();
+            About      = new PryanetAbout ();
+            Bubbles    = new PryanetBubbles ();
+            StatusIcon = new PryanetStatusIcon ();
             
             Program.Controller.UIHasLoaded ();
         }

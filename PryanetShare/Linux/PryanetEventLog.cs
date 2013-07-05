@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -25,11 +25,11 @@ using WebKit;
 
 using IO = System.IO;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleEventLog : Window {
+    public class PryanetEventLog : Window {
 
-        public SparkleEventLogController Controller = new SparkleEventLogController ();
+        public PryanetEventLogController Controller = new PryanetEventLogController ();
 
         private Label size_label;
         private Label history_label;
@@ -39,10 +39,10 @@ namespace SparkleShare {
         private EventBox content_wrapper;
         private ScrolledWindow scrolled_window;
         private WebView web_view;
-        private SparkleSpinner spinner;
+        private PryanetSpinner spinner;
 
 
-        public SparkleEventLog () : base ("")
+        public PryanetEventLog () : base ("")
         {
             SetSizeRequest (480, (int) (Gdk.Screen.Default.Height * 0.8));
 
@@ -55,7 +55,7 @@ namespace SparkleShare {
             BorderWidth = 0;
 
             Title = "Recent Changes";
-            IconName = "folder-sparkleshare";
+            IconName = "folder-pryanetshare";
 
             DeleteEvent += delegate (object o, DeleteEventArgs args) {
                 Controller.WindowClosed ();
@@ -85,7 +85,7 @@ namespace SparkleShare {
             layout_sizes.Add (this.history_label);
 
             VBox layout_vertical = new VBox (false, 0);
-            this.spinner         = new SparkleSpinner (22);
+            this.spinner         = new PryanetSpinner (22);
             this.content_wrapper = new EventBox ();
             this.scrolled_window = new ScrolledWindow ();
 
@@ -261,19 +261,19 @@ namespace SparkleShare {
 
         public void UpdateContent (string html)
         {
-            string pixmaps_path = IO.Path.Combine (SparkleUI.AssetsPath, "pixmaps");
-            string icons_path   = new string [] {SparkleUI.AssetsPath, "icons", "hicolor", "12x12", "status"}.Combine ();
+            string pixmaps_path = IO.Path.Combine (PryanetUI.AssetsPath, "pixmaps");
+            string icons_path   = new string [] {PryanetUI.AssetsPath, "icons", "hicolor", "12x12", "status"}.Combine ();
 
             html = html.Replace ("<!-- $body-font-size -->", (double) (Style.FontDescription.Size / 1024 + 3) + "px");
             html = html.Replace ("<!-- $day-entry-header-font-size -->", (Style.FontDescription.Size / 1024 + 3) + "px");
             html = html.Replace ("<!-- $a-color -->", "#0085cf");
             html = html.Replace ("<!-- $a-hover-color -->", "#009ff8");
             html = html.Replace ("<!-- $body-font-family -->", "\"" + Style.FontDescription.Family + "\"");
-            html = html.Replace ("<!-- $body-color -->", SparkleUIHelpers.GdkColorToHex (Style.Foreground (StateType.Normal)));
-            html = html.Replace ("<!-- $body-background-color -->", SparkleUIHelpers.GdkColorToHex (new TreeView ().Style.Base (StateType.Normal)));
-            html = html.Replace ("<!-- $day-entry-header-background-color -->", SparkleUIHelpers.GdkColorToHex (Style.Background (StateType.Normal)));
-            html = html.Replace ("<!-- $secondary-font-color -->", SparkleUIHelpers.GdkColorToHex (Style.Foreground (StateType.Insensitive)));
-            html = html.Replace ("<!-- $small-color -->", SparkleUIHelpers.GdkColorToHex (Style.Foreground (StateType.Insensitive)));
+            html = html.Replace ("<!-- $body-color -->", PryanetUIHelpers.GdkColorToHex (Style.Foreground (StateType.Normal)));
+            html = html.Replace ("<!-- $body-background-color -->", PryanetUIHelpers.GdkColorToHex (new TreeView ().Style.Base (StateType.Normal)));
+            html = html.Replace ("<!-- $day-entry-header-background-color -->", PryanetUIHelpers.GdkColorToHex (Style.Background (StateType.Normal)));
+            html = html.Replace ("<!-- $secondary-font-color -->", PryanetUIHelpers.GdkColorToHex (Style.Foreground (StateType.Insensitive)));
+            html = html.Replace ("<!-- $small-color -->", PryanetUIHelpers.GdkColorToHex (Style.Foreground (StateType.Insensitive)));
             html = html.Replace ("<!-- $small-font-size -->", "85%");
             html = html.Replace ("<!-- $pixmaps-path -->", pixmaps_path);
 			html = html.Replace ("<!-- $document-added-background-image -->", "file://" + IO.Path.Combine (icons_path, "document-added.png"));

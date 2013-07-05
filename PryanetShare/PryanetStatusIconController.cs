@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
     public enum IconState {
         Idle,
@@ -32,7 +32,7 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleStatusIconController {
+    public class PryanetStatusIconController {
 
         public event UpdateIconEventHandler UpdateIconEvent = delegate { };
         public delegate void UpdateIconEventHandler (IconState state);
@@ -47,7 +47,7 @@ namespace SparkleShare {
         public delegate void UpdateQuitItemEventHandler (bool quit_item_enabled);
 
         public IconState CurrentState = IconState.Idle;
-        public string StateText       = "Welcome to SparkleShare!";
+        public string StateText       = "Welcome to PryanetShare!";
 
         public string [] Folders      = new string [0];
         public string [] FolderErrors = new string [0];
@@ -57,7 +57,7 @@ namespace SparkleShare {
             get {
                 double size = 0;
 
-                foreach (SparkleRepoBase repo in Program.Controller.Repositories)
+                foreach (PryanetRepoBase repo in Program.Controller.Repositories)
                     size += repo.Size;
 
                 if (size == 0)
@@ -113,7 +113,7 @@ namespace SparkleShare {
         }
 
 
-        public SparkleStatusIconController ()
+        public PryanetStatusIconController ()
         {
             UpdateFolders ();
 
@@ -122,7 +122,7 @@ namespace SparkleShare {
                     CurrentState = IconState.Idle;
 
                     if (Folders.Length == 0)
-                        StateText = "Welcome to SparkleShare!";
+                        StateText = "Welcome to PryanetShare!";
                     else
                         StateText = "Projects up to date " + FolderSize;
                 }
@@ -138,7 +138,7 @@ namespace SparkleShare {
                     CurrentState = IconState.Idle;
 
                     if (Folders.Length == 0)
-                        StateText = "Welcome to SparkleShare!";
+                        StateText = "Welcome to PryanetShare!";
                     else
                         StateText = "Projects up to date " + FolderSize;
                 }
@@ -154,7 +154,7 @@ namespace SparkleShare {
 				int repos_syncing_up   = 0;
 				int repos_syncing_down = 0;
 				
-				foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+				foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
 					if (repo.Status == SyncStatus.SyncUp)
 						repos_syncing_up++;
 					
@@ -200,13 +200,13 @@ namespace SparkleShare {
 
         public void SubfolderClicked (string subfolder)
         {
-            Program.Controller.OpenSparkleShareFolder (subfolder);
+            Program.Controller.OpenPryanetShareFolder (subfolder);
         }
 
 
         public void TryAgainClicked (string subfolder)
         {
-            foreach (SparkleRepoBase repo in Program.Controller.Repositories)
+            foreach (PryanetRepoBase repo in Program.Controller.Repositories)
                 if (repo.Name.Equals (subfolder))
                     new Thread (() => repo.ForceRetry ()).Start ();
         }
@@ -268,7 +268,7 @@ namespace SparkleShare {
                 List<string> folders = new List<string> ();
                 List<string> folder_errors = new List<string> ();
 
-                foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+                foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                     folders.Add (repo.Name);
                     
                     if (repo.Error == ErrorStatus.HostUnreachable) {

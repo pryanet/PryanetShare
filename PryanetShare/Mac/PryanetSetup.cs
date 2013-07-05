@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@ using MonoMac.WebKit;
 
 using Mono.Unix;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleSetup : SparkleSetupWindow {
+    public class PryanetSetup : PryanetSetupWindow {
 
-        public SparkleSetupController Controller = new SparkleSetupController ();
+        public PryanetSetupController Controller = new PryanetSetupController ();
 
         private NSButton ContinueButton, AddButton, CopyButton, TryAgainButton, CancelButton, 
             SkipTutorialButton, FinishButton, ShowFilesButton;
@@ -46,10 +46,10 @@ namespace SparkleShare {
         private NSTableColumn IconColumn, DescriptionColumn;
         private NSTableView TableView;
         private NSScrollView ScrollView;
-        private SparkleDataSource DataSource;
+        private PryanetDataSource DataSource;
 
 
-        public SparkleSetup () : base ()
+        public PryanetSetup () : base ()
         {
             Controller.HideWindowEvent += delegate {
                 Program.Controller.Invoke (() => PerformClose (this));
@@ -72,24 +72,24 @@ namespace SparkleShare {
         public void ShowPage (PageType type, string [] warnings)
         {
             if (type == PageType.Setup) {
-                Header      = "Welcome to SparkleShare!";
+                Header      = "Welcome to PryanetShare!";
                 Description = "First off, what's your name and email?\n(visible only to team members)";
 
-                FullNameLabel       = new SparkleLabel ("Full Name:", NSTextAlignment.Right);
+                FullNameLabel       = new PryanetLabel ("Full Name:", NSTextAlignment.Right);
                 FullNameLabel.Frame = new RectangleF (165, Frame.Height - 234, 160, 17);
 
                 FullNameTextField = new NSTextField () {
                     Frame       = new RectangleF (330, Frame.Height - 238, 196, 22),
                     StringValue = UnixUserInfo.GetRealUser ().RealName,
-                    Delegate    = new SparkleTextFieldDelegate ()
+                    Delegate    = new PryanetTextFieldDelegate ()
                 };
 
-                EmailLabel       = new SparkleLabel ("Email:", NSTextAlignment.Right);
+                EmailLabel       = new PryanetLabel ("Email:", NSTextAlignment.Right);
                 EmailLabel.Frame = new RectangleF (165, Frame.Height - 264, 160, 17);
                     
                 EmailTextField = new NSTextField () {
                     Frame       = new RectangleF (330, Frame.Height - 268, 196, 22),
-                    Delegate    = new SparkleTextFieldDelegate ()
+                    Delegate    = new PryanetTextFieldDelegate ()
                 };
 
                 CancelButton = new NSButton () { Title = "Cancel" };
@@ -100,11 +100,11 @@ namespace SparkleShare {
                 };
 
 
-                (FullNameTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                (FullNameTextField.Delegate as PryanetTextFieldDelegate).StringValueChanged += delegate {
                     Controller.CheckSetupPage (FullNameTextField.StringValue, EmailTextField.StringValue);
                 };
 
-                (EmailTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                (EmailTextField.Delegate as PryanetTextFieldDelegate).StringValueChanged += delegate {
                     Controller.CheckSetupPage (FullNameTextField.StringValue, EmailTextField.StringValue);
                 };
 
@@ -137,22 +137,22 @@ namespace SparkleShare {
 
             if (type == PageType.Invite) {
                 Header      = "You've received an invite!";
-                Description = "Do you want to add this project to SparkleShare?";
+                Description = "Do you want to add this project to PryanetShare?";
 
-                AddressLabel       = new SparkleLabel ("Address:", NSTextAlignment.Right);
+                AddressLabel       = new PryanetLabel ("Address:", NSTextAlignment.Right);
                 AddressLabel.Frame = new RectangleF (165, Frame.Height - 240, 160, 17);
      
-                AddressTextField = new SparkleLabel (Controller.PendingInvite.Address, NSTextAlignment.Left) {
+                AddressTextField = new PryanetLabel (Controller.PendingInvite.Address, NSTextAlignment.Left) {
                     Frame = new RectangleF (330, Frame.Height - 240, 260, 17),
-                    Font  = SparkleUI.BoldFont
+                    Font  = PryanetUI.BoldFont
                 };
 
-                PathLabel       = new SparkleLabel ("Remote Path:", NSTextAlignment.Right);
+                PathLabel       = new PryanetLabel ("Remote Path:", NSTextAlignment.Right);
                 PathLabel.Frame = new RectangleF (165, Frame.Height - 264, 160, 17);
 
-                PathTextField = new SparkleLabel (Controller.PendingInvite.RemotePath, NSTextAlignment.Left) {
+                PathTextField = new PryanetLabel (Controller.PendingInvite.RemotePath, NSTextAlignment.Left) {
                     Frame = new RectangleF (330, Frame.Height - 264, 260, 17),
-                    Font  = SparkleUI.BoldFont
+                    Font  = PryanetUI.BoldFont
                 };
 
                 CancelButton = new NSButton () { Title = "Cancel" };
@@ -176,43 +176,43 @@ namespace SparkleShare {
                 Header      = "Where's your project hosted?";
                 Description = "";
 
-                AddressLabel = new SparkleLabel ("Address:", NSTextAlignment.Left) {
+                AddressLabel = new PryanetLabel ("Address:", NSTextAlignment.Left) {
                     Frame = new RectangleF (190, Frame.Height - 308, 160, 17),
-                    Font  = SparkleUI.BoldFont
+                    Font  = PryanetUI.BoldFont
                 };
 
                 AddressTextField = new NSTextField () {
                     Frame       = new RectangleF (190, Frame.Height - 336, 196, 22),
-                    Font        = SparkleUI.Font,
+                    Font        = PryanetUI.Font,
                     Enabled     = (Controller.SelectedPlugin.Address == null),
-                    Delegate    = new SparkleTextFieldDelegate (),
+                    Delegate    = new PryanetTextFieldDelegate (),
                     StringValue = "" + Controller.PreviousAddress
                 };
 
                 AddressTextField.Cell.LineBreakMode = NSLineBreakMode.TruncatingTail;
 
-                PathLabel = new SparkleLabel ("Remote Path:", NSTextAlignment.Left) {
+                PathLabel = new PryanetLabel ("Remote Path:", NSTextAlignment.Left) {
                     Frame = new RectangleF (190 + 196 + 16, Frame.Height - 308, 160, 17),
-                    Font  = SparkleUI.BoldFont
+                    Font  = PryanetUI.BoldFont
                 };
 
                 PathTextField = new NSTextField () {
                     Frame       = new RectangleF (190 + 196 + 16, Frame.Height - 336, 196, 22),
                     Enabled     = (Controller.SelectedPlugin.Path == null),
-                    Delegate    = new SparkleTextFieldDelegate (),
+                    Delegate    = new PryanetTextFieldDelegate (),
                     StringValue = "" + Controller.PreviousPath
                 };
 
                 PathTextField.Cell.LineBreakMode = NSLineBreakMode.TruncatingTail;
 
-                PathHelpLabel = new SparkleLabel (Controller.SelectedPlugin.PathExample, NSTextAlignment.Left) {
+                PathHelpLabel = new PryanetLabel (Controller.SelectedPlugin.PathExample, NSTextAlignment.Left) {
                     TextColor       = NSColor.DisabledControlText,
                     Frame           = new RectangleF (190 + 196 + 16, Frame.Height - 355, 204, 17),
                     Font            = NSFontManager.SharedFontManager.FontWithFamily ("Lucida Grande",
                         NSFontTraitMask.Condensed, 0, 11),
                 };
 
-                AddressHelpLabel = new SparkleLabel (Controller.SelectedPlugin.AddressExample, NSTextAlignment.Left) {
+                AddressHelpLabel = new PryanetLabel (Controller.SelectedPlugin.AddressExample, NSTextAlignment.Left) {
                     TextColor       = NSColor.DisabledControlText,
                     Frame           = new RectangleF (190, Frame.Height - 355, 204, 17),
                     Font            = NSFontManager.SharedFontManager.FontWithFamily ("Lucida Grande",
@@ -225,7 +225,7 @@ namespace SparkleShare {
                         RowHeight        = 34,
                         IntercellSpacing = new SizeF (8, 12),
                         HeaderView       = null,
-                        Delegate         = new SparkleTableViewDelegate ()
+                        Delegate         = new PryanetTableViewDelegate ()
                     };
 
                     ScrollView = new NSScrollView () {
@@ -253,12 +253,12 @@ namespace SparkleShare {
                     TableView.AddColumn (IconColumn);
                     TableView.AddColumn (DescriptionColumn);
 
-                    DataSource = new SparkleDataSource (BackingScaleFactor, Controller.Plugins);
+                    DataSource = new PryanetDataSource (BackingScaleFactor, Controller.Plugins);
 
                     TableView.DataSource = DataSource;
                     TableView.ReloadData ();
                     
-                    (TableView.Delegate as SparkleTableViewDelegate).SelectionChanged += delegate {
+                    (TableView.Delegate as PryanetTableViewDelegate).SelectionChanged += delegate {
                         Controller.SelectedPluginChanged (TableView.SelectedRow);
                         Controller.CheckAddPage (AddressTextField.StringValue, PathTextField.StringValue, TableView.SelectedRow);
                     };
@@ -302,11 +302,11 @@ namespace SparkleShare {
                 };
 
 
-                (AddressTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                (AddressTextField.Delegate as PryanetTextFieldDelegate).StringValueChanged += delegate {
                     Controller.CheckAddPage (AddressTextField.StringValue, PathTextField.StringValue, TableView.SelectedRow);
                 };
 
-                 (PathTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                 (PathTextField.Delegate as PryanetTextFieldDelegate).StringValueChanged += delegate {
                     Controller.CheckAddPage (AddressTextField.StringValue, PathTextField.StringValue, TableView.SelectedRow);
                 };
 
@@ -456,19 +456,19 @@ namespace SparkleShare {
                 if (type == PageType.CryptoPassword)
                     extra_pos_y = 20;
   
-                PasswordLabel = new SparkleLabel ("Password:", NSTextAlignment.Right) {
+                PasswordLabel = new PryanetLabel ("Password:", NSTextAlignment.Right) {
                     Frame           = new RectangleF (155, Frame.Height - 204 - extra_pos_y, 160, 17),
-                    Font            = SparkleUI.BoldFont
+                    Font            = PryanetUI.BoldFont
                 };
 
                 PasswordTextField = new NSSecureTextField () {
                     Frame       = new RectangleF (320, Frame.Height - 208 - extra_pos_y, 196, 22),
-                    Delegate    = new SparkleTextFieldDelegate ()
+                    Delegate    = new PryanetTextFieldDelegate ()
                 };
 
                 VisiblePasswordTextField = new NSTextField () {
                     Frame       = new RectangleF (320, Frame.Height - 208 - extra_pos_y, 196, 22),
-                    Delegate    = new SparkleTextFieldDelegate ()
+                    Delegate    = new PryanetTextFieldDelegate ()
                 };
 
                 ShowPasswordCheckButton = new NSButton () {
@@ -487,7 +487,7 @@ namespace SparkleShare {
                     Frame = new RectangleF (200, Frame.Height - 320, 24, 24)
                 };
 
-                WarningTextField = new SparkleLabel ("This password can't be changed later, and your files can't be recovered if it's forgotten.", NSTextAlignment.Left) {
+                WarningTextField = new PryanetLabel ("This password can't be changed later, and your files can't be recovered if it's forgotten.", NSTextAlignment.Left) {
                     Frame = new RectangleF (235, Frame.Height - 390, 325, 100),
                 };
 
@@ -518,7 +518,7 @@ namespace SparkleShare {
                     }
                 };
 
-                (PasswordTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                (PasswordTextField.Delegate as PryanetTextFieldDelegate).StringValueChanged += delegate {
                     VisiblePasswordTextField.StringValue = PasswordTextField.StringValue;
 
                     if (type == PageType.CryptoSetup)
@@ -527,7 +527,7 @@ namespace SparkleShare {
                         Controller.CheckCryptoPasswordPage (PasswordTextField.StringValue);
                 };
 
-                (VisiblePasswordTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                (VisiblePasswordTextField.Delegate as PryanetTextFieldDelegate).StringValueChanged += delegate {
                     PasswordTextField.StringValue = VisiblePasswordTextField.StringValue;
                     
                     if (type == PageType.CryptoSetup)
@@ -564,7 +564,7 @@ namespace SparkleShare {
 
             if (type == PageType.Finished) {
                 Header      = "Your shared project is ready!";
-                Description = "You can find the files in your SparkleShare folder.";
+                Description = "You can find the files in your PryanetShare folder.";
 
                 if (warnings.Length > 0) {
                     WarningImage = NSImage.ImageNamed ("NSInfo");
@@ -575,7 +575,7 @@ namespace SparkleShare {
                         Frame = new RectangleF (200, Frame.Height - 175, 24, 24)
                     };
 
-                    WarningTextField = new SparkleLabel (warnings [0], NSTextAlignment.Left);
+                    WarningTextField = new PryanetLabel (warnings [0], NSTextAlignment.Left);
                     WarningTextField.Frame       = new RectangleF (235, Frame.Height - 245, 325, 100);
 
                     ContentView.AddSubview (WarningImageView);
@@ -612,7 +612,7 @@ namespace SparkleShare {
                 switch (Controller.TutorialPageNumber) {
                     case 1: {
                         Header      = "What's happening next?";
-                        Description = "SparkleShare creates a special folder on your computer " +
+                        Description = "PryanetShare creates a special folder on your computer " +
                             "that will keep track of your projects.";
 
                         SkipTutorialButton = new NSButton () { Title = "Skip Tutorial" };
@@ -678,7 +678,7 @@ namespace SparkleShare {
                         
                         StartupCheckButton = new NSButton () {
                             Frame = new RectangleF (190, Frame.Height - 400, 300, 18),
-                            Title = "Add SparkleShare to startup items",
+                            Title = "Add PryanetShare to startup items",
                             State = NSCellStateValue.On
                         };
 
@@ -709,15 +709,15 @@ namespace SparkleShare {
     }
 
 
-    [Register("SparkleDataSource")]
-    public class SparkleDataSource : NSTableViewDataSource {
+    [Register("PryanetDataSource")]
+    public class PryanetDataSource : NSTableViewDataSource {
 
         public List<object> Items;
         public NSAttributedString [] Cells, SelectedCells;
 
         int backingScaleFactor;
 
-        public SparkleDataSource (float backingScaleFactor, List<SparklePlugin> plugins)
+        public PryanetDataSource (float backingScaleFactor, List<PryanetPlugin> plugins)
         {
             Items         = new List <object> ();
             Cells         = new NSAttributedString [plugins.Count];
@@ -726,7 +726,7 @@ namespace SparkleShare {
             this.backingScaleFactor = (int)backingScaleFactor;
 
             int i = 0;
-            foreach (SparklePlugin plugin in plugins) {
+            foreach (PryanetPlugin plugin in plugins) {
                 Items.Add (plugin);
 
                 NSTextFieldCell cell = new NSTextFieldCell ();
@@ -808,7 +808,7 @@ namespace SparkleShare {
                 }
 
             } else {
-                var plugin = (SparklePlugin)Items [row_index];
+                var plugin = (PryanetPlugin)Items [row_index];
                 var path = plugin.ImagePath;
 
                 if (backingScaleFactor >= 2) {
@@ -831,7 +831,7 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleTextFieldDelegate : NSTextFieldDelegate {
+    public class PryanetTextFieldDelegate : NSTextFieldDelegate {
         
         public event Action StringValueChanged = delegate { };
 
@@ -842,7 +842,7 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleTableViewDelegate : NSTableViewDelegate {
+    public class PryanetTableViewDelegate : NSTableViewDelegate {
 
         public event Action SelectionChanged = delegate { };
 
@@ -853,9 +853,9 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleLabel : NSTextField {
+    public class PryanetLabel : NSTextField {
 
-        public SparkleLabel (string label, NSTextAlignment alignment)
+        public PryanetLabel (string label, NSTextAlignment alignment)
         {
             if (!string.IsNullOrEmpty (label))
                 StringValue = label;
@@ -864,7 +864,7 @@ namespace SparkleShare {
             BackgroundColor = NSColor.WindowBackground;
             Bordered        = false;
             Editable        = false;
-            Font            = SparkleUI.Font;
+            Font            = PryanetUI.Font;
         }
     }
 }

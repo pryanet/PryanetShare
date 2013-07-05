@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,25 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleShare {
+    public class PryanetShare {
 
         public static void Main (string [] args) {
 
-            new SparkleInviteOpen (args [0]);
+            new PryanetInviteOpen (args [0]);
         }
     }
 
 
-    public class SparkleInviteOpen {
+    public class PryanetInviteOpen {
 
-        public SparkleInviteOpen (string url)
+        public PryanetInviteOpen (string url)
         {
             string xml = "";
 
             // Windows sometimes doesn't strip off protocol handlers            
-            url = url.Replace ("sparkleshare://addProject/", "");
+            url = url.Replace ("pryanetshare://addProject/", "");
 
             // Outlook breaks URLs
             url = Regex.Replace (url, "(https?:)/([^/])", "$1//$2");
@@ -55,9 +55,9 @@ namespace SparkleShare {
             string file_name = DateTime.UtcNow.Millisecond.ToString () + ".xml";
 
             string home_path   = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
-            string target_path = Path.Combine (home_path, "SparkleShare", file_name);
+            string target_path = Path.Combine (home_path, "PryanetShare", file_name);
 
-            if (xml.Contains ("<sparkleshare>")) {
+            if (xml.Contains ("<pryanetshare>")) {
                 File.WriteAllText (target_path, xml);
                 Console.WriteLine ("Downloaded invite: " + url);
             }

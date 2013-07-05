@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -27,9 +27,9 @@ using System.Windows.Shell;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleSetupWindow : Window {
+    public class PryanetSetupWindow : Window {
         
         public Canvas ContentCanvas  = new Canvas ();
         public List <Button> Buttons = new List <Button> ();
@@ -42,17 +42,17 @@ namespace SparkleShare {
         private Rectangle line;
         
 
-        public SparkleSetupWindow ()
+        public PryanetSetupWindow ()
         {
-            Title      = "SparkleShare Setup";
+            Title      = "PryanetShare Setup";
             Width      = 640;
             Height     = 440;
             ResizeMode = ResizeMode.NoResize;
             Background = new SolidColorBrush (Colors.WhiteSmoke);
-            Icon       = SparkleUIHelpers.GetImageSource ("sparkleshare-app", "ico");
+            Icon       = PryanetUIHelpers.GetImageSource ("pryanetshare-app", "ico");
 			
 			TaskbarItemInfo = new TaskbarItemInfo () {
-				Description = "SparkleShare"
+				Description = "PryanetShare"
 			};
             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -85,7 +85,7 @@ namespace SparkleShare {
                 Height = 482
             };
 
-            this.side_splash.Source = SparkleUIHelpers.GetImageSource ("side-splash");
+            this.side_splash.Source = PryanetUIHelpers.GetImageSource ("side-splash");
             
             
             ContentCanvas.Children.Add (this.bar);

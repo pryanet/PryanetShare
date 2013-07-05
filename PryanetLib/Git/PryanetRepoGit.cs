@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleLib.Git {
+namespace PryanetLib.Git {
 
-    public class SparkleRepo : SparkleRepoBase {
+    public class PryanetRepo : PryanetRepoBase {
 
         private bool user_is_set;
         private bool use_git_bin;
@@ -56,11 +56,11 @@ namespace SparkleLib.Git {
                         ResolveConflict ();
                         
                     } catch (IOException e) {
-                        SparkleLogger.LogInfo ("Git", Name + " | Failed to resolve conflict, trying again...", e);
+                        PryanetLogger.LogInfo ("Git", Name + " | Failed to resolve conflict, trying again...", e);
                     }
                 }
 
-                SparkleGit git = new SparkleGit (LocalPath, "rev-parse --abbrev-ref HEAD");
+                PryanetGit git = new PryanetGit (LocalPath, "rev-parse --abbrev-ref HEAD");
                 this.cached_branch = git.StartAndReadStandardOutput ();
 
                 return this.cached_branch;
@@ -68,13 +68,13 @@ namespace SparkleLib.Git {
         }
 
 
-        public SparkleRepo (string path, SparkleConfig config) : base (path, config)
+        public PryanetRepo (string path, PryanetConfig config) : base (path, config)
         {
-            SparkleGit git = new SparkleGit (LocalPath, "config core.ignorecase false");
+            PryanetGit git = new PryanetGit (LocalPath, "config core.ignorecase false");
             git.StartAndWaitForExit ();
 
             // Check if we should use git-bin
-            git = new SparkleGit (LocalPath, "config --get filter.bin.clean");
+            git = new PryanetGit (LocalPath, "config --get filter.bin.clean");
             git.StartAndWaitForExit ();
 
             this.use_git_bin = (git.ExitCode == 0);
@@ -82,7 +82,7 @@ namespace SparkleLib.Git {
             if (this.use_git_bin)
                 ConfigureGitBin ();
 
-            git = new SparkleGit (LocalPath, "config remote.origin.url \"" + RemoteUrl + "\"");
+            git = new PryanetGit (LocalPath, "config remote.origin.url \"" + RemoteUrl + "\"");
             git.StartAndWaitForExit ();
 
             string password_file_path = Path.Combine (LocalPath, ".git", "password");
@@ -94,16 +94,16 @@ namespace SparkleLib.Git {
 
         private void ConfigureGitBin ()
         {
-            SparkleGit git = new SparkleGit (LocalPath, "config filter.bin.clean \"git bin clean %f\"");
+            PryanetGit git = new PryanetGit (LocalPath, "config filter.bin.clean \"git bin clean %f\"");
             git.StartAndWaitForExit ();
             
-            git = new SparkleGit (LocalPath, "config filter.bin.smudge \"git bin smudge\"");
+            git = new PryanetGit (LocalPath, "config filter.bin.smudge \"git bin smudge\"");
             git.StartAndWaitForExit ();
 
-            git = new SparkleGit (LocalPath, "config git-bin.sftpUrl \"" + RemoteUrl + "\"");
+            git = new PryanetGit (LocalPath, "config git-bin.sftpUrl \"" + RemoteUrl + "\"");
             git.StartAndWaitForExit ();
             
-            git = new SparkleGit (LocalPath, "config git-bin.sftpPrivateKeyFile \"" + base.local_config.User.PrivateKeyFilePath + "\"");
+            git = new PryanetGit (LocalPath, "config git-bin.sftpPrivateKeyFile \"" + base.local_config.User.PrivateKeyFilePath + "\"");
             git.StartAndWaitForExit ();
         }
 
@@ -163,7 +163,7 @@ namespace SparkleLib.Git {
 
         public override string CurrentRevision {
             get {
-                SparkleGit git = new SparkleGit (LocalPath, "rev-parse HEAD");
+                PryanetGit git = new PryanetGit (LocalPath, "rev-parse HEAD");
                 string output  = git.StartAndReadStandardOutput ();
 
                 if (git.ExitCode == 0)
@@ -176,10 +176,10 @@ namespace SparkleLib.Git {
 
         public override bool HasRemoteChanges {
             get {
-                SparkleLogger.LogInfo ("Git", Name + " | Checking for remote changes...");
+                PryanetLogger.LogInfo ("Git", Name + " | Checking for remote changes...");
                 string current_revision = CurrentRevision;
 
-                SparkleGit git = new SparkleGit (LocalPath, "ls-remote --heads --exit-code \"" + RemoteUrl + "\" " + this.branch);
+                PryanetGit git = new PryanetGit (LocalPath, "ls-remote --heads --exit-code \"" + RemoteUrl + "\" " + this.branch);
                 string output  = git.StartAndReadStandardOutput ();
 
                 if (git.ExitCode != 0)
@@ -188,23 +188,23 @@ namespace SparkleLib.Git {
                 string remote_revision = "" + output.Substring (0, 40);
 
                 if (!remote_revision.Equals (current_revision)) {
-                    git = new SparkleGit (LocalPath, "merge-base " + remote_revision + " master");
+                    git = new PryanetGit (LocalPath, "merge-base " + remote_revision + " master");
                     git.StartAndWaitForExit ();
 
                     if (git.ExitCode != 0) {
-                        SparkleLogger.LogInfo ("Git", Name + " | Remote changes found, local: " +
+                        PryanetLogger.LogInfo ("Git", Name + " | Remote changes found, local: " +
                             current_revision + ", remote: " + remote_revision);
 
                         Error = ErrorStatus.None;
                         return true;
                     
                     } else {
-                        SparkleLogger.LogInfo ("Git", Name + " | Remote " + remote_revision + " is already in our history");
+                        PryanetLogger.LogInfo ("Git", Name + " | Remote " + remote_revision + " is already in our history");
                         return false;
                     }
                 } 
 
-                SparkleLogger.LogInfo ("Git", Name + " | No remote changes, local+remote: " + current_revision);
+                PryanetLogger.LogInfo ("Git", Name + " | No remote changes, local+remote: " + current_revision);
                 return false;
             }
         }
@@ -223,13 +223,13 @@ namespace SparkleLib.Git {
                 Commit (message);
  
             if (this.use_git_bin) {
-                SparkleGitBin git_bin = new SparkleGitBin (LocalPath, "push");
+                PryanetGitBin git_bin = new PryanetGitBin (LocalPath, "push");
                 git_bin.StartAndWaitForExit ();
 
                 // TODO: Progress
             }
 
-            SparkleGit git = new SparkleGit (LocalPath, "push --progress \"" + RemoteUrl + "\" " + this.branch);
+            PryanetGit git = new PryanetGit (LocalPath, "push --progress \"" + RemoteUrl + "\" " + this.branch);
             git.StartInfo.RedirectStandardError = true;
             git.Start ();
 
@@ -246,7 +246,7 @@ namespace SparkleLib.Git {
                         number = double.Parse (match.Groups [1].Value, new CultureInfo ("en-US"));
                     
                     } catch (FormatException) {
-                        SparkleLogger.LogInfo ("Git", "Error parsing progress: \"" + match.Groups [1] + "\"");
+                        PryanetLogger.LogInfo ("Git", "Error parsing progress: \"" + match.Groups [1] + "\"");
                     }
 
                     // The pushing progress consists of two stages: the "Compressing
@@ -266,7 +266,7 @@ namespace SparkleLib.Git {
                                 speed = double.Parse (speed_match.Groups [1].Value, new CultureInfo ("en-US")) * 1024;
                             
                             } catch (FormatException) {
-                                SparkleLogger.LogInfo ("Git", "Error parsing speed: \"" + speed_match.Groups [1] + "\"");
+                                PryanetLogger.LogInfo ("Git", "Error parsing speed: \"" + speed_match.Groups [1] + "\"");
                             }
 
                             if (speed_match.Groups [2].Value.Equals ("M"))
@@ -275,7 +275,7 @@ namespace SparkleLib.Git {
                     }
 
                 } else {
-                    SparkleLogger.LogInfo ("Git", Name + " | " + line);
+                    PryanetLogger.LogInfo ("Git", Name + " | " + line);
 
                     if (FindError (line))
                         return false;
@@ -300,10 +300,10 @@ namespace SparkleLib.Git {
                 if (File.Exists (salt_file_path)) {
                     string salt = File.ReadAllText (salt_file_path).Trim ();
 
-                    SparkleGit git_salt = new SparkleGit (LocalPath, "branch salt-" + salt);
+                    PryanetGit git_salt = new PryanetGit (LocalPath, "branch salt-" + salt);
                     git_salt.StartAndWaitForExit ();
 
-                    git_salt = new SparkleGit (LocalPath, "push origin salt-" + salt);
+                    git_salt = new PryanetGit (LocalPath, "push origin salt-" + salt);
                     git_salt.StartAndWaitForExit ();
 
                     File.Delete (salt_file_path);
@@ -320,7 +320,7 @@ namespace SparkleLib.Git {
 
         public override bool SyncDown ()
         {
-            SparkleGit git = new SparkleGit (LocalPath, "fetch --progress \"" + RemoteUrl + "\" " + this.branch);
+            PryanetGit git = new PryanetGit (LocalPath, "fetch --progress \"" + RemoteUrl + "\" " + this.branch);
 
             git.StartInfo.RedirectStandardError = true;
             git.Start ();
@@ -338,7 +338,7 @@ namespace SparkleLib.Git {
                         number = double.Parse (match.Groups [1].Value, new CultureInfo ("en-US"));   
                     
                     } catch (FormatException) {
-                        SparkleLogger.LogInfo ("Git", "Error parsing progress: \"" + match.Groups [1] + "\"");
+                        PryanetLogger.LogInfo ("Git", "Error parsing progress: \"" + match.Groups [1] + "\"");
                     }
 
                     // The fetching progress consists of two stages: the "Compressing
@@ -358,7 +358,7 @@ namespace SparkleLib.Git {
                                 speed = double.Parse (speed_match.Groups [1].Value, new CultureInfo ("en-US")) * 1024;
                                 
                             } catch (FormatException) {
-                                SparkleLogger.LogInfo ("Git", "Error parsing speed: \"" + speed_match.Groups [1] + "\"");
+                                PryanetLogger.LogInfo ("Git", "Error parsing speed: \"" + speed_match.Groups [1] + "\"");
                             }
                             
                             if (speed_match.Groups [2].Value.Equals ("M"))
@@ -367,7 +367,7 @@ namespace SparkleLib.Git {
                     }
 
                 } else {
-                    SparkleLogger.LogInfo ("Git", Name + " | " + line);
+                    PryanetLogger.LogInfo ("Git", Name + " | " + line);
 
                     if (FindError (line))
                         return false;
@@ -403,7 +403,7 @@ namespace SparkleLib.Git {
             get {
                 PrepareDirectories (LocalPath);
 
-                SparkleGit git = new SparkleGit (LocalPath, "status --porcelain");
+                PryanetGit git = new PryanetGit (LocalPath, "status --porcelain");
                 string output  = git.StartAndReadStandardOutput ();
 
                 return !string.IsNullOrEmpty (output);
@@ -431,7 +431,7 @@ namespace SparkleLib.Git {
         // Stages the made changes
         private bool Add ()
         {
-            SparkleGit git = new SparkleGit (LocalPath, "add --all");
+            PryanetGit git = new PryanetGit (LocalPath, "add --all");
             git.StartAndWaitForExit ();
 
             return (git.ExitCode == 0);
@@ -441,19 +441,19 @@ namespace SparkleLib.Git {
         // Commits the made changes
         private void Commit (string message)
         {
-            SparkleGit git;
+            PryanetGit git;
 
             if (!this.user_is_set) {
-                git = new SparkleGit (LocalPath, "config user.name \"" + base.local_config.User.Name + "\"");
+                git = new PryanetGit (LocalPath, "config user.name \"" + base.local_config.User.Name + "\"");
                 git.StartAndWaitForExit ();
 
-                git = new SparkleGit (LocalPath, "config user.email \"" + base.local_config.User.Email + "\"");
+                git = new PryanetGit (LocalPath, "config user.email \"" + base.local_config.User.Email + "\"");
                 git.StartAndWaitForExit ();
 
                 this.user_is_set = true;
             }
 
-            git = new SparkleGit (LocalPath, "commit --all --message=\"" + message + "\" " +
+            git = new PryanetGit (LocalPath, "commit --all --message=\"" + message + "\" " +
                 "--author=\"" + base.local_config.User.Name + " <" + base.local_config.User.Email + ">\"");
 
             git.StartAndReadStandardOutput ();
@@ -470,12 +470,12 @@ namespace SparkleLib.Git {
                 Commit (message);
             }
 
-            SparkleGit git;
+            PryanetGit git;
             string rebase_apply_path = new string [] { LocalPath, ".git", "rebase-apply" }.Combine ();
 
             // Stop if we're already in a rebase because something went wrong
             if (Directory.Exists (rebase_apply_path)) {
-                git = new SparkleGit (LocalPath, "rebase --abort");
+                git = new PryanetGit (LocalPath, "rebase --abort");
                 git.StartAndWaitForExit ();
 
                 return false;
@@ -483,10 +483,10 @@ namespace SparkleLib.Git {
 
             // Temporarily change the ignorecase setting to true to avoid
             // conflicts in file names due to letter case changes
-            git = new SparkleGit (LocalPath, "config core.ignorecase true");
+            git = new PryanetGit (LocalPath, "config core.ignorecase true");
             git.StartAndWaitForExit ();
 
-            git = new SparkleGit (LocalPath, "rebase FETCH_HEAD");
+            git = new PryanetGit (LocalPath, "rebase FETCH_HEAD");
             git.StartInfo.RedirectStandardOutput = false;
 
             string error_output = git.StartAndReadStandardError ();
@@ -496,34 +496,34 @@ namespace SparkleLib.Git {
                 // error: cannot stat 'filename': Permission denied
                 if (error_output.Contains ("error: cannot stat")) {
                     Error = ErrorStatus.UnreadableFiles;
-                    SparkleLogger.LogInfo ("Git", Name + " | Error status changed to " + Error);
+                    PryanetLogger.LogInfo ("Git", Name + " | Error status changed to " + Error);
 
-                    git = new SparkleGit (LocalPath, "rebase --abort");
+                    git = new PryanetGit (LocalPath, "rebase --abort");
                     git.StartAndWaitForExit ();
 
-                    git = new SparkleGit (LocalPath, "config core.ignorecase false");
+                    git = new PryanetGit (LocalPath, "config core.ignorecase false");
                     git.StartAndWaitForExit ();
 
                     return false;
                 
                 } else {
-                    SparkleLogger.LogInfo ("Git", Name + " | Conflict detected, trying to get out...");
+                    PryanetLogger.LogInfo ("Git", Name + " | Conflict detected, trying to get out...");
                     
                     while (Directory.Exists (rebase_apply_path) && HasLocalChanges) {
                         try {
                             ResolveConflict ();
 
                         } catch (IOException e) {
-                            SparkleLogger.LogInfo ("Git", Name + " | Failed to resolve conflict, trying again...", e);
+                            PryanetLogger.LogInfo ("Git", Name + " | Failed to resolve conflict, trying again...", e);
                         }
                     }
 
-                    SparkleLogger.LogInfo ("Git", Name + " | Conflict resolved");
+                    PryanetLogger.LogInfo ("Git", Name + " | Conflict resolved");
                     OnConflictResolved ();
                 }
             }
 
-            git = new SparkleGit (LocalPath, "config core.ignorecase false");
+            git = new PryanetGit (LocalPath, "config core.ignorecase false");
             git.StartAndWaitForExit ();
 
             return true;
@@ -533,7 +533,7 @@ namespace SparkleLib.Git {
         private void ResolveConflict ()
         {
             // This is a list of conflict status codes that Git uses, their
-            // meaning, and how SparkleShare should handle them.
+            // meaning, and how PryanetShare should handle them.
             //
             // DD    unmerged, both deleted    -> Do nothing
             // AU    unmerged, added by us     -> Use server's, save ours as a timestamped copy
@@ -551,7 +551,7 @@ namespace SparkleLib.Git {
             //
             // So: 'ours' means the 'server's version' and 'theirs' means the 'local version' after this comment
 
-            SparkleGit git_status = new SparkleGit (LocalPath, "status --porcelain");
+            PryanetGit git_status = new PryanetGit (LocalPath, "status --porcelain");
             string output         = git_status.StartAndReadStandardOutput ();
 
             string [] lines = output.Split ("\n".ToCharArray ());
@@ -562,12 +562,12 @@ namespace SparkleLib.Git {
                 conflicting_path        = EnsureSpecialCharacters (conflicting_path);
                 conflicting_path        = conflicting_path.Replace ("\"", "\\\"");
 
-                SparkleLogger.LogInfo ("Git", Name + " | Conflict type: " + line);
+                PryanetLogger.LogInfo ("Git", Name + " | Conflict type: " + line);
 
-                // Ignore conflicts in the .sparkleshare file and use the local version
-                if (conflicting_path.EndsWith (".sparkleshare") || conflicting_path.EndsWith (".empty")) {
+                // Ignore conflicts in the .pryanetshare file and use the local version
+                if (conflicting_path.EndsWith (".pryanetshare") || conflicting_path.EndsWith (".empty")) {
                     // Recover local version
-                    SparkleGit git_theirs = new SparkleGit (LocalPath, "checkout --theirs \"" + conflicting_path + "\"");
+                    PryanetGit git_theirs = new PryanetGit (LocalPath, "checkout --theirs \"" + conflicting_path + "\"");
                     git_theirs.StartAndWaitForExit ();
 
                     File.SetAttributes (Path.Combine (LocalPath, conflicting_path), FileAttributes.Hidden);
@@ -581,7 +581,7 @@ namespace SparkleLib.Git {
                     line.StartsWith ("AU") || line.StartsWith ("UA")) {
 
                     // Recover local version
-                    SparkleGit git_theirs = new SparkleGit (LocalPath, "checkout --theirs \"" + conflicting_path + "\"");
+                    PryanetGit git_theirs = new PryanetGit (LocalPath, "checkout --theirs \"" + conflicting_path + "\"");
                     git_theirs.StartAndWaitForExit ();
 
                     // Append a timestamp to local version.
@@ -597,7 +597,7 @@ namespace SparkleLib.Git {
                     File.Move (abs_conflicting_path, abs_their_path);
 
                     // Recover server version
-                    SparkleGit git_ours = new SparkleGit (LocalPath, "checkout --ours \"" + conflicting_path + "\"");
+                    PryanetGit git_ours = new PryanetGit (LocalPath, "checkout --ours \"" + conflicting_path + "\"");
                     git_ours.StartAndWaitForExit ();
 
                     changes_added = true;
@@ -606,7 +606,7 @@ namespace SparkleLib.Git {
                 } else if (line.StartsWith ("DU")) {
                     // The modified local version is already in the checkout, so it just needs to be added.
                     // We need to specifically mention the file, so we can't reuse the Add () method
-                    SparkleGit git_add = new SparkleGit (LocalPath, "add \"" + conflicting_path + "\"");
+                    PryanetGit git_add = new PryanetGit (LocalPath, "add \"" + conflicting_path + "\"");
                     git_add.StartAndWaitForExit ();
 
                     changes_added = true;
@@ -614,12 +614,12 @@ namespace SparkleLib.Git {
             }
 
             Add ();
-            SparkleGit git;
+            PryanetGit git;
 
             if (changes_added)
-                git = new SparkleGit (LocalPath, "rebase --continue");
+                git = new PryanetGit (LocalPath, "rebase --continue");
             else
-                git = new SparkleGit (LocalPath, "rebase --skip");
+                git = new PryanetGit (LocalPath, "rebase --skip");
 
             git.StartInfo.RedirectStandardOutput = false;
             git.StartAndWaitForExit ();
@@ -634,13 +634,13 @@ namespace SparkleLib.Git {
             if (revision == null)
                 throw new ArgumentNullException ("revision");
 
-            SparkleLogger.LogInfo ("Git", Name + " | Restoring \"" + path + "\" (revision " + revision + ")");
+            PryanetLogger.LogInfo ("Git", Name + " | Restoring \"" + path + "\" (revision " + revision + ")");
 
             // git-show doesn't decrypt objects, so we can't use it to retrieve
             // files from the index. This is a suboptimal workaround but it does the job
             if (this.is_encrypted) {
                 // Restore the older file...
-                SparkleGit git = new SparkleGit (LocalPath, "checkout " + revision + " \"" + path + "\"");
+                PryanetGit git = new PryanetGit (LocalPath, "checkout " + revision + " \"" + path + "\"");
                 git.StartAndWaitForExit ();
 
                 string local_file_path = Path.Combine (LocalPath, path);
@@ -650,19 +650,19 @@ namespace SparkleLib.Git {
                     File.Move (local_file_path, target_file_path);
                 
                 } catch {
-                    SparkleLogger.LogInfo ("Git",
+                    PryanetLogger.LogInfo ("Git",
                         Name + " | Could not move \"" + local_file_path + "\" to \"" + target_file_path + "\"");
                 }
 
                 // ...and restore the most recent revision
-                git = new SparkleGit (LocalPath, "checkout " + CurrentRevision + " \"" + path + "\"");
+                git = new PryanetGit (LocalPath, "checkout " + CurrentRevision + " \"" + path + "\"");
                 git.StartAndWaitForExit ();
             
             // The correct way
             } else {
                 path = path.Replace ("\"", "\\\"");
 
-                SparkleGit git = new SparkleGit (LocalPath, "show " + revision + ":\"" + path + "\"");
+                PryanetGit git = new PryanetGit (LocalPath, "show " + revision + ":\"" + path + "\"");
                 git.Start ();
 
                 FileStream stream = File.OpenWrite (target_file_path);    
@@ -677,13 +677,13 @@ namespace SparkleLib.Git {
         }
 
 
-        public override List<SparkleChangeSet> GetChangeSets (string path)
+        public override List<PryanetChangeSet> GetChangeSets (string path)
         {
             return GetChangeSetsInternal (path);
         }   
 
 
-        public override List<SparkleChangeSet> GetChangeSets ()
+        public override List<PryanetChangeSet> GetChangeSets ()
         {
             return GetChangeSetsInternal (null);
         }
@@ -711,7 +711,7 @@ namespace SparkleLib.Git {
             }
             
             if (Error != ErrorStatus.None) {
-                SparkleLogger.LogInfo ("Git", Name + " | Error status changed to " + Error);
+                PryanetLogger.LogInfo ("Git", Name + " | Error status changed to " + Error);
                 return true;
             
             } else {
@@ -720,26 +720,26 @@ namespace SparkleLib.Git {
         }
 
 
-        private List<SparkleChangeSet> GetChangeSetsInternal (string path)
+        private List<PryanetChangeSet> GetChangeSetsInternal (string path)
         {
-            List <SparkleChangeSet> change_sets = new List <SparkleChangeSet> ();
-            SparkleGit git;
+            List <PryanetChangeSet> change_sets = new List <PryanetChangeSet> ();
+            PryanetGit git;
 
             if (path == null) {
-                git = new SparkleGit (LocalPath, "log --since=1.month --raw --find-renames --date=iso " +
+                git = new PryanetGit (LocalPath, "log --since=1.month --raw --find-renames --date=iso " +
                     "--format=medium --no-color --no-merges");
 
             } else {
                 path = path.Replace ("\\", "/");
 
-                git = new SparkleGit (LocalPath, "log --raw --find-renames --date=iso " +
+                git = new PryanetGit (LocalPath, "log --raw --find-renames --date=iso " +
                     "--format=medium --no-color --no-merges -- \"" + path + "\"");
             }
 
             string output = git.StartAndReadStandardOutput ();
 
             if (path == null && string.IsNullOrWhiteSpace (output)) {
-                git = new SparkleGit (LocalPath, "log -n 75 --raw --find-renames --date=iso " +
+                git = new PryanetGit (LocalPath, "log -n 75 --raw --find-renames --date=iso " +
                     "--format=medium --no-color --no-merges");
 
                 output = git.StartAndReadStandardOutput ();
@@ -777,11 +777,11 @@ namespace SparkleLib.Git {
                 Match match = this.log_regex.Match (log_entry);
 
                 if (match.Success) {
-                    SparkleChangeSet change_set = new SparkleChangeSet ();
+                    PryanetChangeSet change_set = new PryanetChangeSet ();
 
-                    change_set.Folder    = new SparkleFolder (Name);
+                    change_set.Folder    = new PryanetFolder (Name);
                     change_set.Revision  = match.Groups [1].Value;
-                    change_set.User      = new SparkleUser (match.Groups [2].Value, match.Groups [3].Value);
+                    change_set.User      = new PryanetUser (match.Groups [2].Value, match.Groups [3].Value);
                     change_set.RemoteUrl = RemoteUrl;
 
                     change_set.Timestamp = new DateTime (int.Parse (match.Groups [4].Value),
@@ -806,7 +806,7 @@ namespace SparkleLib.Git {
                             string file_path   = entry_line.Substring (39);
                             bool change_is_folder = false;
 
-                            if (file_path.Equals (".sparkleshare"))
+                            if (file_path.Equals (".pryanetshare"))
                                 continue;
 
                             if (file_path.EndsWith (".empty")) { 
@@ -839,27 +839,27 @@ namespace SparkleLib.Git {
                                 }
 
                                 change_set.Changes.Add (
-                                    new SparkleChange () {
+                                    new PryanetChange () {
                                         Path        = file_path,
                                         IsFolder    = change_is_folder,
                                         MovedToPath = to_file_path,
                                         Timestamp   = change_set.Timestamp,
-                                        Type        = SparkleChangeType.Moved
+                                        Type        = PryanetChangeType.Moved
                                     }
                                 );
 
                             } else {
-                                SparkleChangeType change_type = SparkleChangeType.Added;
+                                PryanetChangeType change_type = PryanetChangeType.Added;
 
                                 if (type_letter.Equals ("M")) {
-                                    change_type = SparkleChangeType.Edited;
+                                    change_type = PryanetChangeType.Edited;
 
                                 } else if (type_letter.Equals ("D")) {
-                                   change_type = SparkleChangeType.Deleted;
+                                   change_type = PryanetChangeType.Deleted;
                                 }
 
                                 change_set.Changes.Add (
-                                    new SparkleChange () {
+                                    new PryanetChange () {
                                         Path      = file_path,
                                         IsFolder  = change_is_folder,
                                         Timestamp = change_set.Timestamp,
@@ -871,7 +871,7 @@ namespace SparkleLib.Git {
                     }
 
                     if (change_sets.Count > 0 && path == null) {
-                        SparkleChangeSet last_change_set = change_sets [change_sets.Count - 1];
+                        PryanetChangeSet last_change_set = change_sets [change_sets.Count - 1];
 
                         if (change_set.Timestamp.Year  == last_change_set.Timestamp.Year &&
                             change_set.Timestamp.Month == last_change_set.Timestamp.Month &&
@@ -895,17 +895,17 @@ namespace SparkleLib.Git {
 
                     } else {
                         if (path != null) {
-                            List<SparkleChange> changes_to_skip = new List<SparkleChange> ();
+                            List<PryanetChange> changes_to_skip = new List<PryanetChange> ();
 
-                            foreach (SparkleChange change in change_set.Changes) {
-                                if ((change.Type == SparkleChangeType.Deleted || change.Type == SparkleChangeType.Moved)
+                            foreach (PryanetChange change in change_set.Changes) {
+                                if ((change.Type == PryanetChangeType.Deleted || change.Type == PryanetChangeType.Moved)
                                     && change.Path.Equals (path)) {
 
                                     changes_to_skip.Add (change);
                                 }
                             }
 
-                            foreach (SparkleChange change_to_skip in changes_to_skip)
+                            foreach (PryanetChange change_to_skip in changes_to_skip)
                                 change_set.Changes.Remove (change_to_skip);
                         }
                                         
@@ -961,7 +961,7 @@ namespace SparkleLib.Git {
             if (!this.use_git_bin)
                 return;
 
-            SparkleGitBin git_bin = new SparkleGitBin (LocalPath, "clear -f");
+            PryanetGitBin git_bin = new PryanetGitBin (LocalPath, "clear -f");
             git_bin.StartAndWaitForExit ();
         }
 
@@ -986,7 +986,7 @@ namespace SparkleLib.Git {
     
                         if (File.Exists (HEAD_file_path)) {
                             File.Move (HEAD_file_path, HEAD_file_path + ".backup");
-                            SparkleLogger.LogInfo ("Git", Name + " | Renamed " + HEAD_file_path);
+                            PryanetLogger.LogInfo ("Git", Name + " | Renamed " + HEAD_file_path);
                         }
     
                         continue;
@@ -1005,13 +1005,13 @@ namespace SparkleLib.Git {
                             File.SetAttributes (Path.Combine (path, ".empty"), FileAttributes.Hidden);
 
                         } catch {
-                            SparkleLogger.LogInfo ("Git", Name + " | Failed adding empty folder " + path);
+                            PryanetLogger.LogInfo ("Git", Name + " | Failed adding empty folder " + path);
                         }
                     }
                 }
 
             } catch (IOException e) {
-                SparkleLogger.LogInfo ("Git", "Failed preparing directory", e);
+                PryanetLogger.LogInfo ("Git", "Failed preparing directory", e);
             }
         }
 
@@ -1022,7 +1022,7 @@ namespace SparkleLib.Git {
             int count      = 0;
             string message = "";
 
-            SparkleGit git_status = new SparkleGit (LocalPath, "status --porcelain");
+            PryanetGit git_status = new PryanetGit (LocalPath, "status --porcelain");
             git_status.Start ();
 
             while (!git_status.StandardOutput.EndOfStream) {
@@ -1089,7 +1089,7 @@ namespace SparkleLib.Git {
                 }
 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Local", "Error calculating directory size", e);
+                PryanetLogger.LogInfo ("Local", "Error calculating directory size", e);
             }
 
             try {
@@ -1104,7 +1104,7 @@ namespace SparkleLib.Git {
                 }
                 
             } catch (Exception e) {
-                SparkleLogger.LogInfo ("Local", "Error calculating file size", e);
+                PryanetLogger.LogInfo ("Local", "Error calculating file size", e);
             }
 
             return size;

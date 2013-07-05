@@ -1,6 +1,6 @@
 ## Building on Mac
 
-You can choose to build SparkleShare from source or to download the SparkleShare bundle.
+You can choose to build PryanetShare from source or to download the PryanetShare bundle.
 
 
 ### Installing build requirements
@@ -25,13 +25,13 @@ Install <tt>git</tt>, <tt>automake</tt>, <tt>libtool</tt>, <tt>pkgconfig</tt> an
 $ sudo port install git-core automake intltool pkgconfig libtool
 ```
 
-Get a [Git](http://code.google.com/p/git-osx-installer/) install, and place both the `bin` and `libexec` directories in `SparkleShare/Mac/git`.
+Get a [Git](http://code.google.com/p/git-osx-installer/) install, and place both the `bin` and `libexec` directories in `PryanetShare/Mac/git`.
 The exact commands depend on where you installed/have Git. Assuming it's in `/usr/local`:
 
 ```bash
-$ mkdir SparkleShare/Mac/git
-$ cp -R /usr/local/git/bin SparkleShare/Mac/git
-$ cp -R /usr/local/git/libexec SparkleShare/Mac/git
+$ mkdir PryanetShare/Mac/git
+$ cp -R /usr/local/git/bin PryanetShare/Mac/git
+$ cp -R /usr/local/git/libexec PryanetShare/Mac/git
 ```
 
 Start the first part of the build:
@@ -40,7 +40,7 @@ Start the first part of the build:
 $ ./autogen.sh
 ```
 
-Now that you have compiled the libraries, open `SparkleShare/Mac/SparkleShare.sln` in
+Now that you have compiled the libraries, open `PryanetShare/Mac/PryanetShare.sln` in
 MonoDevelop and start the build (Build > Build All).
 
 If you get `Are you missing a using directive or an assembly reference?` errors related to MacOS objects, then run:
@@ -56,32 +56,32 @@ It should generate `MonoMac.dll`. Copy it over any `MonoMac.dll` you might have 
 
 ### Creating a Mac bundle
 
-To create the <tt>SparkleShare.app</tt> select <tt>Build</tt> from the menu bar 
-and click <tt>"Build SparkleShare"</tt>.
+To create the <tt>PryanetShare.app</tt> select <tt>Build</tt> from the menu bar 
+and click <tt>"Build PryanetShare"</tt>.
 
-You'll find a SparkleShare.app in SparkleShare/Mac/bin. Now we need to copy some files over:
+You'll find a PryanetShare.app in PryanetShare/Mac/bin. Now we need to copy some files over:
 
 ```
-cp SparkleShare/Mac/config SparkleShare.app/Contents/MonoBundle/config
-cp /Library/Frameworks/Mono.framework/Versions/Current/lib/libintl.dylib SparkleShare.app/Contents/Resources
+cp PryanetShare/Mac/config PryanetShare.app/Contents/MonoBundle/config
+cp /Library/Frameworks/Mono.framework/Versions/Current/lib/libintl.dylib PryanetShare.app/Contents/Resources
 ```
 
-To play nice with GateKeeper, open `SparkleShare.app/Contents/Info.plist` and remove the `CFBundleResourceSpecification` property.
+To play nice with GateKeeper, open `PryanetShare.app/Contents/Info.plist` and remove the `CFBundleResourceSpecification` property.
 
-**Note:** Adjust `SparkleShare.app/Contents/...` to where you saved the bundle.
+**Note:** Adjust `PryanetShare.app/Contents/...` to where you saved the bundle.
 
 Now you have a working bundle that you can run by double-clicking.
 
 
-### Resetting SparkleShare settings
+### Resetting PryanetShare settings
 
 ```
-rm -Rf ~/SparkleShare
-rm -Rf ~/.config/sparkleshare
+rm -Rf ~/PryanetShare
+rm -Rf ~/.config/pryanetshare
 ```
 
 
 ### Uninstalling
 
-Simply remove the SparkleShare bundle.
+Simply remove the PryanetShare bundle.
 

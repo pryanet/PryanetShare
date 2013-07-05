@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,15 +20,15 @@ using System;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleUI : AppDelegate {
+    public class PryanetUI : AppDelegate {
 
-        public SparkleStatusIcon StatusIcon;
-        public SparkleEventLog EventLog;
-        public SparkleSetup Setup;
-        public SparkleBubbles Bubbles;
-        public SparkleAbout About;
+        public PryanetStatusIcon StatusIcon;
+        public PryanetEventLog EventLog;
+        public PryanetSetup Setup;
+        public PryanetBubbles Bubbles;
+        public PryanetAbout About;
 		
 		public static NSFont Font = NSFontManager.SharedFontManager.FontWithFamily (
 			"Lucida Grande", NSFontTraitMask.Condensed, 0, 13);
@@ -37,19 +37,19 @@ namespace SparkleShare {
 			"Lucida Grande", NSFontTraitMask.Bold, 0, 13);
 		
 
-        public SparkleUI ()
+        public PryanetUI ()
         {
             Program.Controller.Invoke (() => {
                 NSWorkspace.SharedWorkspace.SetIconforFile (
-                    NSImage.ImageNamed ("sparkleshare-folder.icns"), Program.Controller.FoldersPath, 0);
+                    NSImage.ImageNamed ("pryanetshare-folder.icns"), Program.Controller.FoldersPath, 0);
 
-                NSApplication.SharedApplication.ApplicationIconImage = NSImage.ImageNamed ("sparkleshare-app.icns");
+                NSApplication.SharedApplication.ApplicationIconImage = NSImage.ImageNamed ("pryanetshare-app.icns");
     
-                Setup      = new SparkleSetup ();
-                EventLog   = new SparkleEventLog ();
-                About      = new SparkleAbout ();
-                Bubbles    = new SparkleBubbles ();
-                StatusIcon = new SparkleStatusIcon ();
+                Setup      = new PryanetSetup ();
+                EventLog   = new PryanetEventLog ();
+                About      = new PryanetAbout ();
+                Bubbles    = new PryanetBubbles ();
+                StatusIcon = new PryanetStatusIcon ();
             });
 
             Program.Controller.UIHasLoaded ();

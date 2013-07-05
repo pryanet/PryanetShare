@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,16 @@ using System;
 
 using Gtk;
 using Notifications;
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
     
-    public class SparkleBubbles {
+    public class PryanetBubbles {
 
-        public SparkleBubblesController Controller = new SparkleBubblesController ();
+        public PryanetBubblesController Controller = new PryanetBubblesController ();
 
 
-        public SparkleBubbles ()
+        public PryanetBubbles ()
         {
             Controller.ShowBubbleEvent += delegate (string title, string subtext, string image_path) {
                 if (!Program.Controller.NotificationsEnabled)
@@ -45,7 +45,7 @@ namespace SparkleShare {
                     if (image_path != null)
                         notification.Icon = new Gdk.Pixbuf (image_path);
                     else
-                        notification.IconName = "folder-sparkleshare";
+                        notification.IconName = "folder-pryanetshare";
 
                     notification.Closed += delegate (object o, EventArgs args) {
                         if ((args as CloseArgs).Reason == CloseReason.User)

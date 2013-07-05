@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
     public enum PageType {
         None,
@@ -44,7 +44,7 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleSetupController {
+    public class PryanetSetupController {
 
         public event Action ShowWindowEvent = delegate { };
         public event Action HideWindowEvent = delegate { };
@@ -73,11 +73,11 @@ namespace SparkleShare {
         public event ChangePathFieldEventHandler ChangePathFieldEvent = delegate { };
         public delegate void ChangePathFieldEventHandler (string text, string example_text, FieldState state);
 
-        public readonly List<SparklePlugin> Plugins = new List<SparklePlugin> ();
-        public SparklePlugin SelectedPlugin;
+        public readonly List<PryanetPlugin> Plugins = new List<PryanetPlugin> ();
+        public PryanetPlugin SelectedPlugin;
 
         public bool WindowIsOpen { get; private set; }
-        public SparkleInvite PendingInvite { get; private set; }
+        public PryanetInvite PendingInvite { get; private set; }
         public int TutorialPageNumber { get; private set; }
         public string PreviousUrl { get; private set; }
         public string PreviousAddress { get; private set; }
@@ -105,7 +105,7 @@ namespace SparkleShare {
         private bool fetch_prior_history = false;
 
 
-        public SparkleSetupController ()
+        public PryanetSetupController ()
         {
             ChangePageEvent += delegate (PageType page_type, string [] warnings) {
                 this.current_page = page_type;
@@ -117,14 +117,14 @@ namespace SparkleShare {
             PreviousUrl        = "";
             SyncingFolder      = "";
 
-            string local_plugins_path = SparklePlugin.LocalPluginsPath;
+            string local_plugins_path = PryanetPlugin.LocalPluginsPath;
             int local_plugins_count   = 0;
 
             // Import all of the plugins
             if (Directory.Exists (local_plugins_path))
                 // Local plugins go first...
                 foreach (string xml_file_path in Directory.GetFiles (local_plugins_path, "*.xml")) {
-                    Plugins.Add (new SparklePlugin (xml_file_path));
+                    Plugins.Add (new PryanetPlugin (xml_file_path));
                     local_plugins_count++;
                 }
 
@@ -133,21 +133,21 @@ namespace SparkleShare {
                 foreach (string xml_file_path in Directory.GetFiles (Program.Controller.PluginsPath, "*.xml")) {
                     // ...and "Own server" at the very top
                     if (xml_file_path.EndsWith ("own-server.xml")) {
-                        Plugins.Insert (0, new SparklePlugin (xml_file_path));
+                        Plugins.Insert (0, new PryanetPlugin (xml_file_path));
 
                     } else if (xml_file_path.EndsWith ("ssnet.xml")) {
-                        // Plugins.Insert ((local_plugins_count + 1), new SparklePlugin (xml_file_path)); 
+                        // Plugins.Insert ((local_plugins_count + 1), new PryanetPlugin (xml_file_path)); 
                         // TODO: Skip this plugin for now
 
                     } else {
-                        Plugins.Add (new SparklePlugin (xml_file_path));
+                        Plugins.Add (new PryanetPlugin (xml_file_path));
                     }
                 }
             }
 
             SelectedPlugin = Plugins [0];
 
-            Program.Controller.InviteReceived += delegate (SparkleInvite invite) {
+            Program.Controller.InviteReceived += delegate (PryanetInvite invite) {
                 PendingInvite = invite;
 
                 ChangePageEvent (PageType.Invite, null);
@@ -236,7 +236,7 @@ namespace SparkleShare {
         
         public void SetupPageCompleted (string full_name, string email)
         {
-            Program.Controller.CurrentUser = new SparkleUser (full_name, email);
+            Program.Controller.CurrentUser = new PryanetUser (full_name, email);
 
             TutorialPageNumber = 1;
             ChangePageEvent (PageType.Tutorial, null);
@@ -351,7 +351,7 @@ namespace SparkleShare {
             Program.Controller.FolderFetchError += AddPageFetchErrorDelegate;
             Program.Controller.FolderFetching   += SyncingPageFetchingDelegate;
 
-            SparkleFetcherInfo info = new SparkleFetcherInfo {
+            PryanetFetcherInfo info = new PryanetFetcherInfo {
                 Address           = address,
                 Fingerprint       = SelectedPlugin.Fingerprint,
                 RemotePath        = remote_path,
@@ -372,20 +372,20 @@ namespace SparkleShare {
             // Create a local plugin for succesfully added projects, so
             // so the user can easily use the same host again
             if (SelectedPluginIndex == 0) {
-                SparklePlugin new_plugin;
+                PryanetPlugin new_plugin;
                 Uri uri = new Uri (remote_url);
 
                 try {
                     string address = remote_url.Replace (uri.AbsolutePath, "");
-                    new_plugin = SparklePlugin.Create (uri.Host, address, address, "", "", "/path/to/project");
+                    new_plugin = PryanetPlugin.Create (uri.Host, address, address, "", "", "/path/to/project");
     
                     if (new_plugin != null) {
                         Plugins.Insert (1, new_plugin);
-                        SparkleLogger.LogInfo ("Controller", "Added plugin for " + uri.Host);
+                        PryanetLogger.LogInfo ("Controller", "Added plugin for " + uri.Host);
                     }
 
                 } catch {
-                    SparkleLogger.LogInfo ("Controller", "Failed adding plugin for " + uri.Host);
+                    PryanetLogger.LogInfo ("Controller", "Failed adding plugin for " + uri.Host);
                 }
             }
 
@@ -440,7 +440,7 @@ namespace SparkleShare {
                 Program.Controller.FolderFetchError += InvitePageFetchErrorDelegate;
                 Program.Controller.FolderFetching   += SyncingPageFetchingDelegate;
 
-                SparkleFetcherInfo info = new SparkleFetcherInfo {
+                PryanetFetcherInfo info = new PryanetFetcherInfo {
                     Address           = PendingInvite.Address,
                     Fingerprint       = PendingInvite.Fingerprint,
                     RemotePath        = PendingInvite.RemotePath,
@@ -557,7 +557,7 @@ namespace SparkleShare {
             if (PreviousPath.EndsWith ("-crypto.git"))
                 folder_name = folder_name.Replace ("-crypto.git", "");
 
-            Program.Controller.OpenSparkleShareFolder (folder_name);
+            Program.Controller.OpenPryanetShareFolder (folder_name);
             FinishPageCompleted ();
         }
 

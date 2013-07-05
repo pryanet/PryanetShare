@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -20,11 +20,11 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
-    public class SparkleConfig : XmlDocument {
+    public class PryanetConfig : XmlDocument {
 
-        public static SparkleConfig DefaultConfig;
+        public static PryanetConfig DefaultConfig;
         public static bool DebugMode = true;
 
         public string FullPath;
@@ -34,7 +34,7 @@ namespace SparkleLib {
 
         public string HomePath {
             get {
-                if (SparkleBackend.Platform == PlatformID.Win32NT)
+                if (PryanetBackend.Platform == PlatformID.Win32NT)
                     return Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
                 else
                     return Environment.GetFolderPath (Environment.SpecialFolder.Personal);
@@ -47,12 +47,12 @@ namespace SparkleLib {
                 if (GetConfigOption ("folders_path") != null)                      
                     return GetConfigOption ("folders_path");
                 else
-                    return Path.Combine (HomePath, "SparkleShare");
+                    return Path.Combine (HomePath, "PryanetShare");
             }
         }
 
 
-        public SparkleConfig (string config_path, string config_file_name)
+        public PryanetConfig (string config_path, string config_file_name)
         {
             FullPath    = Path.Combine (config_path, config_file_name);
             LogFilePath = Path.Combine (config_path, "debug_log.txt");
@@ -101,8 +101,8 @@ namespace SparkleLib {
         {
             string user_name = "Unknown";
 
-            if (SparkleBackend.Platform == PlatformID.Unix ||
-                SparkleBackend.Platform == PlatformID.MacOSX) {
+            if (PryanetBackend.Platform == PlatformID.Unix ||
+                PryanetBackend.Platform == PlatformID.MacOSX) {
 
                 user_name = Environment.UserName;
                 if (string.IsNullOrEmpty (user_name))
@@ -120,23 +120,23 @@ namespace SparkleLib {
             string n = Environment.NewLine;
             File.WriteAllText (FullPath,
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + n +
-                "<sparkleshare>" + n +
+                "<pryanetshare>" + n +
                 "  <user>" + n +
                 "    <name>" + user_name + "</name>" + n +
                 "    <email>Unknown</email>" + n +
                 "  </user>" + n +
-                "</sparkleshare>");
+                "</pryanetshare>");
         }
 
 
-        public SparkleUser User {
+        public PryanetUser User {
             get {
-                XmlNode name_node  = SelectSingleNode ("/sparkleshare/user/name/text()");
-                XmlNode email_node = SelectSingleNode ("/sparkleshare/user/email/text()");
+                XmlNode name_node  = SelectSingleNode ("/pryanetshare/user/name/text()");
+                XmlNode email_node = SelectSingleNode ("/pryanetshare/user/email/text()");
                 string user_name   = name_node.Value;
                 string user_email  = email_node.Value;
 
-                SparkleUser user = new SparkleUser (user_name, user_email);
+                PryanetUser user = new PryanetUser (user_name, user_email);
 
                 string [] private_key_file_paths = Directory.GetFiles (Path.GetDirectoryName (FullPath), "*.key");
                 
@@ -152,10 +152,10 @@ namespace SparkleLib {
             }
 
             set {
-                SparkleUser user = (SparkleUser) value;
+                PryanetUser user = (PryanetUser) value;
 
-                XmlNode name_node    = SelectSingleNode ("/sparkleshare/user/name/text()");
-                XmlNode email_node   = SelectSingleNode ("/sparkleshare/user/email/text()");
+                XmlNode name_node    = SelectSingleNode ("/pryanetshare/user/name/text()");
+                XmlNode email_node   = SelectSingleNode ("/pryanetshare/user/email/text()");
                 name_node.InnerText  = user.Name;
                 email_node.InnerText = user.Email;
 
@@ -168,7 +168,7 @@ namespace SparkleLib {
             get {
                 List<string> folders = new List<string> ();
 
-                foreach (XmlNode node_folder in SelectNodes ("/sparkleshare/folder"))
+                foreach (XmlNode node_folder in SelectNodes ("/pryanetshare/folder"))
                     folders.Add (node_folder ["name"].InnerText);
 
                 folders.Sort ();
@@ -197,7 +197,7 @@ namespace SparkleLib {
             node_folder.AppendChild (node_url);
             node_folder.AppendChild (node_backend);
 
-            XmlNode node_root = SelectSingleNode ("/sparkleshare");
+            XmlNode node_root = SelectSingleNode ("/pryanetshare");
             node_root.AppendChild (node_folder);
 
             Save ();
@@ -206,9 +206,9 @@ namespace SparkleLib {
 
         public void RemoveFolder (string name)
         {
-            foreach (XmlNode node_folder in SelectNodes ("/sparkleshare/folder")) {
+            foreach (XmlNode node_folder in SelectNodes ("/pryanetshare/folder")) {
                 if (node_folder ["name"].InnerText.Equals (name))
-                    SelectSingleNode ("/sparkleshare").RemoveChild (node_folder);
+                    SelectSingleNode ("/pryanetshare").RemoveChild (node_folder);
             }
 
             Save ();
@@ -218,7 +218,7 @@ namespace SparkleLib {
         public void RenameFolder (string identifier, string name)
         {
             XmlNode node_folder = SelectSingleNode (
-                string.Format ("/sparkleshare/folder[identifier=\"{0}\"]", identifier));
+                string.Format ("/pryanetshare/folder[identifier=\"{0}\"]", identifier));
 
             node_folder ["name"].InnerText = name;
             Save ();
@@ -248,7 +248,7 @@ namespace SparkleLib {
             if (identifier == null)
                 throw new ArgumentNullException ();
 
-            foreach (XmlNode node_folder in SelectNodes ("/sparkleshare/folder")) {
+            foreach (XmlNode node_folder in SelectNodes ("/pryanetshare/folder")) {
                 XmlElement folder_id = node_folder ["identifier"];
 
                 if (folder_id != null && identifier.Equals (folder_id.InnerText))
@@ -299,7 +299,7 @@ namespace SparkleLib {
 
         public string GetConfigOption (string name)
         {
-            XmlNode node = SelectSingleNode ("/sparkleshare/" + name);
+            XmlNode node = SelectSingleNode ("/pryanetshare/" + name);
 
             if (node != null)
                 return node.InnerText;
@@ -310,7 +310,7 @@ namespace SparkleLib {
 
         public void SetConfigOption (string name, string content)
         {
-            XmlNode node = SelectSingleNode ("/sparkleshare/" + name);
+            XmlNode node = SelectSingleNode ("/pryanetshare/" + name);
 
             if (node != null) {
                 node.InnerText = content;
@@ -319,18 +319,18 @@ namespace SparkleLib {
                 node           = CreateElement (name);
                 node.InnerText = content;
 
-                XmlNode node_root = SelectSingleNode ("/sparkleshare");
+                XmlNode node_root = SelectSingleNode ("/pryanetshare");
                 node_root.AppendChild (node);
             }
 
             Save ();
-            SparkleLogger.LogInfo ("Config", "Updated option " + name + ":" + content);
+            PryanetLogger.LogInfo ("Config", "Updated option " + name + ":" + content);
         }
 
 
         private XmlNode GetFolder (string name)
         {
-            return SelectSingleNode (string.Format ("/sparkleshare/folder[name=\"{0}\"]", name));
+            return SelectSingleNode (string.Format ("/pryanetshare/folder[name=\"{0}\"]", name));
         }
         
         
@@ -351,7 +351,7 @@ namespace SparkleLib {
                 throw new FileNotFoundException (FullPath + " does not exist");
 
             Save (FullPath);
-            SparkleLogger.LogInfo ("Config", "Wrote to '" + FullPath + "'");
+            PryanetLogger.LogInfo ("Config", "Wrote to '" + FullPath + "'");
         }
     }
 }

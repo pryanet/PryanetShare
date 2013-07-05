@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,18 +18,18 @@
 using System.Timers;
 using Gtk;
 
-namespace SparkleShare {
+namespace PryanetShare {
         
     // This is a close implementation of GtkSpinner
-    public class SparkleSpinner : Image {
+    public class PryanetSpinner : Image {
 
         private Timer timer;
 
 
-        public SparkleSpinner (int size) : base ()
+        public PryanetSpinner (int size) : base ()
         {
             int current_frame          = 0;
-            Gdk.Pixbuf spinner_gallery = SparkleUIHelpers.GetIcon ("process-working", size);
+            Gdk.Pixbuf spinner_gallery = PryanetUIHelpers.GetIcon ("process-working", size);
             int frames_in_width        = spinner_gallery.Width / size;
             int frames_in_height       = spinner_gallery.Height / size;
             int frame_count            = (frames_in_width * frames_in_height) - 1;

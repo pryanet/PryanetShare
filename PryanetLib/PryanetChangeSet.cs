@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace SparkleLib {
+namespace PryanetLib {
 
-    public enum SparkleChangeType {
+    public enum PryanetChangeType {
         Added,
         Edited,
         Deleted,
@@ -29,47 +29,47 @@ namespace SparkleLib {
     }
 
 
-    public class SparkleChangeSet {
+    public class PryanetChangeSet {
 
-        public SparkleUser User = new SparkleUser ("Unknown", "Unknown");
+        public PryanetUser User = new PryanetUser ("Unknown", "Unknown");
 
-        public SparkleFolder Folder;
+        public PryanetFolder Folder;
         public Uri RemoteUrl;
 
         public string Revision;
         public DateTime Timestamp;
         public DateTime FirstTimestamp;
-        public List<SparkleChange> Changes = new List<SparkleChange> ();
+        public List<PryanetChange> Changes = new List<PryanetChange> ();
     }
 
 
-    public class SparkleChange {
+    public class PryanetChange {
 
-        public SparkleChangeType Type;
+        public PryanetChangeType Type;
         public string Path;
         public string MovedToPath;
         public DateTime Timestamp;
     }
 
 
-    public class SparkleFolder {
+    public class PryanetFolder {
 
         public string Name;
         public Uri RemoteAddress;
 
         public string FullPath {
             get {
-                string custom_path = SparkleConfig.DefaultConfig.GetFolderOptionalAttribute (Name, "path");
+                string custom_path = PryanetConfig.DefaultConfig.GetFolderOptionalAttribute (Name, "path");
 
                 if (custom_path != null)
                     return Path.Combine (custom_path, Name);
                 else
-                    return Path.Combine (SparkleConfig.DefaultConfig.FoldersPath, Name);
+                    return Path.Combine (PryanetConfig.DefaultConfig.FoldersPath, Name);
             }
         }
 
 
-        public SparkleFolder (string name)
+        public PryanetFolder (string name)
         {
             Name = name;
         }

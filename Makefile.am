@@ -1,7 +1,7 @@
-basedirs = build SparkleLib SparkleLib/Git
+basedirs = build PryanetLib PryanetLib/Git
 
 SUBDIRS = $(basedirs) $(GUISUBDIRS)
-DIST_SUBDIRS = $(basedirs) SparkleShare
+DIST_SUBDIRS = $(basedirs) PryanetShare
 
 EXTRA_DIST = \
 	News.txt \

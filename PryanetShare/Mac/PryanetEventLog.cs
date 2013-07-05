@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -25,11 +25,11 @@ using MonoMac.AppKit;
 using MonoMac.ObjCRuntime;
 using MonoMac.WebKit;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleEventLog : NSWindow {
+    public class PryanetEventLog : NSWindow {
 
-        public SparkleEventLogController Controller = new SparkleEventLogController ();
+        public PryanetEventLogController Controller = new PryanetEventLogController ();
         public float TitlebarHeight;
 
         private WebView web_view;
@@ -40,12 +40,12 @@ namespace SparkleShare {
         private NSButton hidden_close_button;
 
 
-        public SparkleEventLog (IntPtr handle) : base (handle) { }
+        public PryanetEventLog (IntPtr handle) : base (handle) { }
 
-        public SparkleEventLog () : base ()
+        public PryanetEventLog () : base ()
         {
             Title    = "Recent Changes";
-            Delegate = new SparkleEventsDelegate ();
+            Delegate = new PryanetEventsDelegate ();
 
             int min_width  = 480;
             int min_height = 640;
@@ -94,7 +94,7 @@ namespace SparkleShare {
                     new PointF (0, ContentView.Frame.Height - 30),
                     new SizeF (60, 20)),
                 StringValue     = "Size:",
-                Font            = SparkleUI.BoldFont
+                Font            = PryanetUI.BoldFont
             };
 
             this.size_label_value = new NSTextField () {
@@ -106,7 +106,7 @@ namespace SparkleShare {
                     new PointF (60, ContentView.Frame.Height - 30),
                     new SizeF (60, 20)),
                 StringValue     = "…",
-                Font            = SparkleUI.Font
+                Font            = PryanetUI.Font
             };
 
 
@@ -119,7 +119,7 @@ namespace SparkleShare {
                     new PointF (130, ContentView.Frame.Height - 30),
                     new SizeF (60, 20)),
                 StringValue     = "History:",
-                Font            = SparkleUI.BoldFont
+                Font            = PryanetUI.BoldFont
             };
 
             this.history_label_value = new NSTextField () {
@@ -132,7 +132,7 @@ namespace SparkleShare {
                     new SizeF (60, 20)
                 ),
                 StringValue     = "…",
-                Font            = SparkleUI.Font
+                Font            = PryanetUI.Font
             };
 
             this.popup_button = new NSPopUpButton () {
@@ -169,7 +169,7 @@ namespace SparkleShare {
             ContentView.AddSubview (this.background);
             ContentView.AddSubview (this.hidden_close_button);
 
-            (Delegate as SparkleEventsDelegate).WindowResized += delegate (SizeF new_window_size) {
+            (Delegate as PryanetEventsDelegate).WindowResized += delegate (SizeF new_window_size) {
                 Program.Controller.Invoke (() => Relayout (new_window_size));
             };
 
@@ -338,10 +338,10 @@ namespace SparkleShare {
 
             this.web_view.MainFrame.LoadHtmlString (html, new NSUrl (""));
 
-            this.web_view.PolicyDelegate = new SparkleWebPolicyDelegate ();
+            this.web_view.PolicyDelegate = new PryanetWebPolicyDelegate ();
             ContentView.AddSubview (this.web_view);
 
-            (this.web_view.PolicyDelegate as SparkleWebPolicyDelegate).LinkClicked += delegate (string href) {
+            (this.web_view.PolicyDelegate as PryanetWebPolicyDelegate).LinkClicked += delegate (string href) {
                 if (href.StartsWith ("file:///"))
                     href = href.Substring (7);
 
@@ -376,7 +376,7 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleEventsDelegate : NSWindowDelegate {
+    public class PryanetEventsDelegate : NSWindowDelegate {
 
         public event WindowResizedHandler WindowResized = delegate { };
         public delegate void WindowResizedHandler (SizeF new_window_size);
@@ -389,13 +389,13 @@ namespace SparkleShare {
 
         public override bool WindowShouldClose (NSObject sender)
         {
-            (sender as SparkleEventLog).Controller.WindowClosed ();
+            (sender as PryanetEventLog).Controller.WindowClosed ();
             return false;
         }
     }
     
     
-    public class SparkleWebPolicyDelegate : WebPolicyDelegate {
+    public class PryanetWebPolicyDelegate : WebPolicyDelegate {
 
         public event LinkClickedHandler LinkClicked = delegate { };
         public delegate void LinkClickedHandler (string href);

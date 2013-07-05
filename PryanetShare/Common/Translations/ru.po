@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the SparkleShare package.
+# This file is distributed under the same license as the PryanetShare package.
 # 
 # Translators:
 # Dmitry Golubkov <master@hsdesign.ru>, 2011.
@@ -8,7 +8,7 @@
 # Oleg Shmelyov <shmelyov.o@gmail.com>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: SparkleShare\n"
+"Project-Id-Version: PryanetShare\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-30 15:50+0100\n"
 "PO-Revision-Date: 2011-11-02 11:31+0000\n"
@@ -77,149 +77,149 @@ msgstr "Всё под моим контролем"
 msgid "On my own server"
 msgstr "Мой личный сервер"
 
-#: ../SparkleShare/Mac/SparkleStatusIcon.cs:70
-#: ../SparkleShare/Mac/SparkleStatusIcon.cs:88
-#: ../SparkleShare/SparkleSetup.cs:75 ../SparkleShare/SparkleStatusIcon.cs:75
-#: ../SparkleShare/SparkleStatusIcon.cs:89
-msgid "Welcome to SparkleShare!"
-msgstr "Добро пожаловать в SparkleShare!"
+#: ../PryanetShare/Mac/PryanetStatusIcon.cs:70
+#: ../PryanetShare/Mac/PryanetStatusIcon.cs:88
+#: ../PryanetShare/PryanetSetup.cs:75 ../PryanetShare/PryanetStatusIcon.cs:75
+#: ../PryanetShare/PryanetStatusIcon.cs:89
+msgid "Welcome to PryanetShare!"
+msgstr "Добро пожаловать в PryanetShare!"
 
-#: ../SparkleShare/Mac/SparkleStatusIcon.cs:72
-#: ../SparkleShare/Mac/SparkleStatusIcon.cs:90
-#: ../SparkleShare/SparkleStatusIcon.cs:77
-#: ../SparkleShare/SparkleStatusIcon.cs:91
+#: ../PryanetShare/Mac/PryanetStatusIcon.cs:72
+#: ../PryanetShare/Mac/PryanetStatusIcon.cs:90
+#: ../PryanetShare/PryanetStatusIcon.cs:77
+#: ../PryanetShare/PryanetStatusIcon.cs:91
 msgid "Up to date"
 msgstr "Обновлено"
 
-#: ../SparkleShare/Mac/SparkleStatusIcon.cs:99
-#: ../SparkleShare/SparkleStatusIcon.cs:106
+#: ../PryanetShare/Mac/PryanetStatusIcon.cs:99
+#: ../PryanetShare/PryanetStatusIcon.cs:106
 msgid "Syncing…"
 msgstr "Синхронизация…"
 
-#: ../SparkleShare/Mac/SparkleStatusIcon.cs:109
-#: ../SparkleShare/SparkleStatusIcon.cs:116
+#: ../PryanetShare/Mac/PryanetStatusIcon.cs:109
+#: ../PryanetShare/PryanetStatusIcon.cs:116
 msgid "Not everything is synced"
 msgstr "Синхронизация не завершена"
 
-#: ../SparkleShare/Nautilus/sparkleshare-nautilus-extension.py.in:113
+#: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:113
 msgid "Copy Web Link"
 msgstr "Копировать ссылку"
 
-#: ../SparkleShare/Nautilus/sparkleshare-nautilus-extension.py.in:114
+#: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:114
 msgid "Copy the web address of this file to the clipboard"
 msgstr "Копировать ссылку в буфер обмена"
 
-#: ../SparkleShare/Nautilus/sparkleshare-nautilus-extension.py.in:147
+#: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:147
 msgid "Get Earlier Version"
 msgstr "Получить более раннюю версию"
 
-#: ../SparkleShare/Nautilus/sparkleshare-nautilus-extension.py.in:148
+#: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:148
 msgid "Make a copy of an earlier version in this folder"
 msgstr "Сделать копию более ранней версии в этой папке"
 
-#: ../SparkleShare/Nautilus/sparkleshare-nautilus-extension.py.in:161
+#: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:161
 msgid "Select to get a copy of this version"
 msgstr "Выберите, чтобы скопировать эту версию"
 
-#: ../SparkleShare/Program.cs:51
+#: ../PryanetShare/Program.cs:51
 msgid "Print version information"
 msgstr "Вывести информацию о версии программы."
 
-#: ../SparkleShare/Program.cs:52
+#: ../PryanetShare/Program.cs:52
 msgid "Show this help text"
 msgstr "Показать это справочное сообщение"
 
-#: ../SparkleShare/Program.cs:84
-msgid "SparkleShare, a collaboration and sharing tool."
-msgstr "SparkleShare, утилита совместной разработки и обмена."
+#: ../PryanetShare/Program.cs:84
+msgid "PryanetShare, a collaboration and sharing tool."
+msgstr "PryanetShare, утилита совместной разработки и обмена."
 
-#: ../SparkleShare/Program.cs:85
+#: ../PryanetShare/Program.cs:85
 msgid "Copyright (C) 2010 Hylke Bons"
 msgstr "Copyright (C) 2010 Hylke Bons"
 
-#: ../SparkleShare/Program.cs:87
+#: ../PryanetShare/Program.cs:87
 msgid "This program comes with ABSOLUTELY NO WARRANTY."
 msgstr "Эта программа поставляется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ."
 
-#: ../SparkleShare/Program.cs:89
+#: ../PryanetShare/Program.cs:89
 msgid "This is free software, and you are welcome to redistribute it "
 msgstr "Эта программа является свободной, ее распространение разрешено "
 
-#: ../SparkleShare/Program.cs:90
+#: ../PryanetShare/Program.cs:90
 msgid "under certain conditions. Please read the GNU GPLv3 for details."
 msgstr "при соблюдении требований лицензии GNU GPLv3."
 
-#: ../SparkleShare/Program.cs:92
-msgid "SparkleShare automatically syncs Git repositories in "
-msgstr "SparkleShare автоматически синхронизирует Git-репозитории,"
+#: ../PryanetShare/Program.cs:92
+msgid "PryanetShare automatically syncs Git repositories in "
+msgstr "PryanetShare автоматически синхронизирует Git-репозитории,"
 
-#: ../SparkleShare/Program.cs:93
-msgid "the ~/SparkleShare folder with their remote origins."
-msgstr "находящиеся в папке ~/SparkleShare, с их удалёнными ветвями."
+#: ../PryanetShare/Program.cs:93
+msgid "the ~/PryanetShare folder with their remote origins."
+msgstr "находящиеся в папке ~/PryanetShare, с их удалёнными ветвями."
 
-#: ../SparkleShare/Program.cs:95
-msgid "Usage: sparkleshare [start|stop|restart] [OPTION]..."
-msgstr "Синтаксис: sparkleshare [start|stop|restart] [КЛЮЧ]..."
+#: ../PryanetShare/Program.cs:95
+msgid "Usage: pryanetshare [start|stop|restart] [OPTION]..."
+msgstr "Синтаксис: pryanetshare [start|stop|restart] [КЛЮЧ]..."
 
-#: ../SparkleShare/Program.cs:96
-msgid "Sync SparkleShare folder with remote repositories."
-msgstr "Синхронизировать папку SparkleShare с удаленными источниками."
+#: ../PryanetShare/Program.cs:96
+msgid "Sync PryanetShare folder with remote repositories."
+msgstr "Синхронизировать папку PryanetShare с удаленными источниками."
 
-#: ../SparkleShare/Program.cs:98
+#: ../PryanetShare/Program.cs:98
 msgid "Arguments:"
 msgstr "Параметры:"
 
-#: ../SparkleShare/Program.cs:108
-msgid "SparkleShare "
-msgstr "SparkleShare "
+#: ../PryanetShare/Program.cs:108
+msgid "PryanetShare "
+msgstr "PryanetShare "
 
-#. A menu item that takes the user to http://www.sparkleshare.org/
-#: ../SparkleShare/SparkleAbout.cs:53 ../SparkleShare/SparkleStatusIcon.cs:295
-msgid "About SparkleShare"
+#. A menu item that takes the user to http://www.pryanetshare.org/
+#: ../PryanetShare/PryanetAbout.cs:53 ../PryanetShare/PryanetStatusIcon.cs:295
+msgid "About PryanetShare"
 msgstr "О программе"
 
-#: ../SparkleShare/SparkleAbout.cs:70
+#: ../PryanetShare/PryanetAbout.cs:70
 #, csharp-format
 msgid "A newer version ({0}) is available!"
 msgstr "Доступна более новая версия ({0})!"
 
-#: ../SparkleShare/SparkleAbout.cs:79
+#: ../PryanetShare/PryanetAbout.cs:79
 msgid "You are running the latest version."
 msgstr "У вас уже установлена самая последняя версия."
 
-#: ../SparkleShare/SparkleAbout.cs:88 ../SparkleShare/SparkleAbout.cs:113
+#: ../PryanetShare/PryanetAbout.cs:88 ../PryanetShare/PryanetAbout.cs:113
 msgid "Checking for updates..."
 msgstr "Проверка обновлений…"
 
-#: ../SparkleShare/SparkleControllerBase.cs:493
+#: ../PryanetShare/PryanetControllerBase.cs:493
 msgid "dddd, MMMM d, yyyy"
 msgstr "дддд, ММММ д, гггг"
 
-#: ../SparkleShare/SparkleControllerBase.cs:499
+#: ../PryanetShare/PryanetControllerBase.cs:499
 msgid "dddd, MMMM d"
 msgstr "дддд, ММММ д"
 
-#: ../SparkleShare/SparkleControllerBase.cs:707
+#: ../PryanetShare/PryanetControllerBase.cs:707
 #, csharp-format
 msgid "added ‘{0}’"
 msgstr "«{0}» добавлено"
 
-#: ../SparkleShare/SparkleControllerBase.cs:712
+#: ../PryanetShare/PryanetControllerBase.cs:712
 #, csharp-format
 msgid "moved ‘{0}’"
 msgstr "«{0}» перемещено"
 
-#: ../SparkleShare/SparkleControllerBase.cs:717
+#: ../PryanetShare/PryanetControllerBase.cs:717
 #, csharp-format
 msgid "edited ‘{0}’"
 msgstr "«{0}» изменено"
 
-#: ../SparkleShare/SparkleControllerBase.cs:722
+#: ../PryanetShare/PryanetControllerBase.cs:722
 #, csharp-format
 msgid "deleted ‘{0}’"
 msgstr "«{0}» удалено"
 
-#: ../SparkleShare/SparkleControllerBase.cs:731
+#: ../PryanetShare/PryanetControllerBase.cs:731
 #, csharp-format
 msgid "and {0} more"
 msgid_plural "and {0} more"
@@ -227,131 +227,131 @@ msgstr[0] "и ещё над {0}"
 msgstr[1] "и ещё над {0}"
 msgstr[2] "и ещё над {0}"
 
-#: ../SparkleShare/SparkleControllerBase.cs:735
+#: ../PryanetShare/PryanetControllerBase.cs:735
 msgid "did something magical"
 msgstr "совершено какое-то колдовство"
 
-#: ../SparkleShare/SparkleEventLog.cs:58
+#: ../PryanetShare/PryanetEventLog.cs:58
 msgid "Recent Events"
 msgstr "Недавние события"
 
-#: ../SparkleShare/SparkleEventLog.cs:169
-#: ../SparkleShare/SparkleEventLog.cs:188
+#: ../PryanetShare/PryanetEventLog.cs:169
+#: ../PryanetShare/PryanetEventLog.cs:188
 msgid "All Folders"
 msgstr "Все папки"
 
-#: ../SparkleShare/SparkleSetup.cs:76
+#: ../PryanetShare/PryanetSetup.cs:76
 msgid ""
-"Before we can create a SparkleShare folder on this computer, we need a few "
+"Before we can create a PryanetShare folder on this computer, we need a few "
 "bits of information from you."
 msgstr ""
-"Прежде чем мы сможем создать папку SparkleShare  на этом компьютере, нам "
+"Прежде чем мы сможем создать папку PryanetShare  на этом компьютере, нам "
 "нужно от вас немного информации."
 
-#: ../SparkleShare/SparkleSetup.cs:83
+#: ../PryanetShare/PryanetSetup.cs:83
 msgid "Full Name:"
 msgstr "Полное имя:"
 
-#: ../SparkleShare/SparkleSetup.cs:98
+#: ../PryanetShare/PryanetSetup.cs:98
 msgid "Email:"
 msgstr "Эл. почта:"
 
-#: ../SparkleShare/SparkleSetup.cs:108
+#: ../PryanetShare/PryanetSetup.cs:108
 msgid "Next"
 msgstr "Следующий"
 
-#: ../SparkleShare/SparkleSetup.cs:129
+#: ../PryanetShare/PryanetSetup.cs:129
 msgid "Where's your project hosted?"
 msgstr "Где находится Ваш проект?"
 
-#: ../SparkleShare/SparkleSetup.cs:275
+#: ../PryanetShare/PryanetSetup.cs:275
 msgid "Address"
 msgstr "Адрес"
 
-#: ../SparkleShare/SparkleSetup.cs:295
+#: ../PryanetShare/PryanetSetup.cs:295
 msgid "Remote Path"
 msgstr "Удалённый путь"
 
 #. Cancel button
-#: ../SparkleShare/SparkleSetup.cs:309 ../SparkleShare/SparkleSetup.cs:345
+#: ../PryanetShare/PryanetSetup.cs:309 ../PryanetShare/PryanetSetup.cs:345
 msgid "Cancel"
 msgstr "Отменить"
 
 #. Sync button
-#: ../SparkleShare/SparkleSetup.cs:316
+#: ../PryanetShare/PryanetSetup.cs:316
 msgid "Add"
 msgstr "Добавить"
 
-#: ../SparkleShare/SparkleSetup.cs:335
+#: ../PryanetShare/PryanetSetup.cs:335
 #, csharp-format
 msgid "Adding project ‘{0}’…"
 msgstr "Добавить проект ‘{0}’…"
 
-#: ../SparkleShare/SparkleSetup.cs:336
+#: ../PryanetShare/PryanetSetup.cs:336
 msgid "This may take a while."
 msgstr "Это может занять некоторое время."
 
-#: ../SparkleShare/SparkleSetup.cs:337
+#: ../PryanetShare/PryanetSetup.cs:337
 msgid "Are you sure it’s not coffee o'clock?"
 msgstr "Не пора ли выпить кофе?"
 
-#: ../SparkleShare/SparkleSetup.cs:341 ../SparkleShare/SparkleSetup.cs:457
-#: ../SparkleShare/SparkleSetup.cs:556
+#: ../PryanetShare/PryanetSetup.cs:341 ../PryanetShare/PryanetSetup.cs:457
+#: ../PryanetShare/PryanetSetup.cs:556
 msgid "Finish"
 msgstr "Завершить"
 
-#: ../SparkleShare/SparkleSetup.cs:374
+#: ../PryanetShare/PryanetSetup.cs:374
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
 
-#: ../SparkleShare/SparkleSetup.cs:422
+#: ../PryanetShare/PryanetSetup.cs:422
 msgid "Try Again…"
 msgstr "Попробуйте снова..."
 
-#: ../SparkleShare/SparkleSetup.cs:441
+#: ../PryanetShare/PryanetSetup.cs:441
 #, csharp-format
 msgid "‘{0}’ has been successfully added"
 msgstr "{0}’ был успешно добавлен"
 
-#: ../SparkleShare/SparkleSetup.cs:447
+#: ../PryanetShare/PryanetSetup.cs:447
 msgid "Project successfully added!"
 msgstr "Проект успешно добавлен!"
 
-#: ../SparkleShare/SparkleSetup.cs:448
-msgid "Access the files from your SparkleShare folder."
-msgstr "Получить доступ к файлам из своей папки SparkleShare."
+#: ../PryanetShare/PryanetSetup.cs:448
+msgid "Access the files from your PryanetShare folder."
+msgstr "Получить доступ к файлам из своей папки PryanetShare."
 
 #. A button that opens the synced folder
-#: ../SparkleShare/SparkleSetup.cs:451
+#: ../PryanetShare/PryanetSetup.cs:451
 msgid "Open Folder"
 msgstr "Открыть папку"
 
-#: ../SparkleShare/SparkleSetup.cs:477
+#: ../PryanetShare/PryanetSetup.cs:477
 msgid "What's happening next?"
 msgstr "Что произойдёт дальше?"
 
-#: ../SparkleShare/SparkleSetup.cs:478
+#: ../PryanetShare/PryanetSetup.cs:478
 msgid ""
-"SparkleShare creates a special folder in your personal folder that will keep"
+"PryanetShare creates a special folder in your personal folder that will keep"
 " track of your projects."
 msgstr ""
-"SparkleShare создаёт специальную папку в вашей личной папке, которая будет "
+"PryanetShare создаёт специальную папку в вашей личной папке, которая будет "
 "отслеживать ваши проекты."
 
-#: ../SparkleShare/SparkleSetup.cs:481
+#: ../PryanetShare/PryanetSetup.cs:481
 msgid "Skip Tutorial"
 msgstr "Пропустить обучение"
 
-#: ../SparkleShare/SparkleSetup.cs:486 ../SparkleShare/SparkleSetup.cs:506
-#: ../SparkleShare/SparkleSetup.cs:524
+#: ../PryanetShare/PryanetSetup.cs:486 ../PryanetShare/PryanetSetup.cs:506
+#: ../PryanetShare/PryanetSetup.cs:524
 msgid "Continue"
 msgstr "Продолжить"
 
-#: ../SparkleShare/SparkleSetup.cs:502
+#: ../PryanetShare/PryanetSetup.cs:502
 msgid "Sharing files with others"
 msgstr "Обмен файлами с другими"
 
-#: ../SparkleShare/SparkleSetup.cs:503
+#: ../PryanetShare/PryanetSetup.cs:503
 msgid ""
 "All files added to your project folders are synced with the host "
 "automatically, as well as with your collaborators."
@@ -359,11 +359,11 @@ msgstr ""
 "Все файлы, добавленные в директорию Вашего проекта, автоматически "
 "синхронизируются с сервером, также как и с Вашими коллегами по проекту."
 
-#: ../SparkleShare/SparkleSetup.cs:520
+#: ../PryanetShare/PryanetSetup.cs:520
 msgid "The status icon is here to help"
 msgstr "Значок статуса здесь для помощи"
 
-#: ../SparkleShare/SparkleSetup.cs:521
+#: ../PryanetShare/PryanetSetup.cs:521
 msgid ""
 "It shows the syncing process status, and contains links to your projects and"
 " the event log."
@@ -371,11 +371,11 @@ msgstr ""
 "Он показывает статус процесса синхронизации и содержит ссылки на Ваши "
 "проекты, а также лог событий."
 
-#: ../SparkleShare/SparkleSetup.cs:538
-msgid "Adding projects to SparkleShare"
-msgstr "Добавление проектов в SparkleShare"
+#: ../PryanetShare/PryanetSetup.cs:538
+msgid "Adding projects to PryanetShare"
+msgstr "Добавление проектов в PryanetShare"
 
-#: ../SparkleShare/SparkleSetup.cs:539
+#: ../PryanetShare/PryanetSetup.cs:539
 msgid ""
 "Just click this button when you see it on the web, and the project will be "
 "automatically added:"
@@ -383,7 +383,7 @@ msgstr ""
 "Просто нажмите эту кнопку, когда увидите её в сети, и проект будет добавлен "
 "автоматически:"
 
-#: ../SparkleShare/SparkleSetup.cs:542
+#: ../PryanetShare/PryanetSetup.cs:542
 msgid ""
 "…or select <b>‘Add Hosted Project…’</b> from the status icon menu to add one"
 " by hand."
@@ -392,33 +392,33 @@ msgstr ""
 "уведомлений, чтобы добавить проект вручную."
 
 #. Opens the wizard to add a new remote folder
-#: ../SparkleShare/SparkleSetup.cs:551
-#: ../SparkleShare/SparkleStatusIcon.cs:238
+#: ../PryanetShare/PryanetSetup.cs:551
+#: ../PryanetShare/PryanetStatusIcon.cs:238
 msgid "Add Hosted Project…"
 msgstr "Добавить ведомый проект..."
 
-#: ../SparkleShare/SparkleSetupWindow.cs:44
-msgid "SparkleShare Setup"
-msgstr "Установка SparkleShare"
+#: ../PryanetShare/PryanetSetupWindow.cs:44
+msgid "PryanetShare Setup"
+msgstr "Установка PryanetShare"
 
-#: ../SparkleShare/SparkleStatusIcon.cs:228
+#: ../PryanetShare/PryanetStatusIcon.cs:228
 msgid "No projects yet"
 msgstr "Ещё нет проектов"
 
-#: ../SparkleShare/SparkleStatusIcon.cs:262
+#: ../PryanetShare/PryanetStatusIcon.cs:262
 msgid "Open Recent Events"
 msgstr "Открыть Недавние события"
 
-#: ../SparkleShare/SparkleStatusIcon.cs:282
+#: ../PryanetShare/PryanetStatusIcon.cs:282
 msgid "Turn Notifications Off"
 msgstr "Выключить уведомления"
 
-#: ../SparkleShare/SparkleStatusIcon.cs:284
+#: ../PryanetShare/PryanetStatusIcon.cs:284
 msgid "Turn Notifications On"
 msgstr "Включить уведомления"
 
 #. A menu item that quits the application
-#: ../SparkleShare/SparkleStatusIcon.cs:311
+#: ../PryanetShare/PryanetStatusIcon.cs:311
 msgid "Quit"
 msgstr "Выход"
 

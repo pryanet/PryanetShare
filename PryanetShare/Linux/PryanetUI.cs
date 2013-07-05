@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -18,30 +18,30 @@
 using System;
 
 using Gtk;
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleUI {
+    public class PryanetUI {
 
-        public SparkleStatusIcon StatusIcon;
-        public SparkleEventLog EventLog;
-        public SparkleBubbles Bubbles;
-        public SparkleSetup Setup;
-        public SparkleAbout About;
+        public PryanetStatusIcon StatusIcon;
+        public PryanetEventLog EventLog;
+        public PryanetBubbles Bubbles;
+        public PryanetSetup Setup;
+        public PryanetAbout About;
 
         public static string AssetsPath = Defines.INSTALL_DIR;
 
 
-        public SparkleUI ()
+        public PryanetUI ()
         {
             Application.Init ();
 
-            Setup      = new SparkleSetup ();
-            EventLog   = new SparkleEventLog ();
-            About      = new SparkleAbout ();
-            Bubbles    = new SparkleBubbles ();
-            StatusIcon = new SparkleStatusIcon ();
+            Setup      = new PryanetSetup ();
+            EventLog   = new PryanetEventLog ();
+            About      = new PryanetAbout ();
+            Bubbles    = new PryanetBubbles ();
+            StatusIcon = new PryanetStatusIcon ();
         
 			Program.Controller.UIHasLoaded ();
         }

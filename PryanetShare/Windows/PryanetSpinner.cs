@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -21,20 +21,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleSpinner : Image {
+    public class PryanetSpinner : Image {
 
         private Timer timer;
 
 
-        public SparkleSpinner (int size) : base ()
+        public PryanetSpinner (int size) : base ()
         {           
             Width  = size;
             Height = size;
 
             int current_frame            = 0;
-            BitmapSource spinner_gallery = SparkleUIHelpers.GetImageSource ("process-working-22");
+            BitmapSource spinner_gallery = PryanetUIHelpers.GetImageSource ("process-working-22");
             int frames_in_width          = spinner_gallery.PixelWidth / size;
             int frames_in_height         = spinner_gallery.PixelHeight / size;
             int frame_count              = (frames_in_width * frames_in_height) - 1;

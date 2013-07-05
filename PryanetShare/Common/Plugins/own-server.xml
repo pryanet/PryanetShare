@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sparkleshare>
+<pryanetshare>
   <plugin>
     <info>
         <name>On my own server</name>
@@ -16,4 +16,4 @@
       <example>/path/to/project</example>
     </path>
   </plugin>
-</sparkleshare>
+</pryanetshare>

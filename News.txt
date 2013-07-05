@@ -9,10 +9,10 @@
        - Added a plugin for plan.io
        - Work with host keys other than just RSA
        - "%20" and "_" in project names become spaces in folder names
-       - Stricter permissions on the SparkleShare folder on Unix systems
+       - Stricter permissions on the PryanetShare folder on Unix systems
        - Open folders in the event log by clicking project names
        - Allow spaces in passwords
-       - Change invite scheme to sparkleshare://addProject/$URL
+       - Change invite scheme to pryanetshare://addProject/$URL
        - Many other bug fixes and tweaks
 
 
@@ -72,7 +72,7 @@
 
         Hylke:
         - Show link code and Copy button on last tutorial page
-        - Fix crash when the SparkleShare folder is on an unmounted drive
+        - Fix crash when the PryanetShare folder is on an unmounted drive
         - Fix crash of the event log on Windows
         - Keep Continue button in the same place on each tutorial page
         - Remove dock icon badging on Mac now that Mountain Lion has 
@@ -85,7 +85,7 @@
         - Fix "Show all" link not working in event log
         - Fix wrong version number in the Windows about dialog
         - Fix some problems with encrypted projects
-        - Fix .sparkleshare file not always being hidden on Windows
+        - Fix .pryanetshare file not always being hidden on Windows
         - Fix "Open files" button when an encrypted project has been added
         - Fix a crash of the event log on Windows
 
@@ -129,7 +129,7 @@
         - Website links in the about dialog
         - Scalable custom folder icon in Nautilus 3.x
         - Default host user is now "storage" instead of "git"
-        - Create crash reports in ~/SparkleShare when things go wrong
+        - Create crash reports in ~/PryanetShare when things go wrong
         - New Windows folder icons
         - Project folders can now be renamed in the file manager
         - Resizable event log on Mac
@@ -162,11 +162,11 @@
 	- Show initial sync progress in taskbar item on Windows 7
 	- Fix "Add" item being disabled on first run
 	- Fix some crashes in notfication mechanism
-	- Use ~/SparkleShare instead of ~/My Documents/SparkleShare on Windows
-	- Add option to add SparkleShare to startup items on Windows
-	- Add SparkleShare to Explorer sidebar
+	- Use ~/PryanetShare instead of ~/My Documents/PryanetShare on Windows
+	- Add option to add PryanetShare to startup items on Windows
+	- Add PryanetShare to Explorer sidebar
 	- Report whether we're sending or receiving (or both) in the status icon
-	- Fix some cases where SparkleShare would incorrectly say "not synced"
+	- Fix some cases where PryanetShare would incorrectly say "not synced"
 	- Some UI changes on Windows to comply with the Windows HIG
 
 
@@ -176,7 +176,7 @@
 	- Windows version implemented with WPF
 	- Invites feature: link to a host with one click
 	- Implement sparklshare:// protocol handlers for invites
-	- "Add SparkleShare to login items" checkbox on the last tutorial page
+	- "Add PryanetShare to login items" checkbox on the last tutorial page
 	- Text entries aren't being reset when selecting plugins in the setup dialog
 	- A variety of new default avatars (GNOME style)
 	- More useful hints below the entries in the setup dialog
@@ -200,7 +200,7 @@
 	- Show remote url when hovering project names in the log
 	- Fix the event log on Linux
 	- Allow server ports to be specified once again
-	- Open Folder button after setup now takes you to SparkleShare/subfolder
+	- Open Folder button after setup now takes you to PryanetShare/subfolder
 	- Close event log on Cmd+W on Mac
 
 
@@ -280,7 +280,7 @@
 	Hylke: Add the ability to add notes in the event logs. Fix some quirks
 	in the webkit view on Linux. Redid gravatar fetching parts to be more
 	efficient. Remove headless feature. Fix some small bugs and crashes.
-	SparkleShare will now also try to use your existing SSH keypair. Required
+	PryanetShare will now also try to use your existing SSH keypair. Required
 	Git version is now 1.7.1 or later.
 
 

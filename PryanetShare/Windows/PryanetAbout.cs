@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons (hylkebons@gmail.com)
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -25,22 +25,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xaml;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleAbout : Window {
+    public class PryanetAbout : Window {
 
-        public SparkleAboutController Controller = new SparkleAboutController ();
+        public PryanetAboutController Controller = new PryanetAboutController ();
 
         private Label updates;
 
 
-        public SparkleAbout ()
+        public PryanetAbout ()
         {
-            Title      = "About SparkleShare";
+            Title      = "About PryanetShare";
             ResizeMode = ResizeMode.NoResize;
             Height     = 288;
             Width      = 640;
-            Icon       = SparkleUIHelpers.GetImageSource("sparkleshare-app", "ico");
+            Icon       = PryanetUIHelpers.GetImageSource("pryanetshare-app", "ico");
             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Closing += Close;
@@ -77,7 +77,7 @@ namespace SparkleShare {
                 Height = 260
             };
         
-            image.Source = SparkleUIHelpers.GetImageSource ("about");
+            image.Source = PryanetUIHelpers.GetImageSource ("about");
             
             
             Label version = new Label () {
@@ -97,16 +97,16 @@ namespace SparkleShare {
                 Foreground   = new SolidColorBrush (Colors.White),
                 Text         = "Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others.\n" +
                     "\n" +
-                    "SparkleShare is Open Source software. You are free to use, modify, " +
+                    "PryanetShare is Open Source software. You are free to use, modify, " +
                     "and redistribute it under the GNU General Public License version 3 or later.",
                 TextWrapping = TextWrapping.Wrap,
                 Width        = 318
             };
             
-            SparkleLink website_link = new SparkleLink ("Website", Controller.WebsiteLinkAddress);
-            SparkleLink credits_link = new SparkleLink ("Credits", Controller.CreditsLinkAddress);
-            SparkleLink report_problem_link = new SparkleLink ("Report a problem", Controller.ReportProblemLinkAddress);
-            SparkleLink debug_log_link = new SparkleLink ("Debug log", Controller.DebugLogLinkAddress);
+            PryanetLink website_link = new PryanetLink ("Website", Controller.WebsiteLinkAddress);
+            PryanetLink credits_link = new PryanetLink ("Credits", Controller.CreditsLinkAddress);
+            PryanetLink report_problem_link = new PryanetLink ("Report a problem", Controller.ReportProblemLinkAddress);
+            PryanetLink debug_log_link = new PryanetLink ("Debug log", Controller.DebugLogLinkAddress);
 
             Canvas canvas = new Canvas ();
             
@@ -155,9 +155,9 @@ namespace SparkleShare {
     }
 
 
-    public class SparkleLink : Label {
+    public class PryanetLink : Label {
 
-        public SparkleLink (string title, string url)
+        public PryanetLink (string title, string url)
         {
             FontSize   = 11;
             Cursor     = Cursors.Hand;

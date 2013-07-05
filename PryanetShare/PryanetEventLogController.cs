@@ -1,4 +1,4 @@
-//   SparkleShare, a collaboration and sharing tool.
+//   PryanetShare, a collaboration and sharing tool.
 //   Copyright (C) 2010  Hylke Bons <hylkebons@gmail.com>
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using SparkleLib;
+using PryanetLib;
 
-namespace SparkleShare {
+namespace PryanetShare {
 
-    public class SparkleEventLogController {
+    public class PryanetEventLogController {
 
         public event Action ShowWindowEvent = delegate { };
         public event Action HideWindowEvent = delegate { };
@@ -69,7 +69,7 @@ namespace SparkleShare {
                 UpdateSizeInfoEvent ("…", "…");
 
                 new Thread (() => {
-                    SparkleDelay delay = new SparkleDelay ();
+                    PryanetDelay delay = new PryanetDelay ();
                     string html = HTML;
                     delay.Stop ();
 
@@ -84,7 +84,7 @@ namespace SparkleShare {
 
         public string HTML {
             get {
-                List<SparkleChangeSet> change_sets = GetLog (this.selected_folder);
+                List<PryanetChangeSet> change_sets = GetLog (this.selected_folder);
                 string html = GetHTMLLog (change_sets);
 
                 return html;
@@ -101,7 +101,7 @@ namespace SparkleShare {
             get {
                 double size = 0;
 
-                foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+                foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                     if (this.selected_folder == null) {
                         size += repo.Size;
 
@@ -124,7 +124,7 @@ namespace SparkleShare {
             get {
                 double size = 0;
 
-                foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+                foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                     if (this.selected_folder == null) {
                         size += repo.HistorySize;
 
@@ -144,7 +144,7 @@ namespace SparkleShare {
         }
 
 
-        public SparkleEventLogController ()
+        public PryanetEventLogController ()
         {
             Program.Controller.ShowEventLogWindowEvent += delegate {
                 if (!WindowIsOpen) {
@@ -153,7 +153,7 @@ namespace SparkleShare {
 
                     if (this.selected_folder == null) {
                         new Thread (() => {
-                            SparkleDelay delay = new SparkleDelay ();
+                            PryanetDelay delay = new PryanetDelay ();
                             string html = HTML;
                             delay.Stop ();
 
@@ -180,7 +180,7 @@ namespace SparkleShare {
                 ContentLoadingEvent ();
                 UpdateSizeInfoEvent ("…", "…");
 
-                SparkleDelay delay = new SparkleDelay ();
+                PryanetDelay delay = new PryanetDelay ();
                 string html = HTML;
                 delay.Stop ();
 
@@ -227,7 +227,7 @@ namespace SparkleShare {
                     string timestamp   = match.Groups [4].Value;
 
                     this.restore_revision_info = new RevisionInfo () {
-                        Folder   = new SparkleFolder (match.Groups [1].Value),
+                        Folder   = new PryanetFolder (match.Groups [1].Value),
                         Revision = match.Groups [2].Value,
                         FilePath = match.Groups [5].Value
                     };
@@ -260,13 +260,13 @@ namespace SparkleShare {
                 byte [] file_path_bytes = Encoding.Default.GetBytes (file_path);
                 file_path = Encoding.UTF8.GetString (file_path_bytes);
 
-                foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+                foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                     if (!repo.Name.Equals (folder))
 						continue;
 
 			        new Thread (() => {
-                        SparkleDelay delay = new SparkleDelay ();
-                        List<SparkleChangeSet> change_sets = repo.GetChangeSets (file_path);
+                        PryanetDelay delay = new PryanetDelay ();
+                        List<PryanetChangeSet> change_sets = repo.GetChangeSets (file_path);
                         string html = GetHistoryHTMLLog (change_sets, file_path);
                         delay.Stop ();
 
@@ -286,7 +286,7 @@ namespace SparkleShare {
 
         public void SaveDialogCompleted (string target_file_path)
         {
-            foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+            foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                 if (repo.Name.Equals (this.restore_revision_info.Folder.Name)) {
                     repo.RestoreFile (this.restore_revision_info.FilePath,
                         this.restore_revision_info.Revision, target_file_path);
@@ -306,17 +306,17 @@ namespace SparkleShare {
         }
 
 
-        private List<SparkleChangeSet> GetLog ()
+        private List<PryanetChangeSet> GetLog ()
         {
-            List<SparkleChangeSet> list = new List<SparkleChangeSet> ();
+            List<PryanetChangeSet> list = new List<PryanetChangeSet> ();
 
-            foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
-                List<SparkleChangeSet> change_sets = repo.ChangeSets;
+            foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
+                List<PryanetChangeSet> change_sets = repo.ChangeSets;
 
                 if (change_sets != null)
                     list.AddRange (change_sets);
                 else
-                    SparkleLogger.LogInfo ("Log", "Could not create log for " + repo.Name);
+                    PryanetLogger.LogInfo ("Log", "Could not create log for " + repo.Name);
             }
 
             list.Sort ((x, y) => (x.Timestamp.CompareTo (y.Timestamp)));
@@ -329,14 +329,14 @@ namespace SparkleShare {
         }
 
 
-        private List<SparkleChangeSet> GetLog (string name)
+        private List<PryanetChangeSet> GetLog (string name)
         {
             if (name == null)
                 return GetLog ();
 
-            foreach (SparkleRepoBase repo in Program.Controller.Repositories) {
+            foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                 if (repo.Name.Equals (name)) {
-                    List<SparkleChangeSet> change_sets = repo.ChangeSets;
+                    List<PryanetChangeSet> change_sets = repo.ChangeSets;
 
                     if (change_sets != null)
                         return change_sets;
@@ -345,11 +345,11 @@ namespace SparkleShare {
                 }
             }
 
-            return new List<SparkleChangeSet> ();
+            return new List<PryanetChangeSet> ();
         }
 
 
-        public string GetHistoryHTMLLog (List<SparkleChangeSet> change_sets, string file_path)
+        public string GetHistoryHTMLLog (List<PryanetChangeSet> change_sets, string file_path)
         {
             string html = "<div class='history-header'>" +
                 "<a class='windows' href='back://'>&laquo; Back</a> &nbsp;|&nbsp; ";
@@ -363,7 +363,7 @@ namespace SparkleShare {
 			html += "</div><div class='table-wrapper'><table>";
             
             int count = 0;
-            foreach (SparkleChangeSet change_set in change_sets) {
+            foreach (PryanetChangeSet change_set in change_sets) {
                 count++;
 
                 if (count == 1)
@@ -401,7 +401,7 @@ namespace SparkleShare {
         }
 
 
-        public string GetHTMLLog (List<SparkleChangeSet> change_sets)
+        public string GetHTMLLog (List<PryanetChangeSet> change_sets)
         {
             if (change_sets == null || change_sets.Count == 0)
                 return Program.Controller.EventLogHTML.Replace ("<!-- $event-log-content -->",
@@ -412,7 +412,7 @@ namespace SparkleShare {
             change_sets.Sort ((x, y) => (x.Timestamp.CompareTo (y.Timestamp)));
             change_sets.Reverse ();
 
-            foreach (SparkleChangeSet change_set in change_sets) {
+            foreach (PryanetChangeSet change_set in change_sets) {
                 bool change_set_inserted = false;
             
                 foreach (ActivityDay stored_activity_day in activity_days) {
@@ -442,11 +442,11 @@ namespace SparkleShare {
             foreach (ActivityDay activity_day in activity_days) {
                 string event_entries = "";
 
-                foreach (SparkleChangeSet change_set in activity_day) {
+                foreach (PryanetChangeSet change_set in activity_day) {
                     string event_entry = "<dl>";
 
-                    foreach (SparkleChange change in change_set.Changes) {
-                        if (change.Type != SparkleChangeType.Moved) {
+                    foreach (PryanetChange change in change_set.Changes) {
+                        if (change.Type != PryanetChangeType.Moved) {
                             event_entry += "<dd class='" + change.Type.ToString ().ToLower () + "'>";
 
                             if (!change.IsFolder) {
@@ -607,7 +607,7 @@ namespace SparkleShare {
 
 
         // All change sets that happened on a day
-        private class ActivityDay : List<SparkleChangeSet>
+        private class ActivityDay : List<PryanetChangeSet>
         {
             public DateTime Date;
 
@@ -619,15 +619,15 @@ namespace SparkleShare {
 
 
         private class RevisionInfo {
-            public SparkleFolder Folder;
+            public PryanetFolder Folder;
             public string FilePath;
             public string Revision;
         }
 
 
-        private class SparkleDelay : Stopwatch {
+        private class PryanetDelay : Stopwatch {
 
-            public SparkleDelay () : base ()
+            public PryanetDelay () : base ()
             {
                 Start ();
             }
