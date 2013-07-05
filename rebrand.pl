@@ -56,6 +56,7 @@ sub correct_files
 
 		if ( m/sparkle/i )
 		{
+			#fixme this is like cutting off the branch you are sitting on 
 			my $new_file = $_;
 			$new_file =~ s/Sparkle/Pryanet/g;
 			$new_file =~ s/SPARKLE/PRYANET/g;
