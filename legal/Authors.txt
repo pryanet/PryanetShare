@@ -1,13 +1,18 @@
 Points of contact:
 
-	Maintainer:
-	Hylke Bons <hylkebons@gmail.com>
+	PryanetShare
+		Primary contact for all issues
+		share@pryanet.com
 
-	Marketing:
-	Alexandre Saiz Verdaguer <alex@pryanetshare.net>
-
-	Translations:
-	Łukasz Jernaś <deejay1@srem.org>
+	SparkleShare
+		Maintainer:
+		Hylke Bons <hylkebons@gmail.com>
+	
+		Marketing:
+		Alexandre Saiz Verdaguer <alex@sparkleshare.net>
+	
+		Translations:
+		Łukasz Jernaś <deejay1@srem.org>
 
 
 Code:

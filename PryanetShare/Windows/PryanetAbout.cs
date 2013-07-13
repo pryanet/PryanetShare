@@ -95,9 +95,10 @@ namespace PryanetShare {
             TextBlock credits = new TextBlock () {
                 FontSize     = 11,
                 Foreground   = new SolidColorBrush (Colors.White),
-                Text         = "Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others.\n" +
+                Text         = "SparkleShare Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others.\n" +
+					"PryanetShare Copyright © 2013–" + DateTime.Now.Year + " Pryanet Ltd.\n"
                     "\n" +
-                    "PryanetShare is Open Source software. You are free to use, modify, " +
+                    "PryanetShare is Open Source software powered by SparkleShare. You are free to use, modify, " +
                     "and redistribute it under the GNU General Public License version 3 or later.",
                 TextWrapping = TextWrapping.Wrap,
                 Width        = 318
