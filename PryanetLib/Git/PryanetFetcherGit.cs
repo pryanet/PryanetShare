@@ -128,49 +128,55 @@ namespace PryanetLib.Git {
             DateTime last_change     = DateTime.Now;
             TimeSpan change_interval = new TimeSpan (0, 0, 0, 1);
 
-            while (!this.git.StandardError.EndOfStream) {
-                string line = this.git.StandardError.ReadLine ();
-                Match match = progress_regex.Match (line);
-                
-                double number = 0.0;
-                if (match.Success) {
-                    number = double.Parse (match.Groups [1].Value, new CultureInfo ("en-US"));
+            try {
+                while (!this.git.StandardError.EndOfStream) {
+                    string line = this.git.StandardError.ReadLine ();
+                    Match match = progress_regex.Match (line);
                     
-                    // The cloning progress consists of two stages: the "Compressing 
-                    // objects" stage which we count as 20% of the total progress, and 
-                    // the "Receiving objects" stage which we count as the last 80%
-                    if (line.Contains ("|"))
-                        number = (number / 100 * 80 + 20); // "Receiving objects" stage
-                    else
-                        number = (number / 100 * 20); // "Compressing objects" stage
+                    double number = 0.0;
+                    if (match.Success) {
+                        number = double.Parse (match.Groups [1].Value, new CultureInfo ("en-US"));
+                        
+                        // The cloning progress consists of two stages: the "Compressing 
+                        // objects" stage which we count as 20% of the total progress, and 
+                        // the "Receiving objects" stage which we count as the last 80%
+                        if (line.Contains ("|"))
+                            number = (number / 100 * 80 + 20); // "Receiving objects" stage
+                        else
+                            number = (number / 100 * 20); // "Compressing objects" stage
 
-                } else {
-                    PryanetLogger.LogInfo ("Fetcher", line);
-                    line = line.Trim (new char [] {' ', '@'});
+                    } else {
+                        PryanetLogger.LogInfo ("Fetcher", line);
+                        line = line.Trim (new char [] {' ', '@'});
 
-                    if (line.StartsWith ("fatal:", StringComparison.InvariantCultureIgnoreCase) ||
-                        line.StartsWith ("error:", StringComparison.InvariantCultureIgnoreCase)) {
+                        if (line.StartsWith ("fatal:", StringComparison.InvariantCultureIgnoreCase) ||
+                            line.StartsWith ("error:", StringComparison.InvariantCultureIgnoreCase)) {
 
-                        base.errors.Add (line);
+                            base.errors.Add (line);
 
-                    } else if (line.StartsWith ("WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!")) {
-                        base.errors.Add ("warning: Remote host identification has changed!");
+                        } else if (line.StartsWith ("WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!")) {
+                            base.errors.Add ("warning: Remote host identification has changed!");
 
-                    } else if (line.StartsWith ("WARNING: POSSIBLE DNS SPOOFING DETECTED!")) {
-                        base.errors.Add ("warning: Possible DNS spoofing detected!");
+                        } else if (line.StartsWith ("WARNING: POSSIBLE DNS SPOOFING DETECTED!")) {
+                            base.errors.Add ("warning: Possible DNS spoofing detected!");
+                        }
+                    }
+
+                    if (number >= percentage) {
+                        percentage = number;
+
+                        if (DateTime.Compare (last_change, DateTime.Now.Subtract (change_interval)) < 0) {
+                            base.OnProgressChanged (percentage);
+                            last_change = DateTime.Now;
+                        }
                     }
                 }
-
-                if (number >= percentage) {
-                    percentage = number;
-
-                    if (DateTime.Compare (last_change, DateTime.Now.Subtract (change_interval)) < 0) {
-                        base.OnProgressChanged (percentage);
-                        last_change = DateTime.Now;
-                    }
-                }
-            }
             
+            } catch (Exception) {
+                IsActive = false;
+                return false;
+            }
+
             this.git.WaitForExit ();
 
             if (this.git.ExitCode == 0) {
@@ -248,10 +254,8 @@ namespace PryanetLib.Git {
                     return false;
             }
 
-            Process process = new Process () {
-                EnableRaisingEvents = true
-            };
-
+            Process process = new Process ();
+            process.EnableRaisingEvents              = true;
             process.StartInfo.WorkingDirectory       = TargetFolder;
             process.StartInfo.UseShellExecute        = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -259,7 +263,10 @@ namespace PryanetLib.Git {
 
             process.StartInfo.FileName  = "openssl";
             process.StartInfo.Arguments = "enc -d -aes-256-cbc -base64 -S " + this.crypto_salt +
-                " -pass pass:\"" + password + "\" -in " + password_check_file_path;
+                " -pass pass:\"" + password + "\" -in \"" + password_check_file_path + "\"";
+
+            PryanetLogger.LogInfo ("Cmd | " + System.IO.Path.GetFileName (process.StartInfo.WorkingDirectory),
+                System.IO.Path.GetFileName (process.StartInfo.FileName) + " " + process.StartInfo.Arguments);
 
             process.Start ();
             process.WaitForExit ();
@@ -277,14 +284,23 @@ namespace PryanetLib.Git {
         public override void Stop ()
         {
             try {
-                if (this.git != null) {
-                    this.git.Close ();
+                if (this.git != null && !this.git.HasExited) {
                     this.git.Kill ();
                     this.git.Dispose ();
                 }
 
             } catch (Exception e) {
                 PryanetLogger.LogInfo ("Fetcher", "Failed to dispose properly", e);
+            }
+
+            if (Directory.Exists (TargetFolder)) {
+                try {
+                    Directory.Delete (TargetFolder, true /* Recursive */ );
+                    PryanetLogger.LogInfo ("Fetcher", "Deleted '" + TargetFolder + "'");
+                    
+                } catch (Exception e) {
+                    PryanetLogger.LogInfo ("Fetcher", "Failed to delete '" + TargetFolder + "'", e);
+                }
             }
         }
 
@@ -309,7 +325,7 @@ namespace PryanetLib.Git {
                 "core.autocrlf false", // Don't change file line endings
                 "core.precomposeunicode true", // Use the same Unicode form on all filesystems
                 "core.safecrlf false",
-                "core.exludesfile \"\"",
+                "core.excludesfile \"\"",
                 "core.packedGitLimit 128m", // Some memory limiting options
                 "core.packedGitWindowSize 128m",
                 "pack.deltaCacheSize 128m",

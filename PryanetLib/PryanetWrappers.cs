@@ -43,12 +43,12 @@ namespace PryanetLib {
 
         public string ToMessage ()
         {
-            string message = "added ‘{0}’";
+            string message = "added: {0}";
             
             switch (Changes [0].Type) {
-            case PryanetChangeType.Edited:  message = "edited ‘{0}’"; break;
-            case PryanetChangeType.Deleted: message = "deleted ‘{0}’"; break;
-            case PryanetChangeType.Moved:   message = "moved ‘{0}’"; break;
+            case PryanetChangeType.Edited:  message = "edited: {0}"; break;
+            case PryanetChangeType.Deleted: message = "deleted: {0}"; break;
+            case PryanetChangeType.Moved:   message = "moved: {0}"; break;
             }
 
             if (Changes.Count > 0)

@@ -356,7 +356,8 @@ namespace PryanetShare {
                 Fingerprint       = SelectedPlugin.Fingerprint,
                 RemotePath        = remote_path,
                 FetchPriorHistory = this.fetch_prior_history,
-                AnnouncementsUrl  = SelectedPlugin.AnnouncementsUrl
+                AnnouncementsUrl  = SelectedPlugin.AnnouncementsUrl,
+                Backend           = SelectedPlugin.Backend 
             };
 
             new Thread (() => { Program.Controller.StartFetcher (info); }).Start ();
@@ -568,9 +569,12 @@ namespace PryanetShare {
             PreviousUrl     = "";
             PreviousAddress = "";
             PreviousPath    = "";
-            this.fetch_prior_history = false;
 
+            this.fetch_prior_history = false;
+            this.saved_address     = "";
+            this.saved_remote_path = "";
             this.current_page = PageType.None;
+
             WindowIsOpen = false;
             HideWindowEvent ();
         }

@@ -229,7 +229,7 @@ namespace PryanetShare {
                     this.restore_revision_info = new RevisionInfo () {
                         Folder   = new PryanetFolder (match.Groups [1].Value),
                         Revision = match.Groups [2].Value,
-                        FilePath = match.Groups [5].Value
+                        FilePath = Uri.UnescapeDataString (match.Groups [5].Value)
                     };
 
                     string file_name = Path.GetFileNameWithoutExtension (this.restore_revision_info.FilePath) +
@@ -257,8 +257,7 @@ namespace PryanetShare {
                 string folder    = url.Replace ("history://", "").Split ("/".ToCharArray ()) [0];
                 string file_path = url.Replace ("history://" + folder + "/", "");
 
-                byte [] file_path_bytes = Encoding.Default.GetBytes (file_path);
-                file_path = Encoding.UTF8.GetString (file_path_bytes);
+                file_path = Uri.UnescapeDataString (file_path);
 
                 foreach (PryanetRepoBase repo in Program.Controller.Repositories) {
                     if (!repo.Name.Equals (folder))
@@ -358,26 +357,16 @@ namespace PryanetShare {
                 html += "Revisions for <b>&ldquo;";
             else
                 html += "No revisions for <b>&ldquo;";
-            
+
             html += Path.GetFileName (file_path) + "&rdquo;</b>";
 			html += "</div><div class='table-wrapper'><table>";
-            
-            int count = 0;
-            foreach (PryanetChangeSet change_set in change_sets) {
-                count++;
 
-                if (count == 1)
-                    continue;
-                
-                string change_set_avatar = Program.Controller.GetAvatar (change_set.User.Email, 24);
-                
-                if (change_set_avatar != null)
-                    change_set_avatar = "file://" + change_set_avatar.Replace ("\\", "/");
-                else
-                    change_set_avatar = "file://<!-- $pixmaps-path -->/user-icon-default.png";
-                
+            if (change_sets.Count > 0)
+                change_sets.RemoveAt (0);
+
+            foreach (PryanetChangeSet change_set in change_sets) {
                 html += "<tr>" +
-                            "<td class='avatar'><img src='" + change_set_avatar + "'></td>" +
+                            "<td class='avatar'><img src='" + GetAvatarFilePath (change_set.User) + "'></td>" +
                             "<td class='name'>" + change_set.User.Name + "</td>" +
                             "<td class='date'>" + 
                                 change_set.Timestamp.ToString ("d MMM yyyy", CultureInfo.InvariantCulture) + 
@@ -390,8 +379,6 @@ namespace PryanetShare {
                                 file_path + "'>Restore&hellip;</a>" +
                             "</td>" +
                         "</tr>";
-                
-                count++;
             }
 
             html += "</table></div>";
@@ -472,13 +459,6 @@ namespace PryanetShare {
                         }
                     }
 
-                    string change_set_avatar = Program.Controller.GetAvatar (change_set.User.Email, 48);
-
-                    if (change_set_avatar != null)
-				       	change_set_avatar = "file://" + change_set_avatar.Replace ("\\", "/");
-                    else
-                        change_set_avatar = "file://<!-- $pixmaps-path -->/user-icon-default.png";
-
                     event_entry += "</dl>";
 
                     string timestamp = change_set.Timestamp.ToString ("H:mm");
@@ -492,7 +472,7 @@ namespace PryanetShare {
                     event_entries += event_entry_html.Replace ("<!-- $event-entry-content -->", event_entry)
                         .Replace ("<!-- $event-user-name -->", change_set.User.Name)
                         .Replace ("<!-- $event-user-email -->", change_set.User.Email)
-                        .Replace ("<!-- $event-avatar-url -->", change_set_avatar)
+                        .Replace ("<!-- $event-avatar-url -->", GetAvatarFilePath (change_set.User))
                         .Replace ("<!-- $event-url -->", change_set.RemoteUrl.ToString ())
                         .Replace ("<!-- $event-revision -->", change_set.Revision);
 
@@ -603,6 +583,20 @@ namespace PryanetShare {
                 path2 = path2.Substring (1);
 
             return result + path2;
+        }
+
+
+        private string GetAvatarFilePath (PryanetUser user)
+        {
+            if (!Program.Controller.AvatarsEnabled)
+                return "<!-- $pixmaps-path -->/user-icon-default.png";
+              
+            string fetched_avatar = PryanetAvatars.GetAvatar (user.Email, 48, Program.Controller.Config.FullPath);
+                
+            if (!string.IsNullOrEmpty (fetched_avatar))
+                return "file://" + fetched_avatar.Replace ("\\", "/");
+            else
+                return "<!-- $pixmaps-path -->/user-icon-default.png";
         }
 
 

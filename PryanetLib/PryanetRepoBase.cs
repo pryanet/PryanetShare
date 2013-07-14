@@ -186,6 +186,11 @@ namespace PryanetLib {
                 // changes or the server was down, sync up again
                 if (HasUnsyncedChanges && !this.is_syncing && Error == ErrorStatus.None)
                     SyncUpBase ();
+
+                if (Status != SyncStatus.Idle && Status != SyncStatus.Error) {
+                    Status = SyncStatus.Idle;
+                    SyncStatusChanged (Status);
+                }
             };
         }
 
@@ -273,8 +278,9 @@ namespace PryanetLib {
                             first_sync = false;
 
                         } while (HasLocalChanges);
+                    } 
 
-                    } else {
+                    if (Status != SyncStatus.Idle && Status != SyncStatus.Error) {
                         Status = SyncStatus.Idle;
                         SyncStatusChanged (Status);
                     }
@@ -392,11 +398,10 @@ namespace PryanetLib {
             string pre_sync_revision = CurrentRevision;
 
             if (SyncDown ()) {
-                PryanetLogger.LogInfo ("SyncDown", Name + " | Done");
                 Error = ErrorStatus.None;
 
-				string identifier_file_path = Path.Combine (LocalPath, ".pryanetshare");
-				File.SetAttributes (identifier_file_path, FileAttributes.Hidden);
+                string identifier_file_path = Path.Combine (LocalPath, ".pryanetshare");
+                File.SetAttributes (identifier_file_path, FileAttributes.Hidden);
 
                 ChangeSets = GetChangeSets ();
 
@@ -416,6 +421,8 @@ namespace PryanetLib {
                     if (emit_change_event)
                         NewChangeSet (ChangeSets [0]);
                 }
+
+                PryanetLogger.LogInfo ("SyncDown", Name + " | Done");
 
                 // There could be changes from a resolved
                 // conflict. Tries only once, then lets

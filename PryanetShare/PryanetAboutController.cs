@@ -29,10 +29,10 @@ namespace PryanetShare {
         public event UpdateLabelEventDelegate UpdateLabelEvent = delegate { };
         public delegate void UpdateLabelEventDelegate (string text);
 
-        public readonly string WebsiteLinkAddress       = "http://www.pryanetshare.org/";
-        public readonly string CreditsLinkAddress       = "http://www.github.com/hbons/PryanetShare/tree/master/legal/AUTHORS";
-        public readonly string ReportProblemLinkAddress = "http://www.github.com/hbons/PryanetShare/issues";
-        public readonly string DebugLogLinkAddress      = "file://" + Program.Controller.ConfigPath;
+        public readonly string WebsiteLinkAddress       = "http://www.pryanet.com/";
+        public readonly string CreditsLinkAddress       = "http://www.github.com/pryanet/SparkleShare/tree/master/legal/AUTHORS";
+        public readonly string ReportProblemLinkAddress = "http://www.github.com/pryanet/SparkleShare/issues";
+        public readonly string DebugLogLinkAddress      = "file://" + Program.Controller.Config.LogFilePath;
 
         public string RunningVersion;
 

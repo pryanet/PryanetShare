@@ -4,6 +4,7 @@
 # Jiri Slezka <jiri.slezka@slu.cz>, 2011.
 #   <zzanzare@gmail.com>, 2011.
 # zzanzare <zzanzare@gmail.com>, 2011.
+# Martin Vancl <tux.martin@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: PryanetShare\n"
@@ -67,11 +68,11 @@ msgstr ""
 
 #: ../data/plugins/own-server.xml.in.h:2
 msgid "Everything under my control"
-msgstr ""
+msgstr "Vše pod vlastní kontrolou"
 
 #: ../data/plugins/own-server.xml.in.h:3
 msgid "On my own server"
-msgstr ""
+msgstr "Vlastní server"
 
 #: ../PryanetShare/Mac/PryanetStatusIcon.cs:70
 #: ../PryanetShare/Mac/PryanetStatusIcon.cs:88
@@ -99,7 +100,7 @@ msgstr "Něco není synchronizováno"
 
 #: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:113
 msgid "Copy Web Link"
-msgstr "Copy Web Link"
+msgstr "Kopírovat webový odkaz"
 
 #: ../PryanetShare/Nautilus/pryanetshare-nautilus-extension.py.in:114
 msgid "Copy the web address of this file to the clipboard"
@@ -178,11 +179,11 @@ msgstr "O PryanetShare"
 #: ../PryanetShare/PryanetAbout.cs:70
 #, csharp-format
 msgid "A newer version ({0}) is available!"
-msgstr ""
+msgstr "Je dostupná nová verze ({0})!"
 
 #: ../PryanetShare/PryanetAbout.cs:79
 msgid "You are running the latest version."
-msgstr "Provozujete aktuální verzi."
+msgstr "Používáte aktuální verzi."
 
 #: ../PryanetShare/PryanetAbout.cs:88 ../PryanetShare/PryanetAbout.cs:113
 msgid "Checking for updates..."
@@ -259,15 +260,15 @@ msgstr "Další"
 
 #: ../PryanetShare/PryanetSetup.cs:129
 msgid "Where's your project hosted?"
-msgstr ""
+msgstr "Kde je projekt hostován?"
 
 #: ../PryanetShare/PryanetSetup.cs:275
 msgid "Address"
-msgstr ""
+msgstr "Adresa"
 
 #: ../PryanetShare/PryanetSetup.cs:295
 msgid "Remote Path"
-msgstr ""
+msgstr "Vzdálená cesta"
 
 #. Cancel button
 #: ../PryanetShare/PryanetSetup.cs:309 ../PryanetShare/PryanetSetup.cs:345
@@ -282,7 +283,7 @@ msgstr ""
 #: ../PryanetShare/PryanetSetup.cs:335
 #, csharp-format
 msgid "Adding project ‘{0}’…"
-msgstr ""
+msgstr "Přidávám projekt ‘{0}’…"
 
 #: ../PryanetShare/PryanetSetup.cs:336
 msgid "This may take a while."
@@ -299,11 +300,11 @@ msgstr "Dokončit"
 
 #: ../PryanetShare/PryanetSetup.cs:374
 msgid "Something went wrong"
-msgstr ""
+msgstr "Něco je špatně"
 
 #: ../PryanetShare/PryanetSetup.cs:422
 msgid "Try Again…"
-msgstr ""
+msgstr "Zkusit znovu…"
 
 #: ../PryanetShare/PryanetSetup.cs:441
 #, csharp-format
@@ -312,11 +313,11 @@ msgstr "'{0}' byl úspěšně přidán"
 
 #: ../PryanetShare/PryanetSetup.cs:447
 msgid "Project successfully added!"
-msgstr ""
+msgstr "Projekt byl úspěšne přidán!"
 
 #: ../PryanetShare/PryanetSetup.cs:448
 msgid "Access the files from your PryanetShare folder."
-msgstr ""
+msgstr "Zobrazit soubory ve PryanetShare složce."
 
 #. A button that opens the synced folder
 #: ../PryanetShare/PryanetSetup.cs:451
@@ -335,16 +336,16 @@ msgstr ""
 
 #: ../PryanetShare/PryanetSetup.cs:481
 msgid "Skip Tutorial"
-msgstr ""
+msgstr "Přeskočit tutoriál"
 
 #: ../PryanetShare/PryanetSetup.cs:486 ../PryanetShare/PryanetSetup.cs:506
 #: ../PryanetShare/PryanetSetup.cs:524
 msgid "Continue"
-msgstr ""
+msgstr "Pokračovat"
 
 #: ../PryanetShare/PryanetSetup.cs:502
 msgid "Sharing files with others"
-msgstr ""
+msgstr "Sdílet soubory s ostatními"
 
 #: ../PryanetShare/PryanetSetup.cs:503
 msgid ""
@@ -354,7 +355,7 @@ msgstr ""
 
 #: ../PryanetShare/PryanetSetup.cs:520
 msgid "The status icon is here to help"
-msgstr ""
+msgstr "Stavová ikona je tady, aby vám pomohla"
 
 #: ../PryanetShare/PryanetSetup.cs:521
 msgid ""
@@ -364,7 +365,7 @@ msgstr ""
 
 #: ../PryanetShare/PryanetSetup.cs:538
 msgid "Adding projects to PryanetShare"
-msgstr ""
+msgstr "Přidávám projekt do PryanetShare"
 
 #: ../PryanetShare/PryanetSetup.cs:539
 msgid ""
@@ -382,7 +383,7 @@ msgstr ""
 #: ../PryanetShare/PryanetSetup.cs:551
 #: ../PryanetShare/PryanetStatusIcon.cs:238
 msgid "Add Hosted Project…"
-msgstr ""
+msgstr "Přidat hostovaný projekt…"
 
 #: ../PryanetShare/PryanetSetupWindow.cs:44
 msgid "PryanetShare Setup"
@@ -390,11 +391,11 @@ msgstr "Nastavení PryanetShare"
 
 #: ../PryanetShare/PryanetStatusIcon.cs:228
 msgid "No projects yet"
-msgstr ""
+msgstr "Nemáte žádné projekty"
 
 #: ../PryanetShare/PryanetStatusIcon.cs:262
 msgid "Open Recent Events"
-msgstr ""
+msgstr "Otevřít nedávné události"
 
 #: ../PryanetShare/PryanetStatusIcon.cs:282
 msgid "Turn Notifications Off"

@@ -22,6 +22,7 @@ SOURCES =  \
 	../PryanetSetupController.cs \
 	../PryanetStatusIconController.cs \
 	PryanetAbout.cs \
+	../PryanetAvatars.cs \
 	PryanetBubbles.cs \
 	PryanetController.cs \
 	PryanetEventLog.cs \
