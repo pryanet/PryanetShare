@@ -55,7 +55,7 @@ namespace PryanetShare {
                     notification.Show ();
 
                 } catch (Exception e) {
-                    SparkleLogger.LogInfo ("Notification", "Error showing notification: ", e);
+                    PryanetLogger.LogInfo ("Notification", "Error showing notification: ", e);
                 }
             };
         }
