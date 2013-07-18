@@ -79,6 +79,7 @@
     <Compile Include="PryanetShortcut.cs" />
     <Compile Include="PryanetUI.cs" />
     <Compile Include="..\PryanetAboutController.cs" />
+    <Compile Include="..\PryanetAvatars.cs" />
     <Compile Include="PryanetBubbles.cs" />
     <Compile Include="PryanetAbout.cs" />
     <Compile Include="PryanetController.cs" />
@@ -246,6 +247,10 @@
     <EmbeddedResource Include="Pixmaps\tutorial-slide-3.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PryanetLib\Git\PryanetLib.Git.csproj">
+      <Project>{009FDCD7-1D57-4202-BB6D-8477D8C6B8EE}</Project>
+      <Name>PryanetLib.Git</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PryanetLib\PryanetLib.csproj">
       <Project>{2C914413-B31C-4362-93C7-1AE34F09112A}</Project>
       <Name>PryanetLib</Name>

@@ -26,8 +26,9 @@ namespace PryanetLib {
 
     public class PryanetFetcherInfo {
         public string Address;
-        public string Fingerprint;
         public string RemotePath;
+        public string Backend;
+        public string Fingerprint;
         public string TargetDirectory;
         public string AnnouncementsUrl;
         public bool FetchPriorHistory;
@@ -56,7 +57,7 @@ namespace PryanetLib {
         public string RequiredFingerprint { get; protected set; }
         public readonly bool FetchPriorHistory = false;
         public string TargetFolder { get; protected set; }
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; protected set; }
         public string Identifier;
         public PryanetFetcherInfo OriginalFetcherInfo;
 
@@ -90,6 +91,7 @@ namespace PryanetLib {
             "~*.ppt", "~*.PPT", "~*.pptx", "~*.PPTX",
             "~*.xls", "~*.XLS", "~*.xlsx", "~*.XLSX",
             "~*.doc", "~*.DOC", "~*.docx", "~*.DOCX",
+            "*.a$v", // QuarkXPress
             "*/CVS/*", ".cvsignore", "*/.cvsignore", // CVS
             "/.svn/*", "*/.svn/*", // Subversion
             "/.hg/*", "*/.hg/*", "*/.hgignore", // Mercurial
@@ -150,10 +152,16 @@ namespace PryanetLib {
 
                 } else {
                     Thread.Sleep (500);
-                    PryanetLogger.LogInfo ("Fetcher", "Failed");
+
+                    if (IsActive) {
+                        PryanetLogger.LogInfo ("Fetcher", "Failed");
+                        Failed ();
+                    
+                    } else {
+                        PryanetLogger.LogInfo ("Fetcher", "Failed: cancelled by user");
+                    }
 
                     IsActive = false;
-                    Failed ();
                 }
             });
 

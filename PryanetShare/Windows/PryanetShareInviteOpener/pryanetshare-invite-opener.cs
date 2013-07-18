@@ -24,8 +24,8 @@ namespace PryanetShare {
 
     public class PryanetShare {
 
-        public static void Main (string [] args) {
-
+        public static void Main (string [] args)
+        {
             new PryanetInviteOpen (args [0]);
         }
     }
@@ -59,7 +59,10 @@ namespace PryanetShare {
 
             if (xml.Contains ("<pryanetshare>")) {
                 File.WriteAllText (target_path, xml);
+                File.SetAttributes (target_path, FileAttributes.Hidden);
                 Console.WriteLine ("Downloaded invite: " + url);
+
+                // TODO: Start PryanetShare.exe
             }
         }
     }

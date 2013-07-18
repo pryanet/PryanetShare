@@ -99,6 +99,7 @@
     <Compile Include="..\PryanetKeys.cs">
       <Link>PryanetKeys.cs</Link>
     </Compile>
+    <Compile Include="..\PryanetAvatars.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" xmlns="" />

@@ -103,8 +103,10 @@ namespace PryanetShare {
 
             Label copyright = new Label () {
                 Markup = "<span font_size='small' fgcolor='white'>" +
-                         "Copyright © 2010–" + DateTime.Now.Year + " " +
-                         "Hylke Bons and others." +
+                         "SparkleShare Copyright © 2010–" + DateTime.Now.Year + " " +
+                         "Hylke Bons and others.\n" +
+                         "PryanetShare Copyright © 2013–" + DateTime.Now.Year + " " +
+                         "Pryanet Ltd." +
                          "</span>",
                 Xalign = 0,
                 Xpad   = 300
@@ -114,7 +116,7 @@ namespace PryanetShare {
                 LineWrap     = true,
                 LineWrapMode = Pango.WrapMode.Word,
                 Markup       = "<span font_size='small' fgcolor='white'>" +
-                               "PryanetShare is Open Source software. You are free to use, modify, " +
+                               "PryanetShare is Open Source software powered by SparkleShare. You are free to use, modify, " +
                                "and redistribute it under the GNU General Public License version 3 or later." +
                                "</span>",
                 WidthRequest = 330,

@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-m4_define([pryanetshare_version], [1.1.0])
+m4_define([pryanetshare_version], [1.2])
 
 AC_PREREQ([2.54])
 AC_INIT([PryanetShare], pryanetshare_version)

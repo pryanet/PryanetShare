@@ -73,7 +73,7 @@ namespace PryanetShare {
         {
             if (type == PageType.Setup) {
                 Header      = "Welcome to PryanetShare!";
-                Description = "First off, what's your name and email?\n(visible only to team members)";
+                Description = "First off, what’s your name and email?\n(visible only to team members)";
 
                 FullNameLabel       = new PryanetLabel ("Full Name:", NSTextAlignment.Right);
                 FullNameLabel.Frame = new RectangleF (165, Frame.Height - 234, 160, 17);
@@ -136,7 +136,7 @@ namespace PryanetShare {
             }
 
             if (type == PageType.Invite) {
-                Header      = "You've received an invite!";
+                Header      = "You’ve received an invite!";
                 Description = "Do you want to add this project to PryanetShare?";
 
                 AddressLabel       = new PryanetLabel ("Address:", NSTextAlignment.Right);
@@ -173,7 +173,7 @@ namespace PryanetShare {
             }
 
             if (type == PageType.Add) {
-                Header      = "Where's your project hosted?";
+                Header      = "Where’s your project hosted?";
                 Description = "";
 
                 AddressLabel = new PryanetLabel ("Address:", NSTextAlignment.Left) {
@@ -253,7 +253,11 @@ namespace PryanetShare {
                     TableView.AddColumn (IconColumn);
                     TableView.AddColumn (DescriptionColumn);
 
-                    DataSource = new PryanetDataSource (BackingScaleFactor, Controller.Plugins);
+                    // Hi-res display support was added after Snow Leopard
+                    if (Environment.OSVersion.Version.Major < 11)
+                        DataSource = new PryanetDataSource (1, Controller.Plugins);
+                    else
+                        DataSource = new PryanetDataSource (BackingScaleFactor, Controller.Plugins);
 
                     TableView.DataSource = DataSource;
                     TableView.ReloadData ();
@@ -344,7 +348,7 @@ namespace PryanetShare {
 
             if (type == PageType.Syncing) {
                 Header      = "Adding project ‘" + Controller.SyncingFolder + "’…";
-                Description = "This may take a while for large projects.\nIsn't it coffee-o'clock?";
+                Description = "This may take a while for large projects.\nIsn’t it coffee-o’clock?";
 
                 ProgressIndicator = new NSProgressIndicator () {
                     Frame         = new RectangleF (190, Frame.Height - 200, 640 - 150 - 80, 20),
@@ -411,8 +415,8 @@ namespace PryanetShare {
                     "}" +
                     "</style>" +
                     "<ul>" +
-                    "  <li><b>" + Controller.PreviousUrl + "</b> is the address we've compiled. Does this look alright?</li>" +
-                    "  <li>Is this computer's Client ID known by the host?</li>" +
+                    "  <li><b>" + Controller.PreviousUrl + "</b> is the address we’ve compiled. Does this look alright?</li>" +
+                    "  <li>Is this computer’s Client ID known by the host?</li>" +
                     "</ul>";
 
                 if (warnings.Length > 0) {
@@ -421,7 +425,7 @@ namespace PryanetShare {
                     foreach (string warning in warnings)
                         warnings_markup += "<br><b>" + warning + "</b>";
 
-                    html = html.Replace ("</ul>", "<li>Here's the raw error message: " + warnings_markup + "</li></ul>");
+                    html = html.Replace ("</ul>", "<li>Here’s the raw error message: " + warnings_markup + "</li></ul>");
                 }
 
                 web_view.MainFrame.LoadHtmlString (html, new NSUrl (""));
@@ -444,7 +448,7 @@ namespace PryanetShare {
             if (type == PageType.CryptoSetup || type == PageType.CryptoPassword) {
                 if (type == PageType.CryptoSetup) {
                     Header      = "Set up file encryption";
-                    Description = "Please a provide a strong password that you don't use elsewhere below:";
+                    Description = "Please a provide a strong password that you don’t use elsewhere.";
                 
                 } else {
                     Header      = "This project contains encrypted files";
@@ -487,7 +491,7 @@ namespace PryanetShare {
                     Frame = new RectangleF (200, Frame.Height - 320, 24, 24)
                 };
 
-                WarningTextField = new PryanetLabel ("This password can't be changed later, and your files can't be recovered if it's forgotten.", NSTextAlignment.Left) {
+                WarningTextField = new PryanetLabel ("This password can’t be changed later, and your files can’t be recovered if it’s forgotten.", NSTextAlignment.Left) {
                     Frame = new RectangleF (235, Frame.Height - 390, 325, 100),
                 };
 
@@ -611,7 +615,7 @@ namespace PryanetShare {
 
                 switch (Controller.TutorialPageNumber) {
                     case 1: {
-                        Header      = "What's happening next?";
+                        Header      = "What’s happening next?";
                         Description = "PryanetShare creates a special folder on your computer " +
                             "that will keep track of your projects.";
 
@@ -646,7 +650,7 @@ namespace PryanetShare {
                     case 3: {
                         Header      = "The status icon helps you";
                         Description = "It shows the syncing progress, provides easy access to " +
-                            "your projects and let's you view recent changes.";
+                            "your projects, and lets you view recent changes.";
 
                         ContinueButton = new NSButton () { Title = "Continue" };
                         ContinueButton.Activated += delegate { Controller.TutorialPageCompleted (); };
@@ -656,9 +660,9 @@ namespace PryanetShare {
                     }
 
                     case 4: {
-                        Header      = "Here's your unique client ID";
-                        Description = "You'll need it whenever you want to link this computer to a host. " +
-                            " You can also find it in the status icon menu.";
+                        Header      = "Here’s your unique Client ID";
+                        Description = "You’ll need it whenever you want to link this computer to a host. " +
+                            "You can also find it in the status icon menu.";
 
                         LinkCodeTextField = new NSTextField () {
                             StringValue = Program.Controller.CurrentUser.PublicKey,
@@ -715,15 +719,15 @@ namespace PryanetShare {
         public List<object> Items;
         public NSAttributedString [] Cells, SelectedCells;
 
-        int backingScaleFactor;
+        int backing_scale_factor;
 
-        public PryanetDataSource (float backingScaleFactor, List<PryanetPlugin> plugins)
+        public PryanetDataSource (float backing_scale_factor, List<PryanetPlugin> plugins)
         {
             Items         = new List <object> ();
             Cells         = new NSAttributedString [plugins.Count];
             SelectedCells = new NSAttributedString [plugins.Count];
 
-            this.backingScaleFactor = (int)backingScaleFactor;
+            this.backing_scale_factor = (int) backing_scale_factor;
 
             int i = 0;
             foreach (PryanetPlugin plugin in plugins) {
@@ -808,24 +812,20 @@ namespace PryanetShare {
                 }
 
             } else {
-                var plugin = (PryanetPlugin)Items [row_index];
-                var path = plugin.ImagePath;
+                PryanetPlugin plugin = (PryanetPlugin) Items [row_index];
+                string path = plugin.ImagePath;
 
-                if (backingScaleFactor >= 2) {
-                    var hi_path = String.Format ("{0}@{1}x{2}",
+                if (backing_scale_factor >= 2) {
+                    string hi_path = String.Format ("{0}@{1}x{2}",
                         Path.Combine (Path.GetDirectoryName (path), Path.GetFileNameWithoutExtension (path)),
-                        backingScaleFactor,
-                        Path.GetExtension (path)
+                        backing_scale_factor, Path.GetExtension (path)
                     );
 
-                    if (File.Exists (hi_path)) {
+                    if (File.Exists (hi_path))
                         path = hi_path;
-                    }
                 }
 
-                return new NSImage (path) {
-                    Size = new SizeF (24, 24)
-                };
+                return new NSImage (path) { Size = new SizeF (24, 24) };
             }
         }
     }

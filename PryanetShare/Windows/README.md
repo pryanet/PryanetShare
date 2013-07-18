@@ -6,25 +6,26 @@ You can choose to build PryanetShare from source or to run the Windows installer
 
 Install version 4.0 of the [.NET Framework](http://www.microsoft.com/download/en/details.aspx?id=17851) if you haven't already.
 
-Install [msysGit](http://code.google.com/p/msysgit/downloads/) and copy the contents of the install folder
-(`C:\Program Files (x86)\Git` by default) to `C:\path\to\PryanetShare\sources\bin\msysgit\` (in the PryanetShare source directory).
+Install [msysGit](http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git) and copy the contents of the install folder
+(`C:\Program Files (x86)\Git` by default) to `C:\path\to\PryanetShare-sources\bin\msysgit\` (create the "bin"-folder in the PryanetShare source directory).
 
 Open a command prompt and execute the following:
 
 ```
-cd C:\path\to\PryanetShare\sources
+cd C:\path\to\PryanetShare-sources
 cd PryanetShare\Windows
 build
 ```
 
-`C:\path\to\PryanetShare\sources\bin` should now contain `PryanetShare.exe`, which you can run.
+`C:\path\to\PryanetShare-sources\bin` should now contain `PryanetShare.exe`, which you can run.
 
 
 ### Creating a Windows installer
 
-To create an installer package, install [WiX 3.6](http://wix.codeplex.com/), restart Windows and run:
+To create an installer package, install [WiX 3.7](http://wix.codeplex.com/releases/view/99514), restart Windows and run:
 
 ```
+cd C:\path\to\PryanetShare-sources\PryanetShare\Windows\
 build installer
 ```
 

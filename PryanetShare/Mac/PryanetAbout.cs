@@ -105,7 +105,8 @@ namespace PryanetShare {
             };
 
             this.credits_text_field = new PryanetLabel (
-                @"Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others." +
+                @"SparkleShare Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others.\n" +
+                "PryanetShare Copyright © 2013–" + DateTime.Now.Year + " Pryanet Ltd." +
                 "\n" +
                 "\n" +
                 "PryanetShare is Open Source software. You are free to use, modify, and redistribute it " +

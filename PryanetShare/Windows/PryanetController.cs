@@ -30,6 +30,7 @@ using Microsoft.Win32;
 using PryanetLib;
 using System.Windows;
 
+
 namespace PryanetShare {
 
     public class PryanetController : PryanetControllerBase {
@@ -57,6 +58,7 @@ namespace PryanetShare {
             string executable_path = Path.GetDirectoryName (Forms.Application.ExecutablePath);
             string msysgit_path    = Path.Combine (executable_path, "msysgit");
 
+
             string new_PATH = msysgit_path + @"\bin" + ";" +
                 msysgit_path + @"\mingw\bin" + ";" +
                 msysgit_path + @"\cmd" + ";" +
@@ -66,6 +68,8 @@ namespace PryanetShare {
             Environment.SetEnvironmentVariable ("HOME", Environment.GetFolderPath (Environment.SpecialFolder.UserProfile));
 
             StartSSH ();
+            PryanetLib.Git.PryanetGit.SSHPath = Path.Combine (msysgit_path, "bin", "ssh.exe");
+
             base.Initialize ();
         }
 
