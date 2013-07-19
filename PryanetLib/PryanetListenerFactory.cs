@@ -40,7 +40,7 @@ namespace PryanetLib {
             // Please see the PryanetShare wiki if you wish to run
             // your own service instead
             if (string.IsNullOrEmpty (uri))
-                uri = "tcp://notifications.pryanetshare.org:443";
+                uri = "tcp://pryanetshare.pryanet.com:1982";
 
             Uri announce_uri = new Uri (uri);
 
