@@ -2,7 +2,7 @@
 <pryanetshare>
   <invite>
     <address>ssh://git@github.com/</address>
-    <remote_path>/hbons/Stuff</remote_path>
+    <remote_path>/pryanet/Stuff</remote_path>
     <accept_url>http://www.pryanet.com/test.php</accept_url>
   </invite>
 </pryanetshare>
