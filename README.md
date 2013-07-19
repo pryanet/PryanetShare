@@ -9,7 +9,7 @@ PryanetShare is an Open Source collaboration and sharing tool that is designed t
 |-------------------:|:--------------------------------------------------|
 |       **Website**: | http://www.pryanet.com/                      |
 |       **Twitter**: | https://www.twitter.com/PryanetShare              |
-|   **Development**: | https://github.com/hbons/PryanetShare             |
+|   **Development**: | https://github.com/pryanet/PryanetShare             |
 |   **IRC channel**: | #pryanetshare on irc.gnome.org                    |
 
 
@@ -25,9 +25,9 @@ You can use any host that runs Git. For a simple setup script, check out [Dazzle
 
 ### Building...
 
-[...on Linux distributions](https://github.com/hbons/PryanetShare/blob/master/PryanetShare/Linux/README.md)  
-[...on Mac](https://github.com/hbons/PryanetShare/blob/master/PryanetShare/Mac/README.md)  
-[...on Windows](https://github.com/hbons/PryanetShare/blob/master/PryanetShare/Windows/README.md)  
+[...on Linux distributions](https://github.com/pryanet/PryanetShare/blob/master/PryanetShare/Linux/README.md)  
+[...on Mac](https://github.com/pryanet/PryanetShare/blob/master/PryanetShare/Mac/README.md)  
+[...on Windows](https://github.com/pryanet/PryanetShare/blob/master/PryanetShare/Windows/README.md)  
 
 
 ### Finally...

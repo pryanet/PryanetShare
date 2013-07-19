@@ -73,7 +73,7 @@ namespace PryanetLib {
             string n = Environment.NewLine;
             string crash_report = "Oops! PryanetShare has crashed... :(" + n + n +
                 "If you want to help fix this crash, please report it at " + n +
-                "https://github.com/hbons/PryanetShare/issues and include the lines below." + n + n +
+                "https://github.com/pryanet/PryanetShare/issues and include the lines below." + n + n +
                 "Remove any sensitive information like file names, IP addresses, domain names, etc. if needed." + n + n +
                 "------" +  n + n +
                 "PryanetShare version: " + PryanetLib.PryanetBackend.Version + n +
