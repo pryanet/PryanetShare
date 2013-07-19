@@ -207,7 +207,7 @@ namespace PryanetLib {
                 uri_builder.ToString () + " and everyone connected to it." + n +
                 n +
                 "PryanetShare is an Open Source software program that helps people collaborate and " + n +
-                "share files. If you like what we do, consider buying us a beer: http://www.pryanetshare.org/" + n +
+                "share files. If you like what we do, consider buying us a beer: http://www.pryanet.com/" + n +
                 n +
                 "Have fun! :)" + n;
 

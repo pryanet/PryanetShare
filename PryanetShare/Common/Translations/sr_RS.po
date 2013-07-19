@@ -174,7 +174,7 @@ msgstr "Аргументи:"
 msgid "PryanetShare "
 msgstr "СпарклШер"
 
-#. A menu item that takes the user to http://www.pryanetshare.org/
+#. A menu item that takes the user to http://www.pryanet.com/
 #: ../PryanetShare/PryanetAbout.cs:53 ../PryanetShare/PryanetStatusIcon.cs:297
 msgid "About PryanetShare"
 msgstr "О СпарклШеру"

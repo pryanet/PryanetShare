@@ -60,7 +60,7 @@ namespace PryanetShare {
             Thread.Sleep (500);
 
             WebClient web_client = new WebClient ();
-            Uri uri = new Uri ("http://www.pryanetshare.org/version");
+            Uri uri = new Uri ("http://www.pryanet.com/version");
 
             try {
                 string latest_version = web_client.DownloadString (uri).Trim ();

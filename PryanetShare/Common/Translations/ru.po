@@ -173,7 +173,7 @@ msgstr "Параметры:"
 msgid "PryanetShare "
 msgstr "PryanetShare "
 
-#. A menu item that takes the user to http://www.pryanetshare.org/
+#. A menu item that takes the user to http://www.pryanet.com/
 #: ../PryanetShare/PryanetAbout.cs:53 ../PryanetShare/PryanetStatusIcon.cs:295
 msgid "About PryanetShare"
 msgstr "О программе"

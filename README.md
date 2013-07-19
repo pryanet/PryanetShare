@@ -7,7 +7,7 @@ PryanetShare is an Open Source collaboration and sharing tool that is designed t
 
 |                    |                                                   |
 |-------------------:|:--------------------------------------------------|
-|       **Website**: | http://www.pryanetshare.org/                      |
+|       **Website**: | http://www.pryanet.com/                      |
 |       **Twitter**: | https://www.twitter.com/PryanetShare              |
 |   **Development**: | https://github.com/hbons/PryanetShare             |
 |   **IRC channel**: | #pryanetshare on irc.gnome.org                    |
